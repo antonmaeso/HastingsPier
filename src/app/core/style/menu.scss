@@ -1,9 +1,6 @@
 .menuBar {
-  background-color: inherit;
-  float: left;
-  border: solid;
-  outline: none;
-  height: 8vh;
+  background-color: rgb(70,70,70);
+  height: 22px;
   transition: 0.3s;
   font-size: 17px;
   width: $maxWindowWidth;
@@ -13,7 +10,17 @@
 .menubutton {
   -webkit-app-region: no-drag;
   height: 20px;
-  // padding-right: 12px;
-  // padding-top: 2px;
-  border: solid;
+  padding-right: 12px;
+  padding-top: 2px;
+}
+
+.menunav{
+  float: right;
+  justify-Self: right,
+}
+
+.menulist{
+  list-style-type:none;
+  margin: 0;
+  padding: 0;
 }

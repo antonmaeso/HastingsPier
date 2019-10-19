@@ -8,7 +8,8 @@
     "start": "electron ./dist/main.js",
     "build": "webpack --mode development",
     "buildRun": "npm run build:react && npm run build && npm run start",
-    "build:react": "webpack --mode development --config webpack.react.config.js"
+    "build:react": "webpack --mode development --config webpack.react.config.js",
+    "buildAll": "npm run build:react && npm run build"
   },
   "repository": {
     "type": "git",
@@ -35,7 +36,9 @@
     "css-loader": "^3.2.0",
     "devtron": "^1.4.0",
     "electron": "^6.0.12",
+    "file-loader": "^4.2.0",
     "html-webpack-plugin": "^3.2.0",
+    "image-webpack-loader": "^6.0.0",
     "jest": "^24.9.0",
     "mini-css-extract-plugin": "^0.8.0",
     "node-sass": "^4.12.0",
