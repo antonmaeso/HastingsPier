@@ -1,0 +1,39 @@
+{
+  "name": "HastingsPier",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ./dist/main.js",
+    "build": "webpack --mode development",
+    "buildRun": "npm run build && npm run start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antonmaeso/HastingsPier.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/antonmaeso/HastingsPier/issues"
+  },
+  "homepage": "https://github.com/antonmaeso/HastingsPier#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.6.4",
+    "@babel/core": "^7.6.4",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/plugin-transform-arrow-functions": "^7.2.0",
+    "@babel/preset-env": "^7.6.3",
+    "@babel/preset-typescript": "^7.6.0",
+    "babel-loader": "^8.0.6",
+    "html-webpack-plugin": "^3.2.0",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.9",
+    "electron": "^6.0.12",
+    "prettier": "^1.18.2",
+    "tslint": "^5.20.0",
+    "typescript": "^3.6.4"
+  }
+}
