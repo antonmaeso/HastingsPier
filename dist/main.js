@@ -106,6 +106,9 @@ var window;
 
 var createWindow = function createWindow() {
   window = new electron__WEBPACK_IMPORTED_MODULE_0__["BrowserWindow"]({
+    webPreferences: {
+      nodeIntegration: true
+    },
     width: 800,
     height: 600
   });

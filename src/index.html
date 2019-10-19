@@ -5,7 +5,11 @@
     <title>Hastings Pier</title>
   </head>
   <body>
-      <script>document.write(process.versions.node)</script>
+    <div style="display: none;">
+      Electron version:<script>document.write(process.versions.electron)</script><br/>
+      Node version:<script>document.write(process.versions.node)</script><br/>
+      Chrome version:<script>document.write(process.versions.chrome)</script><br/>
+    </div>
     <div id="renderer"></div>
   </body>
 </html>
