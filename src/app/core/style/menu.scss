@@ -1,5 +1,12 @@
-$colorSecondaryColor: #2e2e2e;
+$colorSecondaryColor: red;
 
 .menuBar {
-  background-color: $colorSecondaryColor;
+  background-color: inherit;
+  float: left;
+  border: solid;
+  outline: none;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+  width: 97%;
 }
