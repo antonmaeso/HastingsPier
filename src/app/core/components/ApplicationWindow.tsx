@@ -1,10 +1,7 @@
 import * as React from "react";
+import { TextInput } from "./library/TextInput";
+import { Button } from "./library/Button";
 
-export interface props {}
-export interface state {}
-
-export class ApplicationWindow extends React.Component<props, state> {
-    public render() {
-        return <div>Application window</div>
-    }
-}
+export const ApplicationWindow = (props: {}) => {
+  return <div className="applicationWindow">Application window</div>;
+};
