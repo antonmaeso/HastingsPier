@@ -1,8 +1,7 @@
 .applicationWindow {
-  float: right;
   width: 99%;
   margin-right: 0;
-  height: $maxWindowHeight;
-  border: solid;
+  height: calc(100vh - 22px);
+  background-color: rgba(64,64,64,0.8);
   display: inline-block;
 }

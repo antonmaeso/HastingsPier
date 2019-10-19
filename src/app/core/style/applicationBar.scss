@@ -1,8 +1,7 @@
 .applicationBar {
   width: 150px;
-  height: $maxWindowHeight;
-  overflow-x: scroll;
-  border: solid;
+  height: calc(100vh - 22px);
   resize: horizontal;
   display: inline-block;  
+  background-color: rgba(64,64,64,0.5);
 }
