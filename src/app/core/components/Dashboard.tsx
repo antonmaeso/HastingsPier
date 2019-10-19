@@ -7,9 +7,13 @@ import { ApplicationWindow } from "./ApplicationWindow";
 export const Dashboard = (props: {}) => {
   return (
     <React.Fragment>
-      <MenuBar />
-      <ApplicationBar />
-      <ApplicationWindow />
+      <div className="application">
+        <MenuBar />
+      </div>
+      <div className="application">
+        <ApplicationBar />
+        <ApplicationWindow />
+      </div>
     </React.Fragment>
   );
 };

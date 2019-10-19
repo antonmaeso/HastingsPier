@@ -1,3 +1,7 @@
 @import "./menu";
 @import "./applicationBar.scss";
 @import "./applicationWindow.scss";
+.application {
+  display: inline-flex;
+  width: 100%;
+}

@@ -1,9 +1,9 @@
+$maxWindowHeight: 87.2vh;
 .applicationBar {
   width: 150px;
-  height: 87.2vh;
+  height: $maxWindowHeight;
   overflow-x: scroll;
-  border-right: solid;
-  border-left: solid;
+  border: solid;
   resize: horizontal;
   display: inline-block;
 }
