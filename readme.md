@@ -5,3 +5,5 @@ https://reactjs.org/docs/testing.html - jest
 require('devtron').install()
 
 https://electronjs.org/spectron
+
+https://reactjs.org/docs/hooks-state.html
