@@ -32179,9 +32179,9 @@ if (false) {} else {
 
 /***/ }),
 
-/***/ "./src/app/Core/components/Dashboard.tsx":
+/***/ "./src/app/core/components/Dashboard.tsx":
 /*!***********************************************!*\
-  !*** ./src/app/Core/components/Dashboard.tsx ***!
+  !*** ./src/app/core/components/Dashboard.tsx ***!
   \***********************************************/
 /*! exports provided: Dashboard */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -32211,11 +32211,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _Core_components_Dashboard__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Core/components/Dashboard */ "./src/app/Core/components/Dashboard.tsx");
+/* harmony import */ var _core_components_Dashboard__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./core/components/Dashboard */ "./src/app/core/components/Dashboard.tsx");
 
 
 
-react_dom__WEBPACK_IMPORTED_MODULE_0__["render"](react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_Core_components_Dashboard__WEBPACK_IMPORTED_MODULE_2__["Dashboard"], null), document.getElementById('renderer'));
+react_dom__WEBPACK_IMPORTED_MODULE_0__["render"](react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_core_components_Dashboard__WEBPACK_IMPORTED_MODULE_2__["Dashboard"], null), document.getElementById('renderer'));
 
 /***/ })
 
