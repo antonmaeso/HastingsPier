@@ -1,38 +1,38 @@
 .menuBar {
-  background-color: rgb(70,70,70);
+  background-color: rgb(70, 70, 70);
   height: 22px;
   font-size: 17px;
   width: $maxWindowWidth;
   -webkit-app-region: drag;
 }
 
-.menunav{
+.menunav {
   float: right;
-  justify-Self: right,
+  justify-self: right;
 }
 
-.menulist{
-  list-style-type:none;
+.menulist {
+  list-style-type: none;
   margin: 0;
   padding: 0;
 }
 
-.menubutton{
-  background-size:contain;
+.menubutton {
+  background-size: contain;
   height: 20px;
   width: 20px;
-  margin:1px;
+  margin: 1px;
   float: right;
   -webkit-app-region: no-drag;
   cursor: pointer;
 }
 
-.menubutton.Close{
+.menubutton.Close {
   background-image: url(../assets/close.png);
 }
-.menubutton.Minimise{
+.menubutton.Minimise {
   background-image: url(../assets/minimise.png);
 }
-.menubutton.Maximise{
+.menubutton.Maximise {
   background-image: url(../assets/maximise.png);
 }
