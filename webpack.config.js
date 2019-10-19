@@ -17,7 +17,11 @@ const config = {
         use: {
           loader: "babel-loader"
         }
-      }
+      },
+      {
+        test: /\.(s*)css$/,
+        use: ['style-loader', 'sass-loader'],
+      },
     ]
   },
   resolve: {

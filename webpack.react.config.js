@@ -21,12 +21,15 @@ const config = {
         exclude: /node_modules/,
         use: {
           loader: "babel-loader"
-        }
-      }
+        },
+      },{
+        test: /\.(s*)css$/,
+        use: ['style-loader', 'css-loader', 'sass-loader'],
+      },
     ]
   },
   resolve: {
-    extensions: [".ts", ".tsx", ".js"]
+    extensions: [".ts", ".tsx", ".js", '.css']
   },
   plugins: [htmlPlugin]
 };
