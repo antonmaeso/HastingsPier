@@ -34,7 +34,9 @@ export const MenuBar = (props: any) => {
     <header className="menuBar">
       {props.appTitle}
       <nav className="menunav">
-        <ul className="menulist">{menuItems}</ul>
+        <ul className="menulist">
+           {menuItems}
+        </ul>
       </nav>
     </header>
   );

@@ -23,3 +23,23 @@
   margin: 0;
   padding: 0;
 }
+
+.experiment{
+  background-size:contain;
+  height: 20px;
+  width: 20px;
+  margin:1px;
+  float: right;
+  -webkit-app-region: no-drag;
+  cursor: pointer;
+}
+
+.experiment.Close{
+  background-image: url(../assets/close.png);
+}
+.experiment.Minimise{
+  background-image: url(../assets/minimise.png);
+}
+.experiment.Maximise{
+  background-image: url(../assets/maximise.png);
+}
