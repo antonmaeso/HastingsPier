@@ -2,3 +2,11 @@
 @import "./menu";
 @import "./applicationBar.scss";
 @import "./applicationWindow.scss";
+
+html{
+    background-image: url(https://www.hastingsdirect.com/img/bg/clouds.png);
+    color: azure;
+    background-size:cover;
+    background-color: #5595ff;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+}

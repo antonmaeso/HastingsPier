@@ -8,7 +8,7 @@ export const Dashboard = (props: any) => {
   return (
     <React.Fragment>
       <div className="application">
-        <MenuBar />
+        <MenuBar appTitle = "Hastings Pier" />
       </div>
       <div className="application">
         <ApplicationBar />
