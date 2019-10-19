@@ -1,0 +1,6 @@
+$maxWindowHeight: 88vh;
+$maxWindowWidth: 100%;
+.application {
+  display: inline-flex;
+  width: $maxWindowWidth;
+}
