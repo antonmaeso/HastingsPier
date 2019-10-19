@@ -32212,11 +32212,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ApplicationWindow", function() { return ApplicationWindow; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _library_TextInput__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./library/TextInput */ "./src/app/core/components/library/TextInput.tsx");
+/* harmony import */ var _library_Button__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./library/Button */ "./src/app/core/components/library/Button.tsx");
+
+
 
 var ApplicationWindow = function ApplicationWindow(props) {
   return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
     className: "applicationWindow"
-  }, "Application window");
+  }, "Application window", react__WEBPACK_IMPORTED_MODULE_0__["createElement"](_library_TextInput__WEBPACK_IMPORTED_MODULE_1__["TextInput"], null), react__WEBPACK_IMPORTED_MODULE_0__["createElement"](_library_Button__WEBPACK_IMPORTED_MODULE_2__["Button"], null));
 };
 
 /***/ }),
@@ -32263,6 +32267,46 @@ var MenuBar = function MenuBar(props) {
   return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
     className: "menuBar"
   }, "Menu Bar");
+};
+
+/***/ }),
+
+/***/ "./src/app/core/components/library/Button.tsx":
+/*!****************************************************!*\
+  !*** ./src/app/core/components/library/Button.tsx ***!
+  \****************************************************/
+/*! exports provided: Button */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Button", function() { return Button; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+var Button = function Button(props) {
+  return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("button", null);
+};
+
+/***/ }),
+
+/***/ "./src/app/core/components/library/TextInput.tsx":
+/*!*******************************************************!*\
+  !*** ./src/app/core/components/library/TextInput.tsx ***!
+  \*******************************************************/
+/*! exports provided: TextInput */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TextInput", function() { return TextInput; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+var TextInput = function TextInput(props) {
+  return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("input", {
+    type: "text"
+  });
 };
 
 /***/ }),
