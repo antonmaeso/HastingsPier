@@ -13,7 +13,9 @@ const createWindow = () => {
       },
       frame: false,
       width: 800,
-      height: 600
+      height: 600,
+      minHeight: 300,
+      minWidth:300,
     }
   );
 
