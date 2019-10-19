@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron ./dist/main.js",
     "build": "webpack --mode development",
-    "buildRun": "npm run build && npm run start"
+    "buildRun": "npm run build:react && npm run build && npm run start",
+    "build:react": "webpack --mode development --config webpack.react.config.js"
   },
   "repository": {
     "type": "git",
@@ -26,14 +27,21 @@
     "@babel/plugin-proposal-class-properties": "^7.5.5",
     "@babel/plugin-transform-arrow-functions": "^7.2.0",
     "@babel/preset-env": "^7.6.3",
+    "@babel/preset-react": "^7.6.3",
     "@babel/preset-typescript": "^7.6.0",
+    "@types/react": "^16.9.9",
+    "@types/react-dom": "^16.9.2",
     "babel-loader": "^8.0.6",
-    "html-webpack-plugin": "^3.2.0",
-    "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.9",
     "electron": "^6.0.12",
+    "html-webpack-plugin": "^3.2.0",
     "prettier": "^1.18.2",
     "tslint": "^5.20.0",
-    "typescript": "^3.6.4"
+    "typescript": "^3.6.4",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.9"
+  },
+  "dependencies": {
+    "react": "^16.10.2",
+    "react-dom": "^16.10.2"
   }
 }
