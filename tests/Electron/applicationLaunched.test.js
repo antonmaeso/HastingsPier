@@ -1,9 +1,9 @@
-var Application = require('spectron').Application
-var assert = require('assert')
-const electronPath = require('electron')
-const path = require('path')
-
 test("Lanches app, checks its visible", () => {
+  var Application = require('spectron').Application
+  var assert = require('assert')
+  const electronPath = require('electron')
+  const path = require('path')
+
   var app = new Application({
     path: electronPath,
     args: [path.join(__dirname, "..")]

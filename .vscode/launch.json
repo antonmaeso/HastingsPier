@@ -11,7 +11,8 @@
       "runtimeArgs": [
         "--inspect-brk",
         "${workspaceRoot}/node_modules/jest/bin/jest.js",
-        "--runInBand"
+        "--runInBand",
+        "--detectOpenHandles"
       ],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
