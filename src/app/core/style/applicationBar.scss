@@ -1,7 +1,27 @@
 .applicationBar {
-  width: 150px;
+  width: 120px;
   height: calc(100vh - 22px);
   resize: horizontal;
-  display: inline-block;  
-  background-color: rgba(64,64,64,0.5);
+  display: inline-flex;
+  flex-flow: column;
+  background-color: rgba(64, 64, 64, 0.5);
+  text-align: center;
+}
+
+.appButton {
+  border-radius: 20%;
+  height: 90px;
+  width: 90px;
+  border: solid;
+  display: flex;
+  align-self: center;
+  margin-top: 10px;
+  text-align: center;
+  background-size: contain;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.appButton:hover {
+  opacity: 1;
 }
