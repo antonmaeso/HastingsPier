@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "electron ./dist/main.js",
     "build": "webpack --mode development",
     "buildRun": "npm run build:react && npm run build && npm run start",
