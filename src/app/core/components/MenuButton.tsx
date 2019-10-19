@@ -4,7 +4,7 @@ export const MenuButton = (props: any) => {
   return (
     <li style={{float:"right"}}>
       <div
-        className={"experiment "+props.alt}
+        className={"menubutton "+props.alt}
         onClick={props.onClick}
         title={props.alt}
       />
