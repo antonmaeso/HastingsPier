@@ -5,6 +5,6 @@ export interface state {}
 
 export class ApplicationBar extends React.Component<props, state> {
     public render() {
-        return <div>Application Bar</div>
+        return <div className="applicationBar">Application Bar</div>
     }
 }
