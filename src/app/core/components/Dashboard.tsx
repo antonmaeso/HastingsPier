@@ -4,7 +4,7 @@ import { MenuBar } from "./MenuBar";
 import { ApplicationBar } from "./ApplicationBar";
 import { ApplicationWindow } from "./ApplicationWindow";
 
-export const Dashboard = (props: {}) => {
+export const Dashboard = (props: any) => {
   return (
     <React.Fragment>
       <div className="application">

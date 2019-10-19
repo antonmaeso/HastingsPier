@@ -7,4 +7,13 @@
   transition: 0.3s;
   font-size: 17px;
   width: $maxWindowWidth;
+  -webkit-app-region: drag;
+}
+
+.menubutton {
+  -webkit-app-region: no-drag;
+  height: 20px;
+  // padding-right: 12px;
+  // padding-top: 2px;
+  border: solid;
 }

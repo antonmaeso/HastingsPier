@@ -7,13 +7,15 @@ let window: BrowserWindow | null;
 
 const createWindow = () => {
   window = new BrowserWindow(
-      { 
-        webPreferences: {
-            nodeIntegration: true
-          },
-        width: 800,
-        height: 600 }
-      );
+    {
+      webPreferences: {
+        nodeIntegration: true
+      },
+      frame: false,
+      width: 800,
+      height: 600
+    }
+  );
 
   window.loadURL(
     url.format({
