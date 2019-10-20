@@ -1,7 +1,7 @@
 const url = require("url");
 const path = require("path");
 
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, ipcMain } from "electron";
 
 let window: BrowserWindow | null;
 
@@ -45,3 +45,9 @@ app.on("activate", () => {
     createWindow();
   }
 });
+
+
+// ipc routing for testing
+ipcMain.on("notify",(event: any, value: any)=>{
+  window.webContents.send("notify",value);
+})
