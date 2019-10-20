@@ -1,11 +1,12 @@
 .applicationBar {
   min-width: 110px;
   height: calc(100vh - 23px);
-  resize: horizontal;
   display: inline-flex;
   flex-flow: column;
   background-color: $tertiaryColour;
   text-align: center;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .appButton {

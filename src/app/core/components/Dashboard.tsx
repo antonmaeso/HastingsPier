@@ -10,7 +10,7 @@ import { Example } from "../../modules/Example/components/example";
 // Application Window for rendering
 
 export const Dashboard = (props: any) => {
-const [RunningApplication, setRunningApplication] = React.useState(<Example/>)
+const [RunningApplication, setRunningApplication] = React.useState(<AppSelection/>)
 
   return (
     <div className="coreApplication">
@@ -24,5 +24,4 @@ const [RunningApplication, setRunningApplication] = React.useState(<Example/>)
     </div>
   );
 };
-
 
