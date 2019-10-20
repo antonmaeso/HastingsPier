@@ -6,14 +6,14 @@ import { ApplicationWindow } from "./ApplicationWindow";
 
 export const Dashboard = (props: any) => {
   return (
-    <React.Fragment>
+    <div className="coreApplication">
       <div className="application">
-        <MenuBar appTitle = "Hastings Pier" />
+        <MenuBar appTitle="Hastings Pier" />
       </div>
       <div className="application">
         <ApplicationBar />
         <ApplicationWindow />
       </div>
-    </React.Fragment>
+    </div>
   );
 };

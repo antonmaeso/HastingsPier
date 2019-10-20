@@ -3,7 +3,7 @@
 @import "./applicationBar.scss";
 @import "./applicationWindow.scss";
 
-html {
+.coreApplication {
   background-image: url(https://www.hastingsdirect.com/img/bg/clouds.png);
   color: $textColour;
   background-size: cover;
