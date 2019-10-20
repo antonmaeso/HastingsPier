@@ -86,6 +86,10 @@ const createTray = () => {
   appIcon.on("balloon-click", () => { window.show(); });
 };
 
+
+ipcMain.on("balloon", (event: any, arg: any) => {
+  balloon(arg.title, arg.contents);
+});
 function balloon(displayTitle: string, contents: string) {
   try {
     appIcon.displayBalloon({ title: displayTitle, content: contents });
@@ -94,7 +98,6 @@ function balloon(displayTitle: string, contents: string) {
     appIcon.displayBalloon({ title: "Exception", content: Exception });
   }
 }
-
 
 // create static util classes
 
