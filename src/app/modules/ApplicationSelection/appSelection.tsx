@@ -16,7 +16,6 @@ export const AppSelection = (props: any) => {
 
   return (
     <div className="applicationWindow AppSelection">
-      <br></br>
       {apps}
     </div>
   );
