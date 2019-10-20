@@ -2,7 +2,7 @@
   "name": "HastingsPier",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/main.js",
   "scripts": {
     "test": "jest --detectOpenHandles",
     "start": "electron ./dist/main.js",
