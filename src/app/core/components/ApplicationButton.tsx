@@ -4,7 +4,8 @@ import { ipcRenderer } from "electron";
 export const AppButton = (props: any) => {
   const[notification, setNotification] = React.useState("0");
 
-  ipcRenderer.on("notify",(event: any, value: any)=>{
+  ipcRenderer.removeAllListeners("notify"+props.title);
+  ipcRenderer.on("notify"+ props.title,(event: any, value: any)=>{
     setNotification(value.notify);
   })
 

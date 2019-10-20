@@ -13,7 +13,7 @@ export const Example = (props: any) => {
       <br></br>      
       <Button text="Send Notification" onClick={()=>{
         setCount(count+1);
-        ipcRenderer.send("notify",{notify:count})
+        ipcRenderer.send("notify",{notify:count,App:"Octane"})
       }}/>
     </div>
   );

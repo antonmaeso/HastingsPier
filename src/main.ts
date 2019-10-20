@@ -49,5 +49,5 @@ app.on("activate", () => {
 
 // ipc routing for testing
 ipcMain.on("notify",(event: any, value: any)=>{
-  window.webContents.send("notify",value);
+  window.webContents.send("notify"+value.App,value);
 })
