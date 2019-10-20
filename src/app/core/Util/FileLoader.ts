@@ -13,5 +13,5 @@ export const readJsonFile = () => {
     );
   }
 
-  return JSON.parse(fs.readFileSync(relativeFilePath, "utf-8"));
+  return fs.readFileSync(relativeFilePath, "utf-8");
 };

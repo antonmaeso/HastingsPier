@@ -13,7 +13,7 @@ export const Example = (props: any) => {
       <Button
         text="Load File"
         onClick={() => {
-          readJsonFile();
+          ipcRenderer.send("apps");
         }}
       />
       <br></br>
