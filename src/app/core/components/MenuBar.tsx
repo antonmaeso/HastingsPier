@@ -9,7 +9,7 @@ import { Button } from "./library/Button";
 const menuItems = [
   <Button
     alt="remove"
-    type="image"
+    type="menuItem"
     onClick={() => {
       closeWindow();
     }}
@@ -17,7 +17,7 @@ const menuItems = [
   />,
   <Button
     alt="fullscreen"
-    type="image"
+    type="menuItem"
     onClick={() => {
       maxWindow();
     }}
@@ -25,7 +25,7 @@ const menuItems = [
   />,
   <Button
     alt="minus"
-    type="image"
+    type="menuItem"
     onClick={() => {
       minWindow();
     }}

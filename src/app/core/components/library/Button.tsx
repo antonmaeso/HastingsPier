@@ -2,12 +2,12 @@ import * as React from "react";
 
 export const Button = (props: any) => {
   let button = <button onClick={props.onClick}>{props.text}</button>;
-  if (props.type == "image") {
-    button = ImageButton(props);
+  if (props.type == "menuItem") {
+    button = MenuItemButton(props);
   }
   return button;
 };
-function ImageButton(props: any) {
+function MenuItemButton(props: any) {
   return (
     <div
       className={"menuItems glyphicon glyphicon-" + props.alt}
