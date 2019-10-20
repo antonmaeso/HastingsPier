@@ -26,6 +26,10 @@
   -webkit-app-region: no-drag;
   cursor: pointer;
 }
+.menuItems {
+  float: right;
+  padding: 2px;
+}
 
 .menubutton.Close {
   background-image: url(../assets/close.png);

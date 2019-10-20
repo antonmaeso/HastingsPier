@@ -4,24 +4,28 @@ import { remote } from "electron";
 import Close from "../assets/close.png";
 import Max from "../assets/maximise.png";
 import Min from "../assets/minimise.png";
+import { Button } from "./library/Button";
 
 const menuItems = [
-  <MenuButton
+  <Button
     alt="remove"
+    type="image"
     onClick={() => {
       closeWindow();
     }}
     src={Close}
   />,
-  <MenuButton
+  <Button
     alt="fullscreen"
+    type="image"
     onClick={() => {
       maxWindow();
     }}
     src={Max}
   />,
-  <MenuButton
+  <Button
     alt="minus"
+    type="image"
     onClick={() => {
       minWindow();
     }}
