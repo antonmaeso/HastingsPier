@@ -5,16 +5,17 @@ import { Button } from "../../../core/components/library/Button";
 import { ipcRenderer, remote } from "electron";
 
 export const Example = (props: any) => {
+  const[count, setCount] = React.useState(0);
+
   return (
     <div className="applicationWindow Example">
       EXAMPLE
       <br></br>      
-      <Button text="Send Notification" onClick={()=>{sendNotification()}}/>
+      <Button text="Send Notification" onClick={()=>{
+        setCount(count+1);
+        ipcRenderer.send("notify",{notify:count})
+      }}/>
     </div>
   );
 };
 
-function sendNotification(){
-  remote.BrowserWindow.getFocusedWindow().minimize();
-  ipcRenderer.send("notify",{notify:"10"})
-}
