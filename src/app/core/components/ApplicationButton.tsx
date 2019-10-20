@@ -6,7 +6,7 @@ export const AppButton = (props: any) => {
 
   ipcRenderer.removeAllListeners("notify"+props.title);
   ipcRenderer.on("notify"+ props.title,(event: any, value: any)=>{
-    setNotification(value.notify);
+    setNotification(value);
   })
 
   return (
