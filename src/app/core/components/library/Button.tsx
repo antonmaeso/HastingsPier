@@ -9,10 +9,10 @@ export const Button = (props: any) => {
 };
 function MenuItemButton(props: any) {
   return (
-    <div
-      className={"menuItems glyphicon glyphicon-" + props.alt}
-      onClick={props.onClick}
-      title={props.alt}
-    />
+      <div
+        className={"menubutton glyphicon glyphicon-" + props.alt}
+        onClick={props.onClick}
+        title={props.alt}
+      />
   );
 }

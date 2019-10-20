@@ -2,7 +2,7 @@ import * as React from "react";
 import "../style/exampleStyle.scss";
 import "../style/appIcons.scss"
 import { Button } from "../../../core/components/library/Button";
-import { ipcRenderer } from "electron";
+import { ipcRenderer, remote } from "electron";
 
 export const Example = (props: any) => {
   return (
@@ -15,5 +15,6 @@ export const Example = (props: any) => {
 };
 
 function sendNotification(){
-  ipcRenderer.send("notify",{notify:"0"})
+  remote.BrowserWindow.getFocusedWindow().minimize();
+  ipcRenderer.send("notify",{notify:"10"})
 }
