@@ -46,9 +46,10 @@ app.on("activate", () => {
 });
 
 // create static util classes
-const config = readJsonFile();
+
 ipcMain.on("apps", () => {
-  window.webContents.send(config);
+  const config = readJsonFile();
+  window.webContents.send("apps", config);
 });
 
 // ipc main routing to util classes

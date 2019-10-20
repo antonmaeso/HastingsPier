@@ -7,6 +7,8 @@ import { ipcRenderer, remote } from "electron";
 export const Example = (props: any) => {
   const [count, setCount] = React.useState(0);
 
+  ipcRenderer.on("allApps", (event: any, value: any) => {});
+
   return (
     <div className="applicationWindow Example">
       EXAMPLE
