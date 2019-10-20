@@ -1,5 +1,9 @@
 $maxWindowHeight: 88vh;
 $maxWindowWidth: 100%;
+$primaryColour: #5595ff;
+$secondaryColour: rgb(70, 70, 70);
+$tertiaryColour: rgba(64, 64, 64, 0.5);
+$textColour: white;
 .application {
   display: inline-flex;
   width: $maxWindowWidth;
