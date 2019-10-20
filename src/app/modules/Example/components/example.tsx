@@ -1,8 +1,8 @@
 import * as React from "react";
 import "../style/exampleStyle.scss";
 import { Button } from "../../../core/components/library/Button";
-import { ipcRenderer, remote } from "electron";
 import { readJsonFile } from "../../../core/util/FileLoader";
+import { ipcRenderer, remote } from "electron";
 
 export const Example = (props: any) => {
   const [count, setCount] = React.useState(0);
