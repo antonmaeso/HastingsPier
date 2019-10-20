@@ -1,9 +1,5 @@
 import * as React from "react";
-import { MenuButton } from "./MenuButton";
 import { remote } from "electron";
-import Close from "../assets/close.png";
-import Max from "../assets/maximise.png";
-import Min from "../assets/minimise.png";
 import { Button } from "./library/Button";
 
 const menuItems = [
@@ -13,7 +9,6 @@ const menuItems = [
     onClick={() => {
       closeWindow();
     }}
-    src={Close}
   />,
   <Button
     alt="fullscreen"
@@ -21,7 +16,6 @@ const menuItems = [
     onClick={() => {
       maxWindow();
     }}
-    src={Max}
   />,
   <Button
     alt="minus"
@@ -29,7 +23,6 @@ const menuItems = [
     onClick={() => {
       minWindow();
     }}
-    src={Min}
   />
 ];
 
