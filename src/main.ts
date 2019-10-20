@@ -88,9 +88,9 @@ const createTray = () => {
 
 
 ipcMain.on("balloon", (event: any, arg: any) => {
-  balloon(arg.title, arg.contents);
+  balloon(arg.title, arg.contents, arg.other);
 });
-function balloon(displayTitle: string, contents: string) {
+function balloon(displayTitle: string, contents: string, other?:any) {
   try {
     appIcon.displayBalloon({ title: displayTitle, content: contents });
     lastBalloonMessage = contents;
@@ -108,9 +108,9 @@ ipcMain.on("apps", () => {
 
 // ipc main routing to util classes
 
-// ipc routing for testing
-ipcMain.on("notify", (event: any, value: any) => {
-  window.webContents.send("notify" + value.App, value);
+// ipc routing for app bar notifications
+ipcMain.on("AppBarNotify", (event: any, value: any) => {
+  window.webContents.send("notify" + value.App, value.Notification);
 });
 
 //ipc routing for application pane

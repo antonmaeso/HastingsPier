@@ -1,6 +1,6 @@
 import * as React from "react";
 import { AppButton } from "./ApplicationButton";
-import { ipcRenderer } from "electron";
+import { ipcRenderer, BrowserWindow } from "electron";
 import { Notify } from "../../core/util/Notify";
 
 const applicationHC = [
@@ -11,8 +11,7 @@ const applicationHC = [
 ];
 
 export const ApplicationBar = (props: any) => {
-  const [applications, setApplications] = React.useState([
-    <AppButton title="ApplicationSelection" />
+  const [applications, setApplications] = React.useState([<AppButton title="ApplicationSelection"/>
   ]);
   const listener = "AppBar";
   ipcRenderer.removeAllListeners(listener);
@@ -31,6 +30,9 @@ export const ApplicationBar = (props: any) => {
 };
 
 const addApplicationToBar = (appName: string, existingApps: any[]) => {
-  const newList = existingApps.concat([<AppButton title={appName} />]);
+  const newFirstElement = [appName,<AppButton title={appName} />];
+  const AddApp = existingApps.shift();
+  const notWithAdd = existingApps.slice(0);
+  const newList = [AddApp].concat([newFirstElement]).concat(notWithAdd);
   return newList;
 };
