@@ -1,7 +1,8 @@
 import * as React from "react";
 import { AppButton } from "./ApplicationButton";
 
-const applications = [
+const applications = [ 
+  // TODO: look this up from a util class
   <AppButton title="ApplicationSelection"/>,
   <AppButton title="Octane"/>,
   <AppButton title="BatManager"/>
