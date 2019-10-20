@@ -7,3 +7,5 @@ require('devtron').install()
 https://electronjs.org/spectron
 
 https://reactjs.org/docs/hooks-state.html
+
+https://electronjs.org/docs/tutorial/using-selenium-and-webdriver
