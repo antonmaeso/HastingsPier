@@ -50,6 +50,8 @@ app.on("activate", () => {
 // create static util classes
 
 
+// ipc main routing to util classes
+
 // ipc routing for testing
 ipcMain.on("notify",(event: any, value: any)=>{
   window.webContents.send("notify"+value.App,value);

@@ -1,4 +1,20 @@
-.ApplicationSlection{
+.AppSelection{
     height: 100%;
-    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: space-between;
+}
+
+.AppPane{
+    flex: 1;
+}
+
+.AppSelection .AppPane{
+    width: 30%;
+}
+
+.ShowOnMouseOver{
+    opacity: 0;
+}
+.ShowOnMouseOver:hover{
+    opacity: 1;
 }
