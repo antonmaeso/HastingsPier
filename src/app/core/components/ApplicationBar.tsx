@@ -11,13 +11,16 @@ const applicationHC = [
 ];
 
 export const ApplicationBar = (props: any) => {
-  const [applications, setApplications] = React.useState([<AppButton title="ApplicationSelection"/>
+  const [applications, setApplications] = React.useState([
+    ["app", <AppButton title="ApplicationSelection" />]
   ]);
   const listener = "AppBar";
   ipcRenderer.removeAllListeners(listener);
   ipcRenderer.on(listener, (event: any, value: any) => {
-    const newList = addApplicationToBar(value, applications);
-    setApplications(newList);
+    if (!new Map(applications).has(value)) {
+      const newList = addApplicationToBar(value, applications);
+      setApplications(newList);
+    }
   });
   // Notify.Balloon("AppBar", applications.length + " Apps in state");
   return (
@@ -30,9 +33,11 @@ export const ApplicationBar = (props: any) => {
 };
 
 const addApplicationToBar = (appName: string, existingApps: any[]) => {
-  const newFirstElement = [appName,<AppButton title={appName} />];
-  const AddApp = existingApps.shift();
-  const notWithAdd = existingApps.slice(0);
-  const newList = [AddApp].concat([newFirstElement]).concat(notWithAdd);
-  return newList;
+  const newFirstElement = [appName, <AppButton title={appName} />];
+  if (!new Map(existingApps).has(newFirstElement[0])) {
+    const AddApp = existingApps.shift();
+    const notWithAdd = existingApps.slice(0);
+    const newList = [AddApp].concat([newFirstElement]).concat(notWithAdd);
+    return newList;
+  }
 };
