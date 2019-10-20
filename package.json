@@ -53,6 +53,7 @@
   },
   "dependencies": {
     "bootstrap": "^4.3.1",
+    "fs": "0.0.1-security",
     "jquery": "^3.4.1",
     "popper.js": "^1.16.0",
     "react": "^16.10.2",
