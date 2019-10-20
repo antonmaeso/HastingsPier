@@ -7,21 +7,21 @@ import Min from "../assets/minimise.png";
 
 const menuItems = [
   <MenuButton
-    alt="Close"
+    alt="remove"
     onClick={() => {
       closeWindow();
     }}
     src={Close}
   />,
   <MenuButton
-    alt="Maximise"
+    alt="fullscreen"
     onClick={() => {
       maxWindow();
     }}
     src={Max}
   />,
   <MenuButton
-    alt="Minimise"
+    alt="minus"
     onClick={() => {
       minWindow();
     }}
@@ -34,9 +34,7 @@ export const MenuBar = (props: any) => {
     <header className="menuBar">
       {props.appTitle}
       <nav className="menunav">
-        <ul className="menulist">
-           {menuItems}
-        </ul>
+        <ul className="menulist">{menuItems}</ul>
       </nav>
     </header>
   );
