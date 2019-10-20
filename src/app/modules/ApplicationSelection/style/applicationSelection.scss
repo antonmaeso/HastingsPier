@@ -1,5 +1,6 @@
 .AppSelection{
-    height: 100%;
+    justify-content: space-evenly;
+    display:flex;
 }
 
 .AppPane{
@@ -14,12 +15,6 @@
     background-size: contain;
 }
 
-.AppSelection .AppPane{
-    width: 30%;
-    display: flex;
-    justify-content: space-between;
-}
-
 .ShowOnMouseOver{
     opacity: 0;
     width: 100%;
@@ -27,4 +22,11 @@
 }
 .ShowOnMouseOver:hover{
     opacity: 1;
+}
+
+.AppPaneTitle{
+    display: flex;
+    height:fit-content;
+    margin-left: 20px;
+    font-size: 18px;
 }
