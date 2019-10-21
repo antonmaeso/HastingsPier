@@ -5,12 +5,14 @@ const path = require("path");
 import logo from "./app/core/assets/Ant.png";
 const iconpath = path.join(__dirname + "\\" + logo);
 
-import { app, BrowserWindow, ipcMain, Tray, nativeImage, Menu } from "electron";
+import { app, BrowserWindow, ipcMain, Menu, nativeImage, Tray } from "electron";
+import { WindowControl } from "./app/core/Util/WindowManager";
 
-let window: BrowserWindow | null;
+const control = new WindowControl(iconpath);
+let mainWindowId: number;
 
 const createWindow = () => {
-  window = new BrowserWindow({
+  mainWindowId = control.createNewWindow({
     frame: false,
     height: 600,
     icon: iconpath,
@@ -20,19 +22,8 @@ const createWindow = () => {
       nodeIntegration: true,
     },
     width: 800,
-  });
+  }, "index.html");
 
-  window.loadURL(
-    url.format({
-      pathname: path.join(__dirname, "index.html"),
-      protocol: "file:",
-      slashes: true,
-    }),
-  );
-
-  window.on("closed", () => {
-    window = null;
-  });
 
   createTray();
 
@@ -51,7 +42,7 @@ app.on("window-all-closed", () => {
 });
 
 app.on("activate", () => {
-  if (window === null) {
+  if (control.getWindow(mainWindowId) === null) {
     createWindow();
   }
 });
@@ -64,7 +55,7 @@ const createTray = () => {
 
   const contextMenu = Menu.buildFromTemplate([{
     click() {
-      window.show();
+      control.getWindow(mainWindowId).show();
     },
     label: "Show",
   },
@@ -84,8 +75,8 @@ const createTray = () => {
 
   appIcon.setContextMenu(contextMenu);
   appIcon.setToolTip("Hastings Pier");
-  appIcon.on("double-click", () => { window.show(); });
-  appIcon.on("balloon-click", () => { window.show(); });
+  appIcon.on("double-click", () => { control.getWindow(mainWindowId).show(); });
+  appIcon.on("balloon-click", () => { control.getWindow(mainWindowId).show(); });
 };
 
 
@@ -105,18 +96,18 @@ function balloon(displayTitle: string, contents: string, other?: any) {
 
 ipcMain.on("apps", (event: any, value: any) => {
   const config = readJsonFile();
-  window.webContents.send("appsResponse", config);
+  control.getWindow(mainWindowId).webContents.send("appsResponse", config);
 });
 
 // ipc main routing to util classes
 
 // ipc routing for app bar notifications
 ipcMain.on("AppBarNotify", (event: any, value: any) => {
-  window.webContents.send("notify" + value.App, value.Notification);
+  control.getWindow(mainWindowId).webContents.send("notify" + value.App, value.Notification);
 });
 
 //ipc routing for application pane
 ipcMain.on("AppBar", (event: any, value: any) => {
-  window.webContents.send("AppBar", value);
+  control.getWindow(mainWindowId).webContents.send("AppBar", value);
 })
 
