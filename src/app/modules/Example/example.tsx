@@ -1,8 +1,8 @@
 import { ipcRenderer, remote } from "electron";
 import * as React from "react";
-import { Button } from "../../../core/components/library/Button";
-import { Notify } from "../../../core/Util/Notify";
-import "../style/exampleStyle.scss";
+import { Button } from "../../core/components/library/Button";
+import { Notify } from "../../core/Util/Notify";
+import "./style/exampleStyle.scss";
 
 export const Example = (props: any) => {
   const [count, setCount] = React.useState(0);
@@ -25,7 +25,7 @@ export const Example = (props: any) => {
       />
       <br></br>
       <Button
-        text="Send Notification"
+        text={"Send Notification" + count.toString()}
         onClick={() => {
           setCount(count + 1);
           Notify.AppNotification("Octane", count.toString());

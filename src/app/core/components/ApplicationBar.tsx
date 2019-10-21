@@ -3,12 +3,41 @@ import * as React from "react";
 import { Notify } from "../../core/util/Notify";
 import { AppButton } from "./ApplicationButton";
 
-const applicationHC = [
-  // TODO: look this up from a util class
-  <AppButton title="ApplicationSelection" />,
-  <AppButton title="Octane" />,
-  <AppButton title="BatManager" />,
-];
+// class appButton {
+//   private button: JSX.Element;
+//   private title: string;
+//   private key: string;
+//   private active = false;
+//   private notification = "0";
+
+//   constructor(Title: string) {
+//     this.title = Title;
+//     this.key = Title + "Pane";
+//     this.button = <AppButton key={this.key} title={Title} />;
+//   }
+
+//   public setNotification(n: string) {
+//     this.notification = n;
+//   }
+//   public setActive(a: boolean) {
+//     this.active = a;
+//   }
+
+//   public Title() {
+//     return this.title;
+//   }
+
+//   public Button() {
+//     return this.button;
+//   }
+// }
+
+// const applicationHC = [
+//   // TODO: look this up from a util class
+//   new appButton("ApplicationSelection"),
+//   new appButton("Octane"),
+//   new appButton("BatManager"),
+// ];
 
 export const ApplicationBar = (props: any) => {
   const [applications, setApplications] = React.useState([
