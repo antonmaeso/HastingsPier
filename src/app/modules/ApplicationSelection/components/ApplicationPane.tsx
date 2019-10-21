@@ -21,4 +21,5 @@ const clickApp = (app: string) => {
   // for now just use ipcRenderer. Extract to util when better idea of how it looks
   ipcRenderer.send("AppBar", app);
   Notify.AppNotification(app, "W");
+  Notify.setWindowTitle(app);
 };

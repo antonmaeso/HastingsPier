@@ -1,28 +1,38 @@
 .menuBar {
-  background-color: $secondaryColour;
-  height: 22px;
-  font-size: 17px;
-  width: $maxWindowWidth;
-  -webkit-app-region: drag;
+    background-color: $secondaryColour;
+    height: 22px;
+    font-size: 17px;
+    width: $maxWindowWidth;
+    -webkit-app-region: drag;
+    display: flex;
+    justify-content: space-between;
+    overflow: hidden;
+    border-bottom: solid;
+    border-color: red;
 }
 
 .menunav {
-  float: right;
-  justify-self: right;
+    float: right;
+    justify-self: right;
 }
 
 .menulist {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
 
 .menubutton {
-  background-size: contain;
-  height: 20px;
-  width: 20px;
-  margin: 1px;
-  float: right;
-  -webkit-app-region: no-drag;
-  cursor: pointer;
+    background-size: contain;
+    height: 20px;
+    width: 20px;
+    margin: 1px;
+    float: right;
+    -webkit-app-region: no-drag;
+    cursor: pointer;
+}
+
+.menuTitle {
+    display: flex;
+    align-self: center;
 }

@@ -1,4 +1,4 @@
-import { remote } from "electron";
+import { remote, ipcRenderer } from "electron";
 import * as React from "react";
 import { Button } from "./library/Button";
 
@@ -30,9 +30,16 @@ const menuItems = [
 ];
 
 export const MenuBar = (props: any) => {
+  const [title, setTitle] = React.useState(props.appTitle);
+
+  const listener = "menuTitle";
+  ipcRenderer.removeAllListeners(listener);
+  ipcRenderer.on(listener, (event: any, value: any) => {
+    setTitle(value);
+  });
   return (
     <header className="menuBar">
-      {props.appTitle}
+      <div className="menuTitle">{title}</div>
       <nav className="menunav">
         <ul className="menulist">{menuItems}</ul>
       </nav>

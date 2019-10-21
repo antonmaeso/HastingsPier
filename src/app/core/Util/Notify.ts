@@ -9,4 +9,8 @@ export class Notify {
     public static AppNotification = (AppName: String, notificationToDisplay: string) => {
         ipcRenderer.send("AppBarNotify", { App: AppName, Notification: notificationToDisplay })
     }
+
+    public static setWindowTitle = (Title: string, WindowId?: Number) => {
+        ipcRenderer.send("menuTitle", { Title: Title, WindowId: WindowId })
+    }
 }
