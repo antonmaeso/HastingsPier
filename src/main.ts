@@ -123,3 +123,8 @@ ipcMain.on("menuTitle", (event: any, value: any) => {
   control.getWindow(windowId).webContents.send("menuTitle", value.Title);
 
 });
+
+// to choose Active Application
+ipcMain.on("activeApplication", (event: any, value: any) => {
+  control.getWindow(mainWindowId).webContents.send("activeApplication", value.Active);
+});

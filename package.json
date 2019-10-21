@@ -1,63 +1,66 @@
 {
-  "name": "HastingsPier",
-  "version": "1.0.0",
-  "description": "",
-  "main": "dist/main.js",
-  "scripts": {
-    "test": "jest --detectOpenHandles",
-    "start": "electron ./dist/main.js",
-    "build": "webpack --mode development",
-    "buildRun": "npm run build:react && npm run build && npm run start",
-    "build:react": "webpack --mode development --config webpack.react.config.js",
-    "buildAll": "npm run build:react && npm run build"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/antonmaeso/HastingsPier.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/antonmaeso/HastingsPier/issues"
-  },
-  "homepage": "https://github.com/antonmaeso/HastingsPier#readme",
-  "devDependencies": {
-    "@babel/cli": "^7.6.4",
-    "@babel/core": "^7.6.4",
-    "@babel/plugin-proposal-class-properties": "^7.5.5",
-    "@babel/plugin-transform-arrow-functions": "^7.2.0",
-    "@babel/preset-env": "^7.6.3",
-    "@babel/preset-react": "^7.6.3",
-    "@babel/preset-typescript": "^7.6.0",
-    "@types/node": "^12.11.1",
-    "@types/react": "^16.9.9",
-    "@types/react-dom": "^16.9.2",
-    "babel-loader": "^8.0.6",
-    "css-loader": "^3.2.0",
-    "devtron": "^1.4.0",
-    "electron": "^6.0.12",
-    "file-loader": "^4.2.0",
-    "html-webpack-plugin": "^3.2.0",
-    "image-webpack-loader": "^6.0.0",
-    "jest": "^24.9.0",
-    "mini-css-extract-plugin": "^0.8.0",
-    "node-sass": "^4.12.0",
-    "prettier": "^1.18.2",
-    "sass-loader": "^8.0.0",
-    "spectron": "^8.0.0",
-    "style-loader": "^1.0.0",
-    "tslint": "^5.20.0",
-    "typescript": "^3.6.4",
-    "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.9"
-  },
-  "dependencies": {
-    "bootstrap": "^4.3.1",
-    "fs": "0.0.1-security",
-    "jquery": "^3.4.1",
-    "popper.js": "^1.16.0",
-    "react": "^16.10.2",
-    "react-dom": "^16.10.2"
-  }
+    "name": "HastingsPier",
+    "version": "1.0.0",
+    "description": "",
+    "main": "dist/main.js",
+    "scripts": {
+        "test": "jest --detectOpenHandles",
+        "start": "electron ./dist/main.js",
+        "build": "webpack --mode development",
+        "buildRun": "npm run buildAll && npm run start",
+        "build:react": "webpack --mode development --config webpack.react.config.js",
+        "buildAll": "npm run build:react && npm run build",
+        "pack-Win": "electron-packager . HastingsPier --overwrite  --platform=win32 --arch=ia32 --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"Hastings Pier\"",
+        "buildPack-win": "npm run buildAll && npm run pack-Win"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/antonmaeso/HastingsPier.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/antonmaeso/HastingsPier/issues"
+    },
+    "homepage": "https://github.com/antonmaeso/HastingsPier#readme",
+    "devDependencies": {
+        "@babel/cli": "^7.6.4",
+        "@babel/core": "^7.6.4",
+        "@babel/plugin-proposal-class-properties": "^7.5.5",
+        "@babel/plugin-transform-arrow-functions": "^7.2.0",
+        "@babel/preset-env": "^7.6.3",
+        "@babel/preset-react": "^7.6.3",
+        "@babel/preset-typescript": "^7.6.0",
+        "@types/node": "^12.11.1",
+        "@types/react": "^16.9.9",
+        "@types/react-dom": "^16.9.2",
+        "babel-loader": "^8.0.6",
+        "css-loader": "^3.2.0",
+        "devtron": "^1.4.0",
+        "electron": "^6.0.12",
+        "electron-packager": "^14.0.6",
+        "file-loader": "^4.2.0",
+        "html-webpack-plugin": "^3.2.0",
+        "image-webpack-loader": "^6.0.0",
+        "jest": "^24.9.0",
+        "mini-css-extract-plugin": "^0.8.0",
+        "node-sass": "^4.12.0",
+        "prettier": "^1.18.2",
+        "sass-loader": "^8.0.0",
+        "spectron": "^8.0.0",
+        "style-loader": "^1.0.0",
+        "tslint": "^5.20.0",
+        "typescript": "^3.6.4",
+        "webpack": "^4.41.2",
+        "webpack-cli": "^3.3.9"
+    },
+    "dependencies": {
+        "bootstrap": "^4.3.1",
+        "fs": "0.0.1-security",
+        "jquery": "^3.4.1",
+        "popper.js": "^1.16.0",
+        "react": "^16.10.2",
+        "react-dom": "^16.10.2"
+    }
 }

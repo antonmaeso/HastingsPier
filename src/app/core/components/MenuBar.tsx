@@ -1,4 +1,4 @@
-import { remote, ipcRenderer } from "electron";
+import { ipcRenderer, remote } from "electron";
 import * as React from "react";
 import { Button } from "./library/Button";
 
