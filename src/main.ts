@@ -6,10 +6,13 @@ import logo from "./app/core/assets/Ant.png";
 const iconpath = path.join(__dirname + "\\" + logo);
 
 import { app, BrowserWindow, ipcMain, Menu, nativeImage, Tray } from "electron";
+import { Logger } from "./app/core/Util/Logger";
 import { WindowControl } from "./app/core/Util/WindowManager";
 
-const control = new WindowControl(iconpath);
 let mainWindowId: number;
+const Path = app.getAppPath();
+const logger = new Logger(Path + "\\log.log");
+const control = new WindowControl(iconpath, logger);
 
 const createWindow = () => {
   mainWindowId = control.createNewWindow({

@@ -1,4 +1,5 @@
 import { BrowserWindow, BrowserWindowConstructorOptions } from "electron";
+import { Logger } from "./Logger";
 // tslint:disable-next-line: no-var-requires
 const Path = require("path");
 
@@ -7,8 +8,10 @@ const currentWindows: Map<number, BrowserWindow> = new Map();
 export class WindowControl {
 
     private iconpath = "";
-    constructor(deaultIcon: string) {
+    private Log: Logger;
+    constructor(deaultIcon: string, log: Logger) {
         this.iconpath = deaultIcon;
+        this.Log = log;
     }
 
     public route = (arg: any) => {
