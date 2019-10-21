@@ -32,6 +32,7 @@ export const ApplicationBar = (props: any) => {
 
 const addApplicationToBar = (appName: string, existingApps: any[]) => {
   // TODO: this is not maintaining the current condition of the notifications.
+  // need to make it a full map to not show labels when rendering
   const newFirstElement = [appName, <AppButton key={appName + "Pane"} title={appName} />];
   if (!new Map(existingApps).has(newFirstElement[0])) {
     const AddApp = existingApps.shift();
