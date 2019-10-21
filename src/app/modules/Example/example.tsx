@@ -3,10 +3,12 @@ import * as React from "react";
 import { Button } from "../../core/components/library/Button";
 import { Notify } from "../../core/Util/Notify";
 import "./style/exampleStyle.scss";
+import {PersistantStore as ps} from "../../core/util/PersistantStorage";
 
 export const Example = (props: any) => {
   const [count, setCount] = React.useState(0);
   const [apps, setApps] = React.useState({});
+  const [local, setLocal] = React.useState("0");
 
   const listener = "appsResponse";
   ipcRenderer.removeAllListeners(listener);
@@ -32,6 +34,19 @@ export const Example = (props: any) => {
           // ipcRenderer.send("notify", { notify: count, App: "Octane" });
         }}
       />
-    </div>
+      <br></br>
+      <Button
+        text={"Save Count in local"}
+        onClick={() => {
+          ps.putLocal("noteCount",count);
+        }}
+      />
+      <Button
+        text={"Return Count from local"}
+        onClick={() => {
+          setLocal(ps.getLocal("noteCount"));
+        }}
+      /><div>Local stored Count: {local}</div>
+      </div>
   );
 };

@@ -8,10 +8,12 @@ const iconpath = path.join(__dirname + "\\" + logo);
 import { app, BrowserWindow, ipcMain, Menu, nativeImage, Tray } from "electron";
 import { Logger } from "./app/core/Util/Logger";
 import { WindowControl } from "./app/core/Util/WindowManager";
+import { PersistantStore } from "./app/core/util/PersistantStorage";
 
 let mainWindowId: number;
 const Path = app.getAppPath();
 const logger = new Logger(Path + "\\log.log");
+const store = new PersistantStore(logger);
 const control = new WindowControl(iconpath, logger);
 
 const createWindow = () => {

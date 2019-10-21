@@ -14,6 +14,10 @@ export class Notify {
         ipcRenderer.send("menuTitle", { Title: Title, WindowId: WindowId });
     }
 
+    // public static getWindowTitle = () =>{
+    //     const toReturn = ipcRenderer.send("getMenuTitle");
+    // }
+
     public static setActiveApplication = (App: string) => {
         ipcRenderer.send("activeApplication", { Active: App });
     }

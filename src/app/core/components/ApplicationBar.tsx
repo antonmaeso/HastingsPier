@@ -51,7 +51,7 @@ export const ApplicationBar = (props: any) => {
       setApplications(newList);
     }
   });
-  Notify.Balloon("AppBar", applications.length + " Apps in state");
+  // Notify.Balloon("AppBar", applications.length + " Apps in state");
   return (
     <div className="applicationBar">
       {applications}
