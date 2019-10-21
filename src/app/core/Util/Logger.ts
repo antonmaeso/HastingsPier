@@ -1,6 +1,6 @@
 import * as fs from "fs";
 export class Logger {
-    private shouldLog = false;
+    private shouldLog = true;
     private logPath = "";
 
     constructor(LogPath: string) {

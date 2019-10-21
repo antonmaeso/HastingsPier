@@ -8,7 +8,7 @@ import {PersistantStore as ps} from "../../core/util/PersistantStorage";
 export const Example = (props: any) => {
   const [count, setCount] = React.useState(0);
   const [apps, setApps] = React.useState({});
-  const [local, setLocal] = React.useState("0");
+  const [local, setLocal] = React.useState(0);
 
   const listener = "appsResponse";
   ipcRenderer.removeAllListeners(listener);
@@ -18,7 +18,7 @@ export const Example = (props: any) => {
 
   return (
     <div className="applicationWindow Example">
-      EXAMPLE
+      EXAMPLE<br></br>
       <Button
         text="Load File"
         onClick={() => {
@@ -30,7 +30,7 @@ export const Example = (props: any) => {
         text={"Send Notification" + count.toString()}
         onClick={() => {
           setCount(count + 1);
-          Notify.AppNotification("Octane", count.toString());
+          Notify.AppNotification("Octane", (count+1).toString());
           // ipcRenderer.send("notify", { notify: count, App: "Octane" });
         }}
       />
@@ -47,6 +47,18 @@ export const Example = (props: any) => {
           setLocal(ps.getLocal("noteCount"));
         }}
       /><div>Local stored Count: {local}</div>
+      <Button
+        text={"Save Array in local"}
+        onClick={() => {
+          ps.putLocal("noteCountArray",[count,count,count]);
+        }}
+      />
+      <Button
+        text={"Return Array from local"}
+        onClick={() => {
+          const returned = ps.getLocal("noteCountArray");
+        }}
+      />
       </div>
   );
 };
