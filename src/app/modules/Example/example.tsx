@@ -3,18 +3,26 @@ import * as React from "react";
 import { Button } from "../../core/components/library/Button";
 import { Notify } from "../../core/Util/Notify";
 import "./style/exampleStyle.scss";
-import {PersistantStore as ps} from "../../core/util/PersistantStorage";
+import { PersistantStore as ps } from "../../core/util/PersistantStorage";
 
 export const Example = (props: any) => {
   const [count, setCount] = React.useState(0);
   const [apps, setApps] = React.useState({});
   const [local, setLocal] = React.useState(0);
+  const [session, setSession] = React.useState(0);
 
   const listener = "appsResponse";
   ipcRenderer.removeAllListeners(listener);
   ipcRenderer.on(listener, (event: any, value: any) => {
     setApps(value);
   });
+
+  //reLoad state
+  const [reloaded, setReloaded] = React.useState(false);
+  if (!reloaded) {
+    setLocal(ps.getLocal("noteCount"));
+    setReloaded(true);
+  }
 
   return (
     <div className="applicationWindow Example">
@@ -30,7 +38,7 @@ export const Example = (props: any) => {
         text={"Send Notification" + count.toString()}
         onClick={() => {
           setCount(count + 1);
-          Notify.AppNotification("Octane", (count+1).toString());
+          Notify.AppNotification("BatManager", (count + 1).toString());
           // ipcRenderer.send("notify", { notify: count, App: "Octane" });
         }}
       />
@@ -38,7 +46,7 @@ export const Example = (props: any) => {
       <Button
         text={"Save Count in local"}
         onClick={() => {
-          ps.putLocal("noteCount",count);
+          ps.putLocal("noteCount", count);
         }}
       />
       <Button
@@ -46,11 +54,25 @@ export const Example = (props: any) => {
         onClick={() => {
           setLocal(ps.getLocal("noteCount"));
         }}
-      /><div>Local stored Count: {local}</div>
+      />
+      <div>Local stored Count: {local}</div>
+      <Button
+        text={"Save Count in Session"}
+        onClick={() => {
+          ps.putLocal("noteCountSes", count);
+        }}
+      />
+      <Button
+        text={"Return Count from Session"}
+        onClick={() => {
+          setSession(ps.getLocal("noteCountSes"));
+        }}
+      />
+      <div>Local stored Count: {session}</div>
       <Button
         text={"Save Array in local"}
         onClick={() => {
-          ps.putLocal("noteCountArray",[count,count,count]);
+          ps.putLocal("noteCountArray", [count, count, count]);
         }}
       />
       <Button
@@ -59,6 +81,6 @@ export const Example = (props: any) => {
           const returned = ps.getLocal("noteCountArray");
         }}
       />
-      </div>
+    </div>
   );
 };

@@ -49,6 +49,7 @@ export class PersistantStore {
     }
 
     public static getSession(key:string){
-        return sessionStorage.getItem(key)
+        const toReturn =JSON.parse(sessionStorage.getItem(key));
+        return toReturn;
     }
 }

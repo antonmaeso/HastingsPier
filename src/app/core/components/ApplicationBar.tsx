@@ -2,6 +2,7 @@ import { ipcRenderer } from "electron";
 import * as React from "react";
 import { Notify } from "../../core/util/Notify";
 import { AppButton } from "./ApplicationButton";
+import { PersistantStore as ps } from "../util/PersistantStorage";
 
 // class appButton {
 //   private button: JSX.Element;
@@ -43,12 +44,25 @@ export const ApplicationBar = (props: any) => {
   const [applications, setApplications] = React.useState([
     ["app", <AppButton key="ApplicationSelectionPane" title="ApplicationSelection" />]
   ]);
+
+  const [reloaded, setReloaded] = React.useState(false);
+
+  if (!reloaded) {
+    //re load state from session
+    const sessionData =ps.getSession("AppBarApplications")
+    if(sessionData !== null && sessionData !== null){
+      setApplications(sessionData);
+    }
+    setReloaded(true);
+  }
+
   const listener = "AppBar";
   ipcRenderer.removeAllListeners(listener);
   ipcRenderer.on(listener, (event: any, value: any) => {
     if (!new Map(applications).has(value)) {
       const newList = addApplicationToBar(value, applications);
       setApplications(newList);
+      ps.putSession("AppBarApplications",newList)
     }
   });
   // Notify.Balloon("AppBar", applications.length + " Apps in state");
