@@ -1,18 +1,18 @@
+import { ipcRenderer } from "electron";
 import * as React from "react";
-import { AppButton } from "./ApplicationButton";
-import { ipcRenderer, BrowserWindow } from "electron";
 import { Notify } from "../../core/util/Notify";
+import { AppButton } from "./ApplicationButton";
 
 const applicationHC = [
   // TODO: look this up from a util class
   <AppButton title="ApplicationSelection" />,
   <AppButton title="Octane" />,
-  <AppButton title="BatManager" />
+  <AppButton title="BatManager" />,
 ];
 
 export const ApplicationBar = (props: any) => {
   const [applications, setApplications] = React.useState([
-    ["app", <AppButton title="ApplicationSelection" />]
+    ["app", <AppButton key="ApplicationSelectionPane" title="ApplicationSelection" />]
   ]);
   const listener = "AppBar";
   ipcRenderer.removeAllListeners(listener);
@@ -22,18 +22,17 @@ export const ApplicationBar = (props: any) => {
       setApplications(newList);
     }
   });
-  // Notify.Balloon("AppBar", applications.length + " Apps in state");
+  Notify.Balloon("AppBar", applications.length + " Apps in state");
   return (
     <div className="applicationBar">
-      Applications
-      <br />
       {applications}
     </div>
   );
 };
 
 const addApplicationToBar = (appName: string, existingApps: any[]) => {
-  const newFirstElement = [appName, <AppButton title={appName} />];
+  // TODO: this is not maintaining the current condition of the notifications.
+  const newFirstElement = [appName, <AppButton key={appName + "Pane"} title={appName} />];
   if (!new Map(existingApps).has(newFirstElement[0])) {
     const AddApp = existingApps.shift();
     const notWithAdd = existingApps.slice(0);

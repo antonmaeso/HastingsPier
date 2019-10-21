@@ -3,6 +3,7 @@ const url = require("url");
 const path = require("path");
 // const os = require("os");
 import logo from "./app/core/assets/Ant.png";
+const iconpath = path.join(__dirname + "\\" + logo);
 
 import { app, BrowserWindow, ipcMain, Tray, nativeImage, Menu } from "electron";
 
@@ -10,22 +11,23 @@ let window: BrowserWindow | null;
 
 const createWindow = () => {
   window = new BrowserWindow({
-    webPreferences: {
-      nodeIntegration: true
-    },
     frame: false,
-    width: 800,
     height: 600,
+    icon: iconpath,
     minHeight: 300,
-    minWidth: 300
+    minWidth: 300,
+    webPreferences: {
+      nodeIntegration: true,
+    },
+    width: 800,
   });
 
   window.loadURL(
     url.format({
       pathname: path.join(__dirname, "index.html"),
       protocol: "file:",
-      slashes: true
-    })
+      slashes: true,
+    }),
   );
 
   window.on("closed", () => {
@@ -54,11 +56,11 @@ app.on("activate", () => {
   }
 });
 
-//app tray
+// app tray
 let appIcon: Tray = null;
 let lastBalloonMessage = "";
 const createTray = () => {
-  appIcon = new Tray(nativeImage.createFromPath( path.join(__dirname +"\\"+ logo)).resize({ width: 16, height: 16 }));
+  appIcon = new Tray(nativeImage.createFromPath(iconpath).resize({ width: 16, height: 16 }));
 
   const contextMenu = Menu.buildFromTemplate([{
     click() {
@@ -90,7 +92,7 @@ const createTray = () => {
 ipcMain.on("balloon", (event: any, arg: any) => {
   balloon(arg.title, arg.contents, arg.other);
 });
-function balloon(displayTitle: string, contents: string, other?:any) {
+function balloon(displayTitle: string, contents: string, other?: any) {
   try {
     appIcon.displayBalloon({ title: displayTitle, content: contents });
     lastBalloonMessage = contents;
@@ -114,7 +116,7 @@ ipcMain.on("AppBarNotify", (event: any, value: any) => {
 });
 
 //ipc routing for application pane
-ipcMain.on("AppBar", (event:any, value: any) => {
+ipcMain.on("AppBar", (event: any, value: any) => {
   window.webContents.send("AppBar", value);
 })
 

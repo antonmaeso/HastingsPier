@@ -3,31 +3,42 @@
 @import "./applicationBar.scss";
 @import "./applicationWindow.scss";
 @import "~bootstrap/scss/bootstrap";
-
 .coreApplication {
-  background-image: url(https://www.hastingsdirect.com/img/bg/clouds.png);
-  color: $textColour;
-  background-size: cover;
-  background-color: $primaryColour;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background-image: url(https://www.hastingsdirect.com/img/bg/clouds.png);
+    color: $textColour;
+    background-size: cover;
+    background-color: $primaryColour;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    height: 100%;
+    overflow: auto;
 }
 
 // Scrollbar
 ::-webkit-scrollbar {
-  width: 10px;
+    width: 10px;
+    opacity: 0.5;
 }
+
 
 /* Track */
+
 ::-webkit-scrollbar-track {
-  background: #f1f1f1; 
-}
- 
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #888; 
+    background: #f1f1f1;
+    opacity: 0.5;
 }
 
+
+/* Handle */
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    opacity: 0.5;
+}
+
+
 /* Handle on hover */
+
 ::-webkit-scrollbar-thumb:hover {
-  background: #555; 
+    background: #555;
+    opacity: 1;
 }

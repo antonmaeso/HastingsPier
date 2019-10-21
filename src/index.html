@@ -1,25 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
+<html lang="en" style="height: 100%;">
+
+<head>
     <meta charset="UTF-8" />
     <title>Hastings Pier</title>
-    <link
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-  </head>
-  <body style="margin: 0px;">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+
+<body style="margin: 0px;
+height: 100%;
+display: flex;
+flex-flow: column;">
     <div style="display: none;">
-      Electron version:<script>
-        document.write(process.versions.electron);</script
-      ><br />
-      Node version:<script>
-        document.write(process.versions.node);</script
-      ><br />
-      Chrome version:<script>
-        document.write(process.versions.chrome);</script
-      ><br />
+        Electron version:
+        <script>
+            document.write(process.versions.electron);
+        </script><br /> Node version:
+        <script>
+            document.write(process.versions.node);
+        </script><br /> Chrome version:
+        <script>
+            document.write(process.versions.chrome);
+        </script><br />
     </div>
-    <div id="renderer"></div>
-  </body>
+    <div id="menuBarRender"> </div>
+    <div style="height:100%" id="renderer"></div>
+</body>
+
 </html>

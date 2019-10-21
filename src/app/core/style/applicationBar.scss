@@ -1,38 +1,37 @@
 .applicationBar {
-  min-width: 110px;
-  height: calc(100vh - 23px);
-  display: inline-flex;
-  flex-flow: column;
-  background-color: $tertiaryColour;
-  text-align: center;
-  overflow-y: auto;
-  overflow-x: hidden;
+    min-width: 110px;
+    height: calc(100vh - 23px);
+    display: inline-flex;
+    flex-flow: column;
+    background-color: $tertiaryColour;
+    text-align: center;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .appButton {
-  border-radius: 20%;
-  min-height: 85px;
-  height:85px;
-  min-width: 85px;
-  width: 85px;
-  border: solid;
-  display: flex;
-  align-self: center;
-  margin-top: 10px;
-  text-align: center;
-  background-size: contain;
-  cursor: pointer;
-  opacity: 0.7;
-  justify-content: flex-end;
+    border-radius: 20%;
+    min-height: 85px;
+    height: 85px;
+    min-width: 85px;
+    width: 85px;
+    border: solid;
+    display: flex;
+    align-self: center;
+    margin-top: 10px;
+    text-align: center;
+    background-size: contain;
+    cursor: pointer;
+    opacity: 0.7;
+    justify-content: flex-end;
 }
-
 
 .appButton:hover {
-  opacity: 1;
+    opacity: 1;
 }
 
-.notify{
-  display: flex;
+.notify {
+    display: flex;
     height: 30px;
     width: 30px;
     align-self: flex-end;
@@ -46,5 +45,3 @@
     position: relative;
     top: 10px;
 }
-
-

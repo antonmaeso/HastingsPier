@@ -1,10 +1,11 @@
-import * as React from "react";
 import { remote } from "electron";
+import * as React from "react";
 import { Button } from "./library/Button";
 
 const menuItems = [
   <Button
     alt="remove"
+    key="MenuRemove"
     type="menuItem"
     onClick={() => {
       closeWindow();
@@ -12,6 +13,7 @@ const menuItems = [
   />,
   <Button
     alt="fullscreen"
+    key="MenuMaximise"
     type="menuItem"
     onClick={() => {
       maxWindow();
@@ -19,11 +21,12 @@ const menuItems = [
   />,
   <Button
     alt="minus"
+    key="MenuMin"
     type="menuItem"
     onClick={() => {
       minWindow();
     }}
-  />
+  />,
 ];
 
 export const MenuBar = (props: any) => {
