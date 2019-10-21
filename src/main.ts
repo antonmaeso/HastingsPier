@@ -101,9 +101,9 @@ function balloon(displayTitle: string, contents: string, other?:any) {
 
 // create static util classes
 
-ipcMain.on("apps", () => {
+ipcMain.on("apps", (event: any, value: any) => {
   const config = readJsonFile();
-  window.webContents.send("apps", config);
+  window.webContents.send("appsResponse", config);
 });
 
 // ipc main routing to util classes
