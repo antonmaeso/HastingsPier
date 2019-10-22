@@ -5,19 +5,19 @@ import { Example } from "../../modules/Example/example";
 import { OctaneParent } from "../../modules/OctaneBurner/OctaneParent";
 import { RmDash } from "../../modules/RmDashboard/RmDash";
 import { Google } from "../../modules/StackoverFlow/StackOverflow";
-import { Tapestry } from "../../modules/Tapestry";
+import { Tapestry } from "../../modules/Tapestry/Tapestry";
 
 class App {
-  public root: JSX.Element;
-  public description: string;
-  public glyphicon: string;
+    public root: JSX.Element;
+    public description: string;
+    public title: string;
 
-  constructor(component: JSX.Element, description: string, glyphicon?: string) {
-    this.root = component;
-    this.description = description;
+    constructor(component: JSX.Element, description: string, title:string) {
+        this.root = component;
+        this.description = description;
+        this.title = title;
+    }
   }
-}
-
 // add your component to the map. The Key is assigned as the class to your apps selection pane and
 // its icon in the appBar
 export const appMap = new Map<string, App>([
