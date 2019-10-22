@@ -9,8 +9,6 @@ import { ApplicationWindow } from "./ApplicationWindow";
 // TODO: Util class which passes the required application to the
 // Application Window for rendering
 
-
-
 export const Dashboard = (props: any) => {
   const [RunningApplication, setRunningApplication] = React.useState(
     "ApplicationSelection",

@@ -4,12 +4,24 @@ import * as N from "./Notify";
 // tslint:disable-next-line: no-var-requires
 const Path = require("path");
 
-const currentWindows: Map<number, BrowserWindow> = new Map();
+class WindowObject {
+    public Window: BrowserWindow;
+    public LoadedApp: string;
 
+    constructor(window: BrowserWindow, toShow: string) {
+        this.Window = window;
+        this.LoadedApp = toShow;
+    }
+}
+
+const currentWindows: Map<number, WindowObject> = new Map();
+
+// tslint:disable-next-line: max-classes-per-file
 export class WindowControl {
 
     private iconpath = "";
     private Log: Logger;
+
     constructor(deaultIcon: string, log: Logger) {
         this.iconpath = deaultIcon;
         this.Log = log;
@@ -32,6 +44,9 @@ export class WindowControl {
             }
             case "closeWindow": {
                 return this.closeWindow(arg.data);
+            }
+            case "windowApp": {
+                return currentWindows.get(arg.windowId).LoadedApp;
             }
             default: {
                 return null;
@@ -85,43 +100,48 @@ export class WindowControl {
         const filePath = Path.join(__dirname, file);
         newWindow.loadURL(`file://${filePath}#${windowId}`);
 
-        currentWindows.set(windowId, newWindow);
+        // if no specific app specified, use ApplicationSelection
+        let toDisplay = "ApplicationSelection";
+        if (loadSpecificApp !== undefined && loadSpecificApp !== null) {
+            toDisplay = loadSpecificApp;
+            newWindow.webContents.on("did-finish-load", () => {
+                N.setActiveApplication(toDisplay, windowId);
+                N.setWindowTitle(toDisplay, windowId);
+            });
+        }
+
+        currentWindows.set(windowId, new WindowObject(newWindow, toDisplay));
         this.notifyUpdateWindowIDs(windowId);
 
-        // if there is a specific app to display, send the message now
-        if (loadSpecificApp !== undefined) {
-            N.setActiveApplication(loadSpecificApp, windowId);
-            N.setWindowTitle(loadSpecificApp, windowId);
-        }
 
         return windowId;
     }
 
     public closeWindow = (id: number) => {
-        currentWindows.get(id).close();
+        currentWindows.get(id).Window.close();
     }
 
     public focusWindow = (id: number) => {
-        currentWindows.get(id).focus();
+        currentWindows.get(id).Window.focus();
         return true;
     }
 
     public getWindow = (id: number) => {
-        return currentWindows.get(id);
+        return currentWindows.get(id).Window;
     }
 
     public navigateTo = (windowId: number, uri: string) => {
-        currentWindows.get(windowId).loadURL(uri);
+        currentWindows.get(windowId).Window.loadURL(uri);
     }
 
     private notifyUpdateWindowIDs = (excludeId: number) => {
         const windowIds = Array.from(currentWindows.keys());
         currentWindows.forEach((w) => {
-            if (w.id === excludeId) {
+            if (w.Window.id === excludeId) {
                 return;
             }
 
-            w.webContents.send("UpdateWindowIds", windowIds);
+            w.Window.webContents.send("UpdateWindowIds", windowIds);
         });
     }
 }

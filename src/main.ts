@@ -14,6 +14,7 @@ const Path = app.getAppPath();
 const logger = new Logger(Path + "\\log.log");
 const control = new WindowControl(iconpath, logger);
 
+
 const createWindow = () => {
   mainWindowId = control.createNewWindow({
     frame: false,
@@ -134,10 +135,15 @@ ipcMain.on("menuTitle", (event: any, value: any) => {
 
 // to choose Active Application
 ipcMain.on("activeApplication", (event: any, value: any) => {
-  control.getWindow(mainWindowId).webContents.send("activeApplication", value.Active);
+  let windowId = mainWindowId;
+  if (value.WindowId !== undefined && value.WindowId !== null) {
+    windowId = value.WindowId;
+  }
+  control.getWindow(windowId).webContents.send("activeApplication", value.Active);
 });
 
 // to request a new window open
 ipcMain.on("WindowControl", (event: any, value: any) => {
-  control.route(value);
+  const toReturn = control.route(value);
+  return toReturn;
 });

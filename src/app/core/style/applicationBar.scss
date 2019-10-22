@@ -30,6 +30,13 @@
     opacity: 1;
 }
 
+.CollapseBar {
+    background: red;
+    display: flex;
+    font-size: 15px;
+    font-weight: bolder;
+}
+
 .activeApp {
     border-color: green;
     opacity: 1;

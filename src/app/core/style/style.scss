@@ -13,14 +13,19 @@
     overflow: auto;
 }
 
-button{
+button {
     background-color: $secondaryColour;
+}
+
+.hide {
+    display: none;
 }
 
 // Scrollbar
 ::-webkit-scrollbar {
     width: 10px;
 }
+
 
 /* Track */
 

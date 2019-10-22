@@ -10,7 +10,7 @@ let applications = [
 
 export const ApplicationBar = (props: any) => {
   const [appArray, setAppArray] = React.useState(["ApplicationSelection"]);
-
+  const [showBar, setShowBar] = React.useState(true);
   const [reloaded, setReloaded] = React.useState(false);
 
   if (!reloaded) {
@@ -32,10 +32,27 @@ export const ApplicationBar = (props: any) => {
     }
   });
   // Notify.Balloon("AppBar", applications.length + " Apps in state");
+  let className = "applicationBar";
+  let arrow = "<";
+  if (!showBar) {
+    className += " hide";
+    arrow = ">"
+  }
+
   return (
-    <div className="applicationBar">
-      {applications}
-    </div>
+    <React.Fragment>
+      <div className={className}>
+        {applications}
+      </div>
+      <div className="CollapseBar"
+        onClick={() => {
+          setShowBar(!showBar);
+        }} >
+        <div style={{ display: "flex", alignSelf: "center" }}>
+          {arrow}
+        </div>
+      </div>
+    </React.Fragment>
   );
 };
 
