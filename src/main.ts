@@ -1,4 +1,4 @@
-import { readJsonFile } from "./app/core/util/FileLoader";
+import * as fr from "./app/core/util/FileLoader";
 const url = require("url");
 const path = require("path");
 // const os = require("os");
@@ -8,12 +8,10 @@ const iconpath = path.join(__dirname + "\\" + logo);
 import { app, BrowserWindow, ipcMain, Menu, nativeImage, Tray } from "electron";
 import { Logger } from "./app/core/util/Logger";
 import { WindowControl } from "./app/core/util/WindowManager";
-import { PersistantStore } from "./app/core/util/PersistantStorage";
 
 let mainWindowId: number;
 const Path = app.getAppPath();
 const logger = new Logger(Path + "\\log.log");
-const store = new PersistantStore(logger);
 const control = new WindowControl(iconpath, logger);
 
 const createWindow = () => {
@@ -100,7 +98,16 @@ function balloon(displayTitle: string, contents: string, other?: any) {
 // create static util classes
 
 ipcMain.on("apps", (event: any, value: any) => {
-  const config = readJsonFile();
+  const appManefest = path.join(path.resolve() + "/dist", "/HastingsPier.json");
+
+  let config: string | boolean = false;
+  while (config === false) {
+    config = fr.readFile(appManefest);
+    if (config === false) {
+      fr.createFile(appManefest, "{'apps':[{'appName':'TheAppFinderGeneral'}]}");
+    }
+  }
+
   control.getWindow(mainWindowId).webContents.send("appsResponse", config);
 });
 

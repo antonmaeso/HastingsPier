@@ -21,11 +21,9 @@ export class PersistantStore {
             if(PersistantStore.storageAvailable("localStorage")){
                 const toStore = JSON.stringify(value);
                 localStorage.setItem(key,toStore);
-                // PersistantStore.log.Log("value");
                 return true;
             }
         }catch(e){
-            // this.log.Log(e.toString())
             return false;
         }
     }
@@ -44,7 +42,6 @@ export class PersistantStore {
                 return true;
             }
         }catch(e){
-            // this.log.Log(e.toString())
             return false;
         }
     }

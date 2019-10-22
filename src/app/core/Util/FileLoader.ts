@@ -1,17 +1,22 @@
 import * as fs from "fs";
-import * as path from "path";
 
-const __dirname = path.resolve();
-
-export const readJsonFile = () => {
-  const relativeFilePath = path.join(__dirname + "/dist", "/HastingsPier.json");
-  console.log(fs.existsSync(relativeFilePath));
-  if (!fs.existsSync(relativeFilePath)) {
-    fs.writeFileSync(
-      relativeFilePath,
-      '{"apps":[{"appName":"TheAppFinderGeneral"}]}'
-    );
+export const readFile = (Path: string) => {
+  console.log(fs.existsSync(Path));
+  if (fs.existsSync(Path)) {
+    return fs.readFileSync(Path, "utf-8");
+  } else {
+    return false;
   }
+};
 
-  return fs.readFileSync(relativeFilePath, "utf-8");
+export const createFile = (Path: string, contents: string) => {
+  if (!fs.existsSync(Path)) {
+    fs.writeFileSync(
+      Path,
+      contents,
+    );
+    return true;
+  } else {
+    return false;
+  }
 };
