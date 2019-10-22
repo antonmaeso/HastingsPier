@@ -5,6 +5,7 @@ import { Example } from "../../modules/Example/example";
 import { OctaneParent } from "../../modules/OctaneBurner/OctaneParent";
 import { RmDash } from "../../modules/RmDashboard/RmDash";
 import { Google } from "../../modules/StackoverFlow/StackOverflow";
+import { Tapestry } from "../../modules/Tapestry";
 
 class App {
   public root: JSX.Element;
@@ -14,35 +15,32 @@ class App {
   constructor(component: JSX.Element, description: string, glyphicon?: string) {
     this.root = component;
     this.description = description;
-    this.glyphicon = glyphicon;
   }
 }
 
-// add your component to the map. The Key is assigned as the class to your apps selection pane and 
+// add your component to the map. The Key is assigned as the class to your apps selection pane and
 // its icon in the appBar
 export const appMap = new Map<string, App>([
   [
     "ApplicationSelection",
-    new App(<AppSelection />, "Default for selecting an app")
+    new App(<AppSelection />, "Default for selecting an app", "Hastings Pier")
   ],
   [
     "Octane",
     new App(
       <OctaneParent />,
-      "Burn down your Octane Tasks to keep accurate track of time taken"
+      "Burn down your Octane Tasks to keep accurate track of time taken",
+      "Octane Burner"
     )
   ],
-  ["BatManager", new App(<Example />, "For testing stuff as we develop")],
+  [
+    "BatManager",
+    new App(<Example />, "For testing stuff as we develop", "Dev Experiments")
+  ],
   [
     "RmDashboard",
-    new App(
-      <RmDash />,
-      "Show RM Dashboard in app",
-      "glyphicon glyphicon-dashboard"
-    )
+    new App(<RmDash />, "Show RM Dashboard in app", "RM Dashboard")
   ],
-  [
-    "Google",
-    new App(<Google />, "Show google", "glyphicon glyphicon-dashboard")
-  ]
+  ["HastingsTapestry", new App(<Tapestry />, "Load Tapestry", "Tapestry")],
+  ["Google", new App(<Google />, "Show google", "Loading Google")]
 ]);
