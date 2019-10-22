@@ -21,7 +21,11 @@ const loadOptions = () => {
   const toReturn: JSX.Element[] = [];
   Array.from(appMap.keys()).forEach(app => {
     if (app !== "ApplicationSelection") {
-      toReturn.push(<AppPane key={app + "pane"} appName={app} description={appMap.get(app).description} />);
+      const appDetails = appMap.get(app);
+      toReturn.push(<AppPane key={app + "pane"}
+        appName={app}
+        description={appDetails.description}
+        glyphicon={appDetails.glyphicon} />);
     }
   });
   return toReturn;

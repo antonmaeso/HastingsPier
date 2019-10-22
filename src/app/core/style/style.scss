@@ -21,6 +21,12 @@ button {
     display: none;
 }
 
+.fullIframe {
+    display: flex;
+    height: 100%;
+    width: 100%;
+}
+
 // Scrollbar
 ::-webkit-scrollbar {
     width: 10px;

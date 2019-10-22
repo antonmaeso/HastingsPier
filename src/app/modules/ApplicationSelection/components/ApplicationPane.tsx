@@ -3,9 +3,13 @@ import * as React from "react";
 import * as Notify from "../../../core/util/Notify";
 
 export const AppPane = (props: any) => {
+  let className = "AppPane " + props.appName;
+  if (props.glyphicon !== undefined) {
+    className += " " + props.glyphicon;
+  }
   return (
     <div
-      className={"AppPane " + props.appName}
+      className={className}
       onClick={() => {
         clickApp(props.appName);
       }}
