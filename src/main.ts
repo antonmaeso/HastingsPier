@@ -104,7 +104,7 @@ ipcMain.on("apps", (event: any, value: any) => {
   while (config === false) {
     config = fr.readFile(appManefest);
     if (config === false) {
-      fr.createFile(appManefest, "{'apps':[{'appName':'TheAppFinderGeneral'}]}");
+      fr.createFile(appManefest, '{"apps":[{"appName":"TheAppFinderGeneral"}]}');
     }
   }
 

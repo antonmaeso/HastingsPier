@@ -20,3 +20,15 @@ export const createFile = (Path: string, contents: string) => {
     return false;
   }
 };
+
+export const replaceFile = (Path: string, contents: string) => {
+  if (fs.existsSync(Path)) {
+    fs.writeFileSync(
+      Path,
+      contents,
+    );
+    return true;
+  } else {
+    return false;
+  }
+};
