@@ -10,9 +10,9 @@ export const AppButton = (props: any) => {
   const [reloaded, setReloaded] = React.useState(false);
 
   if (!reloaded) {
-    //re load state from session
+    // re load state from session
     setNotification(ps.getSession("notify" + props.title));
-    setActive(ps.getSession("activeApplication" + props.title));
+    setActive((ps.getSession("activeApplication") === props.title));
     setReloaded(true);
   }
 
@@ -25,6 +25,15 @@ export const AppButton = (props: any) => {
   if (active) {
     className += " activeApp";
   }
+
+  React.useEffect(() => {
+    // save state on window close/refresh/unmount
+    window.addEventListener("beforeunload", () => { saveStateToSession(props, notification, active); console.log("window unload"); });
+    return () => { // return is the same as will unmount
+      saveStateToSession(props, notification, active);
+      window.removeEventListener("beforeunload", () => { saveStateToSession(props, notification, active); });
+    };
+  }, []);
 
   return (
     <div
@@ -40,17 +49,22 @@ export const AppButton = (props: any) => {
   );
 };
 
+function saveStateToSession(props: any, notification: string, active: boolean) {
+  ps.putSession("notify" + props.title, notification);
+
+  ps.putSession("activeApplication" + props.title, active);
+}
+
 function setupListeners(
   props: any,
   setNotification: React.Dispatch<React.SetStateAction<string>>,
   setActive: React.Dispatch<React.SetStateAction<boolean>>
 ) {
+  ipcRenderer.removeAllListeners("notify" + props.title);
   ipcRenderer.on("notify" + props.title, (event: any, value: any) => {
     setNotification(value);
-    ps.putSession("notify" + props.title, value);
   });
   ipcRenderer.on("activeApplication", (event: any, value: any) => {
     setActive(value === props.title);
-    ps.putSession("activeApplication" + props.title, value === props.title);
   });
 }

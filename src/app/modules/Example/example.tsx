@@ -1,9 +1,9 @@
 import { ipcRenderer, remote } from "electron";
 import * as React from "react";
 import { Button } from "../../core/components/library/Button";
-import { Notify } from "../../core/Util/Notify";
-import "./style/exampleStyle.scss";
+import { Notify } from "../../core/util/Notify";
 import { PersistantStore as ps } from "../../core/util/PersistantStorage";
+import "./style/exampleStyle.scss";
 
 export const Example = (props: any) => {
   const [count, setCount] = React.useState(0);
@@ -38,7 +38,7 @@ export const Example = (props: any) => {
         text={"Send Notification" + count.toString()}
         onClick={() => {
           setCount(count + 1);
-          Notify.AppNotification("BatManager", (count + 1).toString());
+          Notify.AppNotification("Octane", (count + 1).toString());
           // ipcRenderer.send("notify", { notify: count, App: "Octane" });
         }}
       />
@@ -79,6 +79,22 @@ export const Example = (props: any) => {
         text={"Return Array from local"}
         onClick={() => {
           const returned = ps.getLocal("noteCountArray");
+        }}
+      />
+      <Button
+        text={"Save Map in local"}
+        onClick={() => {
+          const toStore = new Map<string, number>();
+          toStore.set("1", count);
+          toStore.set("2", count);
+          toStore.set("3", count);
+          ps.putLocal("noteCountMap", Array.from(toStore));
+        }}
+      />
+      <Button
+        text={"Return Map from local"}
+        onClick={() => {
+          const returned = new Map(ps.getLocal("noteCountMap"));
         }}
       />
     </div>

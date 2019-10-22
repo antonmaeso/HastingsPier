@@ -6,8 +6,8 @@ import logo from "./app/core/assets/Ant.png";
 const iconpath = path.join(__dirname + "\\" + logo);
 
 import { app, BrowserWindow, ipcMain, Menu, nativeImage, Tray } from "electron";
-import { Logger } from "./app/core/Util/Logger";
-import { WindowControl } from "./app/core/Util/WindowManager";
+import { Logger } from "./app/core/util/Logger";
+import { WindowControl } from "./app/core/util/WindowManager";
 import { PersistantStore } from "./app/core/util/PersistantStorage";
 
 let mainWindowId: number;

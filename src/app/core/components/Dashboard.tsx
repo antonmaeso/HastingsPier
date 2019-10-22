@@ -6,6 +6,7 @@ import { OctaneParent } from "../../modules/OctaneBurner/OctaneParent";
 import "../style/style.scss";
 import { ApplicationBar } from "./ApplicationBar";
 import { ApplicationWindow } from "./ApplicationWindow";
+import { PersistantStore as ps } from "../util/PersistantStorage";
 
 // TODO: Util class which passes the required application to the
 // Application Window for rendering
@@ -26,6 +27,23 @@ export const Dashboard = (props: any) => {
     setListeners(true);
   }
 
+  const [reloaded, setReloaded] = React.useState(false);
+  if (!reloaded) {
+    const loaded = ps.getSession("activeApplication");
+    if (loaded !== undefined && loaded !== null) {
+      setRunningApplication(loaded);
+    }
+    setReloaded(true);
+  }
+
+  React.useEffect(() => {
+    // save state on window unmount
+    return () => { // return is the same as will unmount
+      saveStateToSession(RunningApplication);
+    };
+  }, []);
+
+
   return (
     <div className="coreApplication">
       <div className="application">
@@ -36,9 +54,13 @@ export const Dashboard = (props: any) => {
   );
 };
 
+const saveStateToSession = (active: string) => {
+  ps.putSession("activeApplication", active);
+};
 
 const setupListeners = (setRunningApplication: React.Dispatch<React.SetStateAction<string>>) => {
   ipcRenderer.on("activeApplication", (event: any, value: any) => {
     setRunningApplication(value);
+    saveStateToSession(value);
   });
-}
+};

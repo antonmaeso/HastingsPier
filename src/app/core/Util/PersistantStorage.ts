@@ -31,7 +31,8 @@ export class PersistantStore {
     }
 
     public static getLocal(key:string){
-        const toReturn = JSON.parse(localStorage.getItem(key));
+        const raw = localStorage.getItem(key)
+        const toReturn = JSON.parse(raw);
         return toReturn;
     }
 
