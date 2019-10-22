@@ -1,7 +1,7 @@
 import { ipcRenderer } from "electron";
 import * as React from "react";
-import { Notify } from "../util/Notify";
-import { PersistantStore as ps } from "../util/PersistantStorage";
+import * as Notify from "../util/Notify";
+import * as ps from "../util/PersistantStorage";
 
 export const AppButton = (props: any) => {
   const [notification, setNotification] = React.useState("0");
@@ -11,7 +11,10 @@ export const AppButton = (props: any) => {
 
   if (!reloaded) {
     // re load state from session
-    setNotification(ps.getSession("notify" + props.title));
+    const oldNotes = ps.getSession("notify" + props.title);
+    if (oldNotes !== undefined && oldNotes !== null) {
+      setNotification(oldNotes);
+    }
     setActive((ps.getSession("activeApplication") === props.title));
     setReloaded(true);
   }
@@ -43,23 +46,29 @@ export const AppButton = (props: any) => {
         Notify.setWindowTitle(props.title);
         Notify.setActiveApplication(props.title);
       }}
+      onContextMenu={() => { rightClick(props.title) }}
     >
       <div className="notify">{notification}</div>
     </div>
   );
 };
 
-function saveStateToSession(props: any, notification: string, active: boolean) {
+const rightClick = (AppToShow: string) => {
+  // open app in new window
+  ipcRenderer.send("WindowControl", { target: "createWindow", data: { appToShow: AppToShow } });
+};
+
+const saveStateToSession = (props: any, notification: string, active: boolean) => {
   ps.putSession("notify" + props.title, notification);
 
   ps.putSession("activeApplication" + props.title, active);
-}
+};
 
-function setupListeners(
+const setupListeners = (
   props: any,
   setNotification: React.Dispatch<React.SetStateAction<string>>,
   setActive: React.Dispatch<React.SetStateAction<boolean>>
-) {
+) => {
   ipcRenderer.removeAllListeners("notify" + props.title);
   ipcRenderer.on("notify" + props.title, (event: any, value: any) => {
     setNotification(value);

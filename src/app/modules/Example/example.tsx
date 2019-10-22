@@ -1,8 +1,8 @@
 import { ipcRenderer, remote } from "electron";
 import * as React from "react";
 import { Button } from "../../core/components/library/Button";
-import { Notify } from "../../core/util/Notify";
-import { PersistantStore as ps } from "../../core/util/PersistantStorage";
+import * as Notify from "../../core/util/Notify";
+import * as ps from "../../core/util/PersistantStorage";
 import "./style/exampleStyle.scss";
 
 export const Example = (props: any) => {

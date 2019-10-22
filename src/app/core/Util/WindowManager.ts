@@ -1,5 +1,6 @@
 import { BrowserWindow, BrowserWindowConstructorOptions } from "electron";
 import { Logger } from "./Logger";
+import * as N from "./Notify";
 // tslint:disable-next-line: no-var-requires
 const Path = require("path");
 
@@ -18,7 +19,7 @@ export class WindowControl {
         const target = arg.target;
         switch (target) {
             case "createWindow": {
-                return this.createNewWindow(arg.data.details, arg.data.filename);
+                return this.createNewWindow(arg.data.details, arg.data.filename, arg.data.appToShow);
             }
             case "getWindow": {
                 return this.getWindow(arg.data);
@@ -38,7 +39,7 @@ export class WindowControl {
         }
     }
 
-    public createNewWindow = (windowDetails?: object, filename?: string) => {
+    public createNewWindow = (windowDetails?: object, filename?: string, loadSpecificApp?: string) => {
         let newWindow: BrowserWindow;
         if (windowDetails === undefined || windowDetails === null) {
             newWindow = new BrowserWindow({
@@ -86,6 +87,13 @@ export class WindowControl {
 
         currentWindows.set(windowId, newWindow);
         this.notifyUpdateWindowIDs(windowId);
+
+        // if there is a specific app to display, send the message now
+        if (loadSpecificApp !== undefined) {
+            N.setActiveApplication(loadSpecificApp, windowId);
+            N.setWindowTitle(loadSpecificApp, windowId);
+        }
+
         return windowId;
     }
 

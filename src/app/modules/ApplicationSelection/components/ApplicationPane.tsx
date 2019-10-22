@@ -1,6 +1,6 @@
 import { ipcRenderer } from "electron";
 import * as React from "react";
-import { Notify } from "../../../core/util/Notify";
+import * as Notify from "../../../core/util/Notify";
 
 export const AppPane = (props: any) => {
   return (

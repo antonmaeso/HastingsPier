@@ -1,7 +1,7 @@
 import { ipcRenderer } from "electron";
 import * as React from "react";
-import { Notify } from "../util/Notify";
-import { PersistantStore as ps } from "../util/PersistantStorage";
+import * as Notify from "../util/Notify";
+import * as ps from "../util/PersistantStorage";
 import { AppButton } from "./ApplicationButton";
 
 let applications = [

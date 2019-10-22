@@ -107,7 +107,6 @@ ipcMain.on("apps", (event: any, value: any) => {
       fr.createFile(appManefest, '{"apps":[{"appName":"TheAppFinderGeneral"}]}');
     }
   }
-
   control.getWindow(mainWindowId).webContents.send("appsResponse", config);
 });
 
@@ -136,4 +135,9 @@ ipcMain.on("menuTitle", (event: any, value: any) => {
 // to choose Active Application
 ipcMain.on("activeApplication", (event: any, value: any) => {
   control.getWindow(mainWindowId).webContents.send("activeApplication", value.Active);
+});
+
+// to request a new window open
+ipcMain.on("WindowControl", (event: any, value: any) => {
+  control.route(value);
 });

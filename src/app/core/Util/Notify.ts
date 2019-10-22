@@ -1,24 +1,22 @@
 import { ipcRenderer } from "electron";
 
-export class Notify {
+export const Balloon = (Title: string, Contents: string, Other?: any) => {
+    ipcRenderer.send("balloon", { title: Title, contents: Contents, other: Other });
+};
 
-    public static Balloon = (Title: string, Contents: string, Other?: any) => {
-        ipcRenderer.send("balloon", { title: Title, contents: Contents, other: Other });
-    }
+export const AppNotification = (AppName: string, notificationToDisplay: string) => {
+    ipcRenderer.send("AppBarNotify", { App: AppName, Notification: notificationToDisplay });
+};
 
-    public static AppNotification = (AppName: string, notificationToDisplay: string) => {
-        ipcRenderer.send("AppBarNotify", { App: AppName, Notification: notificationToDisplay });
-    }
+export const setWindowTitle = (title: string, windowId?: number) => {
+    ipcRenderer.send("menuTitle", { Title: title, WindowId: windowId });
+};
 
-    public static setWindowTitle = (Title: string, WindowId?: number) => {
-        ipcRenderer.send("menuTitle", { Title: Title, WindowId: WindowId });
-    }
+// public static getWindowTitle = () =>{
+//     const toReturn = ipcRenderer.send("getMenuTitle");
+// }
 
-    // public static getWindowTitle = () =>{
-    //     const toReturn = ipcRenderer.send("getMenuTitle");
-    // }
+export const setActiveApplication = (App: string, window?: number) => {
+    ipcRenderer.send("activeApplication", { Active: App, Window: window });
+};
 
-    public static setActiveApplication = (App: string) => {
-        ipcRenderer.send("activeApplication", { Active: App });
-    }
-}
