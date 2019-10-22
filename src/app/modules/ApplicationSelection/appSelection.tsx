@@ -25,7 +25,7 @@ const loadOptions = () => {
       toReturn.push(<AppPane key={app + "pane"}
         appName={app}
         description={appDetails.description}
-        glyphicon={appDetails.glyphicon} />);
+        title = {appDetails.title} />);
     }
   });
   return toReturn;

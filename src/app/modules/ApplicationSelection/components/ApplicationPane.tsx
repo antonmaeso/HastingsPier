@@ -15,7 +15,7 @@ export const AppPane = (props: any) => {
       }}
     >
       <div className="ShowOnMouseOver">{props.description}</div>
-      <div className="AppPaneTitle">{props.appName}</div>
+      <div className="AppPaneTitle">{props.title}</div>
     </div>
   );
 };

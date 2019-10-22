@@ -1,19 +1,24 @@
+$AppSquareSize: 200px;
+
 .AppSelection {
     justify-content: space-evenly;
     display: flex !important;
     align-items: center;
+    flex-wrap: wrap;
+    overflow: auto;
 }
 
 .AppPane {
-    flex: 1;
     cursor: pointer;
     border: solid;
-    height: 300px;
-    width: 300px;
-    max-width: 30vh;
-    max-height: 30vh;
+    min-height: $AppSquareSize;
+    min-width: $AppSquareSize;
+    max-width: $AppSquareSize;
+    max-height: $AppSquareSize;
+    height: $AppSquareSize;
     border-radius: 10%;
     background-size: contain;
+    margin: 1%;
 }
 
 .ShowOnMouseOver {
