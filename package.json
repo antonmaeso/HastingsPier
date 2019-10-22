@@ -57,6 +57,8 @@
     },
     "dependencies": {
         "bootstrap": "^4.3.1",
+        "electron-main-window": "^1.0.4",
+        "electron-window-manager": "^1.0.6",
         "fs": "0.0.1-security",
         "jquery": "^3.4.1",
         "popper.js": "^1.16.0",

@@ -147,3 +147,22 @@ ipcMain.on("WindowControl", (event: any, value: any) => {
   const toReturn = control.route(value);
   return toReturn;
 });
+ipcMain.on("NewWindow", (event: any, value: any) => {
+  let newWindow: number;
+  newWindow = control.createNewWindow({
+    frame: true,
+    height: 600,
+    icon: iconpath,
+    minHeight: 300,
+    minWidth: 300,
+    webPreferences: {
+      nodeIntegration: true
+    },
+    width: 800
+  });
+  control.getWindow(newWindow).show();
+  control.getWindow(newWindow).loadURL(value);
+  control
+    .getWindow(mainWindowId)
+    .webContents.send("webpageLauncher", newWindow);
+});
