@@ -29,14 +29,14 @@ export const AppButton = (props: any) => {
     className += " activeApp";
   }
 
-  React.useEffect(() => {
-    // save state on window close/refresh/unmount
-    window.addEventListener("beforeunload", () => { saveStateToSession(props, notification, active); console.log("window unload"); });
-    return () => { // return is the same as will unmount
-      saveStateToSession(props, notification, active);
-      window.removeEventListener("beforeunload", () => { saveStateToSession(props, notification, active); });
-    };
-  }, []);
+  // React.useEffect(() => {
+  //   // save state on window close/refresh/unmount
+  //   window.addEventListener("beforeunload", () => { saveStateToSession(props, notification, active);});
+  //   return () => { // return is the same as will unmount
+  //     saveStateToSession(props, notification, active);
+  //     window.removeEventListener("beforeunload", () => { saveStateToSession(props, notification, active); });
+  //   };
+  // }, []);
 
   return (
     <div
@@ -45,8 +45,9 @@ export const AppButton = (props: any) => {
       onClick={() => {
         Notify.setWindowTitle(props.title);
         Notify.setActiveApplication(props.title);
+        setNotification("");
       }}
-      onContextMenu={() => { rightClick(props.title) }}
+      onContextMenu={() => { rightClick(props.title); }}
     >
       <div className="notify">{notification}</div>
     </div>
@@ -58,12 +59,6 @@ const rightClick = (AppToShow: string) => {
   ipcRenderer.send("WindowControl", { target: "createWindow", data: { appToShow: AppToShow } });
 };
 
-const saveStateToSession = (props: any, notification: string, active: boolean) => {
-  ps.putSession("notify" + props.title, notification);
-
-  ps.putSession("activeApplication" + props.title, active);
-};
-
 const setupListeners = (
   props: any,
   setNotification: React.Dispatch<React.SetStateAction<string>>,
@@ -72,8 +67,10 @@ const setupListeners = (
   ipcRenderer.removeAllListeners("notify" + props.title);
   ipcRenderer.on("notify" + props.title, (event: any, value: any) => {
     setNotification(value);
+    ps.putSession("notify" + props.title, value);
   });
   ipcRenderer.on("activeApplication", (event: any, value: any) => {
     setActive(value === props.title);
+    ps.putSession("activeApplication" + props.title, (value === props.title));
   });
 }

@@ -16,8 +16,12 @@ export const ApplicationBar = (props: any) => {
   if (!reloaded) {
     // re load state from session
     const appsLoaded = ps.getSession("AppBarApplications");
-    if (appsLoaded !== null && appsLoaded !== null) {
+    const barState = ps.getSession("AppBarOpen");
+    if (appsLoaded !== null) {
       buildAppsFromstore(appsLoaded.reverse(), setAppArray);
+    }
+    if (barState !== null) {
+      setShowBar(barState);
     }
     setReloaded(true);
   }
@@ -36,7 +40,7 @@ export const ApplicationBar = (props: any) => {
   let arrow = "<";
   if (!showBar) {
     className += " hide";
-    arrow = ">"
+    arrow = ">";
   }
 
   return (
@@ -47,6 +51,7 @@ export const ApplicationBar = (props: any) => {
       <div className="CollapseBar"
         onClick={() => {
           setShowBar(!showBar);
+          ps.putSession("AppBarOpen", !showBar);
         }} >
         <div style={{ display: "flex", alignSelf: "center" }}>
           {arrow}
