@@ -4,9 +4,9 @@ import { AppSelection } from "../../modules/ApplicationSelection/appSelection";
 import { Example } from "../../modules/Example/example";
 import { OctaneParent } from "../../modules/OctaneBurner/OctaneParent";
 import "../style/style.scss";
+import * as ps from "../util/PersistantStorage";
 import { ApplicationBar } from "./ApplicationBar";
 import { ApplicationWindow } from "./ApplicationWindow";
-import { PersistantStore as ps } from "../util/PersistantStorage";
 
 // TODO: Util class which passes the required application to the
 // Application Window for rendering
