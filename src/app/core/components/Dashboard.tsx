@@ -1,9 +1,7 @@
 import { ipcRenderer } from "electron";
 import * as React from "react";
-import { AppSelection } from "../../modules/ApplicationSelection/appSelection";
-import { Example } from "../../modules/Example/example";
-import { OctaneParent } from "../../modules/OctaneBurner/OctaneParent";
 import "../style/style.scss";
+import { appMap } from "../util/ApplicationManifest";
 import * as ps from "../util/PersistantStorage";
 import { ApplicationBar } from "./ApplicationBar";
 import { ApplicationWindow } from "./ApplicationWindow";
@@ -11,10 +9,6 @@ import { ApplicationWindow } from "./ApplicationWindow";
 // TODO: Util class which passes the required application to the
 // Application Window for rendering
 
-const appMap = new Map<string, JSX.Element>();
-appMap.set("ApplicationSelection", <AppSelection />);
-appMap.set("Octane", <OctaneParent />);
-appMap.set("BatManager", <Example />);
 
 
 export const Dashboard = (props: any) => {
@@ -48,7 +42,7 @@ export const Dashboard = (props: any) => {
     <div className="coreApplication">
       <div className="application">
         <ApplicationBar />
-        <ApplicationWindow App={appMap.get(RunningApplication)} />
+        <ApplicationWindow App={appMap.get(RunningApplication).root} />
       </div>
     </div>
   );
