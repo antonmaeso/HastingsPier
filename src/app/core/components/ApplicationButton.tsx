@@ -11,11 +11,11 @@ export const AppButton = (props: any) => {
 
   if (!reloaded) {
     // re load state from session
-    const oldNotes = ps.getSession("notify" + props.title);
+    const oldNotes = ps.getSession("notify" + props.appName);
     if (oldNotes !== undefined && oldNotes !== null) {
       setNotification(oldNotes);
     }
-    setActive((ps.getSession("activeApplication") === props.title));
+    setActive((ps.getSession("activeApplication") === props.appName));
     setReloaded(true);
   }
 
@@ -44,10 +44,10 @@ export const AppButton = (props: any) => {
       title={props.title}
       onClick={() => {
         Notify.setWindowTitle(props.title);
-        Notify.setActiveApplication(props.title);
+        Notify.setActiveApplication(props.appName);
         setNotification("");
       }}
-      onContextMenu={() => { rightClick(props.title); }}
+      onContextMenu={() => { rightClick(props.appName); }}
     >
       <div className="notify">{notification}</div>
     </div>
@@ -64,13 +64,13 @@ const setupListeners = (
   setNotification: React.Dispatch<React.SetStateAction<string>>,
   setActive: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
-  ipcRenderer.removeAllListeners("notify" + props.title);
-  ipcRenderer.on("notify" + props.title, (event: any, value: any) => {
+  ipcRenderer.removeAllListeners("notify" + props.appName);
+  ipcRenderer.on("notify" + props.appName, (event: any, value: any) => {
     setNotification(value);
-    ps.putSession("notify" + props.title, value);
+    ps.putSession("notify" + props.appName, value);
   });
   ipcRenderer.on("activeApplication", (event: any, value: any) => {
-    setActive(value === props.title);
-    ps.putSession("activeApplication" + props.title, (value === props.title));
+    setActive(value === props.appName);
+    ps.putSession("activeApplication" + props.appName, (value === props.appName));
   });
 }

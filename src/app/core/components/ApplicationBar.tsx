@@ -64,20 +64,20 @@ export const ApplicationBar = (props: any) => {
 const buildAppsFromstore = (appArray: [], setAppArray: React.Dispatch<React.SetStateAction<any[]>>) => {
   const newArray: JSX.Element[] = [];
   appArray.forEach((appName) => {
-    newArray.push(createAppButton(appName));
+    newArray.push(createAppButton(appName, appName));
   });
   applications = newArray;
   setAppArray(appArray);
 };
 
-const createAppButton = (appName: string) => {
-  return <AppButton key={appName + "Pane"} title={appName} />;
+const createAppButton = (appName: string, title: string) => {
+  return <AppButton key={appName + "Pane"} appName ={appName} title={title} />;
 };
 
 
 const addApplicationToBar = (appName: string, existingApps: any[]) => {
   // just update the existing array with a new element, might avoid redrawing
   // trigger the redraw by changing the array of app options
-  applications.push(createAppButton(appName));
+  applications.push(createAppButton(appName, appName));
   return [appName].concat(existingApps);
 };
