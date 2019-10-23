@@ -35,12 +35,11 @@ export const Dashboard = (props: any) => {
     };
   }, []);
 
-
   return (
     <div className="coreApplication">
       <div className="application">
         <ApplicationBar />
-        <ApplicationWindow App={appMap.get(RunningApplication).root} />
+        <ApplicationWindow App={(appMap.get(RunningApplication)).root} />
       </div>
     </div>
   );
@@ -52,7 +51,9 @@ const saveStateToSession = (active: string) => {
 
 const setupListeners = (setRunningApplication: React.Dispatch<React.SetStateAction<string>>) => {
   ipcRenderer.on("activeApplication", (event: any, value: any) => {
-    setRunningApplication(value);
-    saveStateToSession(value);
+    if (value !== undefined) {
+      setRunningApplication(value);
+      saveStateToSession(value);
+    }
   });
 };

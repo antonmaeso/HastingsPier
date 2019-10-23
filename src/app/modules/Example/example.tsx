@@ -97,6 +97,13 @@ export const Example = (props: any) => {
           const returned = new Map(ps.getLocal("noteCountMap"));
         }}
       />
+      <br></br>
+      <Button
+        text="Send to main external class"
+        onClick={() => {
+          ipcRenderer.send("SeperateClass");
+        }} />
+      <br></br>
     </div>
   );
 };

@@ -12,7 +12,7 @@ class App {
     public description: string;
     public title: string;
 
-    constructor(component: JSX.Element, description: string, title:string) {
+    constructor(component: JSX.Element, description: string, title: string) {
         this.root = component;
         this.description = description;
         this.title = title;
@@ -23,24 +23,24 @@ class App {
 export const appMap = new Map<string, App>([
   [
     "ApplicationSelection",
-    new App(<AppSelection />, "Default for selecting an app", "Hastings Pier")
+    new App(<AppSelection />, "Default for selecting an app", "Hastings Pier"),
   ],
   [
     "Octane",
     new App(
       <OctaneParent />,
       "Burn down your Octane Tasks to keep accurate track of time taken",
-      "Octane Burner"
-    )
+      "Octane Burner",
+    ),
   ],
   [
     "BatManager",
-    new App(<Example />, "For testing stuff as we develop", "Dev Experiments")
+    new App(<Example />, "For testing stuff as we develop", "Dev Experiments"),
   ],
   [
     "RmDashboard",
-    new App(<RmDash />, "Show RM Dashboard in app", "RM Dashboard")
+    new App(<RmDash />, "Show RM Dashboard in app", "RM Dashboard"),
   ],
   ["HastingsTapestry", new App(<Tapestry />, "Load Tapestry", "Tapestry")],
-  ["Google", new App(<Google />, "Show google", "Loading Google")]
+  ["Google", new App(<Google />, "Show google", "Loading Google")],
 ]);

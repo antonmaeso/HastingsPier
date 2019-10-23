@@ -6,14 +6,16 @@ import logo from "./app/core/assets/Ant.png";
 const iconpath = path.join(__dirname + "\\" + logo);
 
 import { app, BrowserWindow, ipcMain, Menu, nativeImage, Tray } from "electron";
+import { IpcMainRouting } from "./app/core/util/IpcMainRouting";
 import { Logger } from "./app/core/util/Logger";
+import { NotifyRouting } from "./app/core/util/NotifyRouting";
 import { WindowControl } from "./app/core/util/WindowManager";
 
-let mainWindowId: number;
+export let mainWindowId: number;
 const Path = app.getAppPath();
 const logger = new Logger(Path + "\\log.log");
-const control = new WindowControl(iconpath, logger);
-
+export const control = new WindowControl(iconpath, logger);
+const NR = new NotifyRouting();
 
 const createWindow = () => {
   mainWindowId = control.createNewWindow({
@@ -84,10 +86,7 @@ const createTray = () => {
 };
 
 
-ipcMain.on("balloon", (event: any, arg: any) => {
-  balloon(arg.title, arg.contents, arg.other);
-});
-function balloon(displayTitle: string, contents: string, other?: any) {
+export function balloon(displayTitle: string, contents: string, other?: any) {
   try {
     appIcon.displayBalloon({ title: displayTitle, content: contents });
     lastBalloonMessage = contents;
@@ -111,42 +110,12 @@ ipcMain.on("apps", (event: any, value: any) => {
   control.getWindow(mainWindowId).webContents.send("appsResponse", config);
 });
 
-// ipc main routing to util classes
-
-// ipc routing for app bar notifications
-ipcMain.on("AppBarNotify", (event: any, value: any) => {
-  control.getWindow(mainWindowId).webContents.send("notify" + value.App, value.Notification);
-});
-
-// ipc routing for application pane
-ipcMain.on("AppBar", (event: any, value: any) => {
-  control.getWindow(mainWindowId).webContents.send("AppBar", value);
-});
-
-// ipc routing to change Title
-ipcMain.on("menuTitle", (event: any, value: any) => {
-  let windowId = mainWindowId;
-  if (value.WindowId !== undefined && value.WindowId !== null) {
-    windowId = value.WindowId;
-  }
-  control.getWindow(windowId).webContents.send("menuTitle", value.Title);
-
-});
-
-// to choose Active Application
-ipcMain.on("activeApplication", (event: any, value: any) => {
-  let windowId = mainWindowId;
-  if (value.WindowId !== undefined && value.WindowId !== null) {
-    windowId = value.WindowId;
-  }
-  control.getWindow(windowId).webContents.send("activeApplication", value.Active);
-});
-
 // to request a new window open
 ipcMain.on("WindowControl", (event: any, value: any) => {
   const toReturn = control.route(value);
   return toReturn;
 });
+
 ipcMain.on("NewWindow", (event: any, value: any) => {
   let newWindow: number;
   newWindow = control.createNewWindow({
@@ -166,3 +135,4 @@ ipcMain.on("NewWindow", (event: any, value: any) => {
     .getWindow(mainWindowId)
     .webContents.send("webpageLauncher", newWindow);
 });
+

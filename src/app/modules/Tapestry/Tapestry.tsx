@@ -3,7 +3,7 @@ import { IFrame } from "../../core/components/library/Iframe";
 import "./style/tapestry.scss";
 
 export const Tapestry = (props: any) => {
-    const Src = "https://forum.pimaxvr.com/c/pimax-8k-Series";
+    const Src = "http://tapestry/Pages/Home.aspx";
     return <div className="Tapestry">
         <IFrame Src={Src} MaxSize={true} />
     </div>;
