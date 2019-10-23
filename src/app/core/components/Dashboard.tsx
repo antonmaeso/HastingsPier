@@ -5,6 +5,7 @@ import { appMap } from "../util/ApplicationManifest";
 import * as ps from "../util/PersistantStorage";
 import { ApplicationBar } from "./ApplicationBar";
 import { ApplicationWindow } from "./ApplicationWindow";
+const WindowId = require('electron').remote.getCurrentWindow().id;
 
 // TODO: Util class which passes the required application to the
 // Application Window for rendering
@@ -21,12 +22,17 @@ export const Dashboard = (props: any) => {
 
   const [reloaded, setReloaded] = React.useState(false);
   if (!reloaded) {
-    const loaded = ps.getSession("activeApplication");
+    const loaded = ps.getSession("activeApplication"+WindowId);
     if (loaded !== undefined && loaded !== null) {
       setRunningApplication(loaded);
     }
     setReloaded(true);
+    // request the app which should be shown
+    if (WindowId !== 1) {
+      ipcRenderer.send("WindowControl", { target: "activeApp", data: { windowId: WindowId } });
+    }
   }
+
 
   React.useEffect(() => {
     // save state on window unmount
@@ -46,7 +52,7 @@ export const Dashboard = (props: any) => {
 };
 
 const saveStateToSession = (active: string) => {
-  ps.putSession("activeApplication", active);
+  ps.putSession("activeApplication"+WindowId, active);
 };
 
 const setupListeners = (setRunningApplication: React.Dispatch<React.SetStateAction<string>>) => {

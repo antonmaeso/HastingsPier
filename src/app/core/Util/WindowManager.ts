@@ -31,7 +31,8 @@ export class WindowControl {
         const target = arg.target;
         switch (target) {
             case "createWindow": {
-                return this.createNewWindow(arg.data.details, arg.data.filename, arg.data.appToShow);
+                const windowId = this.createNewWindow(arg.data.details, arg.data.filename, arg.data.appToShow);
+                return windowId;
             }
             case "getWindow": {
                 return this.getWindow(arg.data);
@@ -45,8 +46,8 @@ export class WindowControl {
             case "closeWindow": {
                 return this.closeWindow(arg.data);
             }
-            case "windowApp": {
-                return currentWindows.get(arg.windowId).LoadedApp;
+            case "activeApp": {
+                return this.activeApp(arg.data);
             }
             default: {
                 return null;
@@ -104,15 +105,10 @@ export class WindowControl {
         let toDisplay = "ApplicationSelection";
         if (loadSpecificApp !== undefined && loadSpecificApp !== null) {
             toDisplay = loadSpecificApp;
-            newWindow.webContents.on("did-finish-load", () => {
-                N.setActiveApplication(toDisplay, windowId);
-                N.setWindowTitle(toDisplay, windowId);
-            });
         }
 
         currentWindows.set(windowId, new WindowObject(newWindow, toDisplay));
         this.notifyUpdateWindowIDs(windowId);
-
 
         return windowId;
     }
@@ -140,8 +136,28 @@ export class WindowControl {
             if (w.Window.id === excludeId) {
                 return;
             }
-
             w.Window.webContents.send("UpdateWindowIds", windowIds);
         });
+    }
+
+    private activeApp(data: any) {
+        const windowId = data.windowId;
+        let app = data.Active;
+        if (app === undefined) {
+            app = currentWindows.get(windowId).LoadedApp;
+            N.setActiveApplication(app, windowId);
+            N.setWindowTitle(app, windowId);
+            return app;
+        } else {
+            currentWindows.get(windowId).LoadedApp = app;
+        }
+    }
+
+    private wait(ms: number) {
+        let time = new Date().getTime();
+        const end = time + ms;
+        while (time < end) {
+            time = new Date().getTime();
+        }
     }
 }

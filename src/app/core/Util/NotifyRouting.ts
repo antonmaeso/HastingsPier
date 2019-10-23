@@ -37,6 +37,4 @@ export class NotifyRouting {
             control.getWindow(windowId).webContents.send("activeApplication", value.Active);
         });
     }
-
 }
-

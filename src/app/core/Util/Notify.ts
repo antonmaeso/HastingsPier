@@ -16,7 +16,7 @@ export const setWindowTitle = (title: string, windowId?: number) => {
 //     const toReturn = ipcRenderer.send("getMenuTitle");
 // }
 
-export const setActiveApplication = (App: string, window?: number) => {    
-    ipcRenderer.send("activeApplication", { Active: App, Window: window });
+export const setActiveApplication = (App: string, window?: number) => {
+    ipcRenderer.send("activeApplication", { Active: App, WindowId: window });
 };
 

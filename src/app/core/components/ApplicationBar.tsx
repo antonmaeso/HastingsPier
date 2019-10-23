@@ -3,6 +3,7 @@ import * as React from "react";
 import * as Notify from "../util/Notify";
 import * as ps from "../util/PersistantStorage";
 import { AppButton } from "./ApplicationButton";
+const WindowId = require("electron").remote.getCurrentWindow().id;
 
 let applications = [
   <AppButton key="ApplicationSelectionPane" title="ApplicationSelection" />,
@@ -15,8 +16,8 @@ export const ApplicationBar = (props: any) => {
 
   if (!reloaded) {
     // re load state from session
-    const appsLoaded = ps.getSession("AppBarApplications");
-    const barState = ps.getSession("AppBarOpen");
+    const appsLoaded = ps.getSession("AppBarApplications" + WindowId);
+    const barState = ps.getSession("AppBarOpen" + WindowId);
     if (appsLoaded !== null) {
       buildAppsFromstore(appsLoaded.reverse(), setAppArray);
     }
@@ -32,7 +33,7 @@ export const ApplicationBar = (props: any) => {
     if (!appArray.includes(value)) {
       const newList = addApplicationToBar(value, appArray);
       setAppArray(newList);
-      ps.putSession("AppBarApplications", newList); // doesnt like react elements
+      ps.putSession("AppBarApplications" + WindowId, newList); // doesnt like react elements
     }
   });
   // Notify.Balloon("AppBar", applications.length + " Apps in state");
@@ -51,7 +52,7 @@ export const ApplicationBar = (props: any) => {
       <div className="CollapseBar"
         onClick={() => {
           setShowBar(!showBar);
-          ps.putSession("AppBarOpen", !showBar);
+          ps.putSession("AppBarOpen" + WindowId, !showBar);
         }} >
         <div style={{ display: "flex", alignSelf: "center" }}>
           {arrow}
@@ -71,7 +72,7 @@ const buildAppsFromstore = (appArray: [], setAppArray: React.Dispatch<React.SetS
 };
 
 const createAppButton = (appName: string, title: string) => {
-  return <AppButton key={appName + "Pane"} appName ={appName} title={title} />;
+  return <AppButton key={appName + "Pane"} appName={appName} title={title} />;
 };
 
 

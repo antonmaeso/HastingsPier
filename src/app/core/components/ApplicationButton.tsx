@@ -2,6 +2,7 @@ import { ipcRenderer } from "electron";
 import * as React from "react";
 import * as Notify from "../util/Notify";
 import * as ps from "../util/PersistantStorage";
+const WindowId = require("electron").remote.getCurrentWindow().id;
 
 export const AppButton = (props: any) => {
   const [notification, setNotification] = React.useState("0");
@@ -11,11 +12,11 @@ export const AppButton = (props: any) => {
 
   if (!reloaded) {
     // re load state from session
-    const oldNotes = ps.getSession("notify" + props.appName);
+    const oldNotes = ps.getSession("notify" + props.appName + WindowId);
     if (oldNotes !== undefined && oldNotes !== null) {
       setNotification(oldNotes);
     }
-    setActive((ps.getSession("activeApplication") === props.appName));
+    setActive((ps.getSession("activeApplication" + WindowId) === props.appName));
     setReloaded(true);
   }
 
@@ -67,10 +68,10 @@ const setupListeners = (
   ipcRenderer.removeAllListeners("notify" + props.appName);
   ipcRenderer.on("notify" + props.appName, (event: any, value: any) => {
     setNotification(value);
-    ps.putSession("notify" + props.appName, value);
+    ps.putSession("notify" + props.appName + WindowId, value);
   });
   ipcRenderer.on("activeApplication", (event: any, value: any) => {
     setActive(value === props.appName);
-    ps.putSession("activeApplication" + props.appName, (value === props.appName));
+    ps.putSession("activeApplication" + props.appName + WindowId, (value === props.appName));
   });
-}
+};

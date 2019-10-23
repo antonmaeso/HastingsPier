@@ -111,10 +111,39 @@ ipcMain.on("apps", (event: any, value: any) => {
 });
 
 // to request a new window open
-ipcMain.on("WindowControl", (event: any, value: any) => {
+ipcMain.on("WindowControl", (event: any, value: any, responseTarget: string) => {
   const toReturn = control.route(value);
   return toReturn;
 });
+
+// ipcMain.on("WindowControl", (event: any, arg: any, responseTarget: string) => {
+//   new Promise((resolve, reject) => {
+//     const response = control.route(arg);
+//     if (response !== undefined) {
+//       resolve(response);
+//     } else {
+//       reject(undefined);
+//     }
+//   }).then((res) => {
+//     // console.log("I was called successfully");
+//     // console.log(res);
+//     if (responseTarget !== undefined && responseTarget !== null) {
+//       let WindowId = mainWindowId;
+//       if (arg.windowId !== undefined && arg.windowId !== null) {
+//         WindowId = arg.windowId;
+//       }
+//       control.getWindow(WindowId).webContents.send(responseTarget, res);
+//     }
+//   }).catch((res) => {
+//     // tslint:disable: no-console
+//     console.log("I was not called successfully");
+//     console.log(res);
+//     console.log(arg.target);
+//     // console.log(arg.data);
+//   });
+// });
+
+
 
 ipcMain.on("NewWindow", (event: any, value: any) => {
   let newWindow: number;

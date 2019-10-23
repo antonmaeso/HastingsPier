@@ -44,6 +44,12 @@ export const Example = (props: any) => {
       />
       <br></br>
       <Button
+        text="Send Balloon of click count"
+        onClick={() => {
+          Notify.Balloon("Example", count.toString())
+        }} />
+      <br></br>
+      <Button
         text={"Save Count in local"}
         onClick={() => {
           ps.putLocal("noteCount", count);
@@ -104,6 +110,14 @@ export const Example = (props: any) => {
           ipcRenderer.send("SeperateClass");
         }} />
       <br></br>
+      <Button
+        text="Set Second Window to specific app"
+        onClick={() => {
+          Notify.setActiveApplication("BatManager", 2);
+          Notify.setWindowTitle("BatManager", 2);;
+        }} />
+      <br></br>
+
     </div>
   );
 };
