@@ -9,6 +9,7 @@ const WindowId = require('electron').remote.getCurrentWindow().id;
 
 // TODO: Util class which passes the required application to the
 // Application Window for rendering
+const loadedApps = new Map<string, JSX.Element>();
 
 export const Dashboard = (props: any) => {
   const [RunningApplication, setRunningApplication] = React.useState(
@@ -22,7 +23,7 @@ export const Dashboard = (props: any) => {
 
   const [reloaded, setReloaded] = React.useState(false);
   if (!reloaded) {
-    const loaded = ps.getSession("activeApplication"+WindowId);
+    const loaded = ps.getSession("activeApplication" + WindowId);
     if (loaded !== undefined && loaded !== null) {
       setRunningApplication(loaded);
     }
@@ -33,7 +34,6 @@ export const Dashboard = (props: any) => {
     }
   }
 
-
   React.useEffect(() => {
     // save state on window unmount
     return () => { // return is the same as will unmount
@@ -41,18 +41,20 @@ export const Dashboard = (props: any) => {
     };
   }, []);
 
+  const appToDisplay = appMap.get(RunningApplication).root;
+
   return (
     <div className="coreApplication">
       <div className="application">
-        <ApplicationBar />
-        <ApplicationWindow App={(appMap.get(RunningApplication)).root} />
+        <ApplicationBar Active = {RunningApplication}/>
+        <ApplicationWindow Title={RunningApplication} Active = {RunningApplication} App={appToDisplay} />
       </div>
     </div>
   );
 };
 
 const saveStateToSession = (active: string) => {
-  ps.putSession("activeApplication"+WindowId, active);
+  ps.putSession("activeApplication" + WindowId, active);
 };
 
 const setupListeners = (setRunningApplication: React.Dispatch<React.SetStateAction<string>>) => {

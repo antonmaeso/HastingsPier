@@ -6,11 +6,12 @@ import { AppButton } from "./ApplicationButton";
 const WindowId = require("electron").remote.getCurrentWindow().id;
 
 let applications = [
-  <AppButton key="ApplicationSelectionPane" title="ApplicationSelection" />,
+  <AppButton key="ApplicationSelectionPane" title="ApplicationSelection" appName="ApplicationSelection" />,
 ];
 
 export const ApplicationBar = (props: any) => {
   const [appArray, setAppArray] = React.useState(["ApplicationSelection"]);
+  // TODO: should change to a map to more accuratly maintain order
   const [showBar, setShowBar] = React.useState(true);
   const [reloaded, setReloaded] = React.useState(false);
 
@@ -33,7 +34,7 @@ export const ApplicationBar = (props: any) => {
     if (!appArray.includes(value)) {
       const newList = addApplicationToBar(value, appArray);
       setAppArray(newList);
-      ps.putSession("AppBarApplications" + WindowId, newList); // doesnt like react elements
+      ps.putSession("AppBarApplications" + WindowId, newList);
     }
   });
   // Notify.Balloon("AppBar", applications.length + " Apps in state");

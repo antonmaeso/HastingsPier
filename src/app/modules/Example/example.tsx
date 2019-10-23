@@ -4,12 +4,15 @@ import { Button } from "../../core/components/library/Button";
 import * as Notify from "../../core/util/Notify";
 import * as ps from "../../core/util/PersistantStorage";
 import "./style/exampleStyle.scss";
+import { Kid } from "./components/exampleChild";
 
 export const Example = (props: any) => {
   const [count, setCount] = React.useState(0);
   const [apps, setApps] = React.useState({});
   const [local, setLocal] = React.useState(0);
   const [session, setSession] = React.useState(0);
+  const [kidText, setKidText] = React.useState("Milky bar");
+  const [hiddenListenerText, sethiddenListenerText] = React.useState("Og");
 
   const listener = "appsResponse";
   ipcRenderer.removeAllListeners(listener);
@@ -17,7 +20,7 @@ export const Example = (props: any) => {
     setApps(value);
   });
 
-  //reLoad state
+  // reLoad state
   const [reloaded, setReloaded] = React.useState(false);
   if (!reloaded) {
     setLocal(ps.getLocal("noteCount"));
@@ -46,7 +49,7 @@ export const Example = (props: any) => {
       <Button
         text="Send Balloon of click count"
         onClick={() => {
-          Notify.Balloon("Example", count.toString())
+          Notify.Balloon("Example", count.toString());
         }} />
       <br></br>
       <Button
@@ -116,6 +119,23 @@ export const Example = (props: any) => {
           Notify.setActiveApplication("BatManager", 2);
           Notify.setWindowTitle("BatManager", 2);;
         }} />
+      <br></br>
+      <Button
+        text="Change props in child"
+        onClick={() => {
+          setKidText("Bars are on me" + count);
+        }} />
+      <br></br>
+      <Kid key="Milkybar" text={kidText} />
+      <Button
+        text="Set up listener"
+        onClick={() => {
+          ipcRenderer.on("CallMe", () => {
+            Notify.Balloon("Example", "listener Called");
+            sethiddenListenerText("listener Called");
+          })
+        }} />
+        <div>{hiddenListenerText}</div>
       <br></br>
 
     </div>

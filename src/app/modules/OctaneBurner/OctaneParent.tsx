@@ -5,7 +5,9 @@ export const OctaneParent = (props: any) => {
 
   return (
     <div className="applicationWindow">
-      Octane
+      <button onClick={()=>{
+        ipcRenderer.send("CallMe");
+      }}>Click to send message</button>
     </div>
   );
 };

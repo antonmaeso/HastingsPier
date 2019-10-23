@@ -4,9 +4,14 @@ import * as React from "react";
 
 export const ApplicationWindow = (props: any) => {
 
-  // React.useEffect(() => {
-  //   return () => { console.log(props.App + " Unmounted"); }
-  // });
+  React.useEffect(() => {
+    console.log("ApplicationWindow useEffect")
+    return () => { console.log("ApplicationWindow Unmounted"); };
+  });
+  let className = "applicationWindow";
+  if (props.Active !== props.Title) {
+    className += " hidden";
+  }
 
-  return <div className="applicationWindow">{props.App}</div>;
+  return <div className={className}>{props.App}</div>;
 };
