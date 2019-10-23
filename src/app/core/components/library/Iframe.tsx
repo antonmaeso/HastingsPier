@@ -5,5 +5,5 @@ export const IFrame = (props: any) => {
     if (props.MaxSize) {
         className = "fullIframe";
     }
-    return <iframe className={className} src={props.Src} />;
+    return <webview className={className} src={props.Src} />;
 };

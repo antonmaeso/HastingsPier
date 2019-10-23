@@ -26,6 +26,7 @@ const createWindow = () => {
     minWidth: 300,
     webPreferences: {
       nodeIntegration: true,
+      webviewTag: true,
     },
     width: 800,
   }, "index.html");
@@ -143,7 +144,9 @@ ipcMain.on("WindowControl", (event: any, value: any, responseTarget: string) => 
 //   });
 // });
 
-
+ipcMain.on("CallMe", () =>{
+  control.getWindow(mainWindowId).webContents.send("CallMe");
+})
 
 ipcMain.on("NewWindow", (event: any, value: any) => {
   let newWindow: number;
