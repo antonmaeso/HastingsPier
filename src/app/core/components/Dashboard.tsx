@@ -36,18 +36,23 @@ export const Dashboard = (props: any) => {
 
   React.useEffect(() => {
     // save state on window unmount
-    return () => { // return is the same as will unmount
+    return () => { // return is ~ the same as will unmount
       saveStateToSession(RunningApplication);
     };
   }, []);
 
   const appToDisplay = appMap.get(RunningApplication).root;
+  const appWindow = <ApplicationWindow
+    key={RunningApplication}
+    Title={RunningApplication}
+    Active={RunningApplication}
+    App={appToDisplay} />;
 
   return (
     <div className="coreApplication">
       <div className="application">
-        <ApplicationBar Active = {RunningApplication}/>
-        <ApplicationWindow Title={RunningApplication} Active = {RunningApplication} App={appToDisplay} />
+        <ApplicationBar Active={RunningApplication} />
+        {appWindow}
       </div>
     </div>
   );
