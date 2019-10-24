@@ -1,0 +1,21 @@
+{
+  "done": [],
+  "in-progress": [
+    {
+      "assignedTo": {
+        "name": "mannn"
+      },
+      "category": "Remove Application",
+      "creation_time": "2019-10-24T16:41:01.056Z",
+      "description": {
+        "content": "Make the close app option on the app bar buttons work",
+        "mime": "text/markdown"
+      },
+      "id": "1",
+      "references": [],
+      "title": "Remove Application - App Bar"
+    }
+  ],
+  "testing": [],
+  "todo": []
+}

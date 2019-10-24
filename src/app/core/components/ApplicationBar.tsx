@@ -78,8 +78,8 @@ const addApplicationToBar = (appName: string, existingApps: any[]) => {
   return [appName].concat(existingApps);
 };
 
-const removeAppFromBar = (appName: string) =>{
-  
+const removeAppFromBar = (appName: string) => {
+
 }
 
 const StartListeners = (appArray: string[], setAppArray: React.Dispatch<React.SetStateAction<string[]>>) => {
@@ -93,7 +93,7 @@ const StartListeners = (appArray: string[], setAppArray: React.Dispatch<React.Se
     }
   });
   ipcRenderer.on("closeApplication", (event: any, value: any) => {
-    applications.delete(value);
+    removeAppFromBar(value);
   });
 };
 
