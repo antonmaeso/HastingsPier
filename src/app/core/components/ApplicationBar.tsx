@@ -29,15 +29,8 @@ export const ApplicationBar = (props: any) => {
     setReloaded(true);
   }
 
-  const listener = "AppBar";
-  ipcRenderer.removeAllListeners(listener);
-  ipcRenderer.on(listener, (event: any, value: any) => {
-    if (!appArray.includes(value)) {
-      const newList = addApplicationToBar(value, appArray);
-      setAppArray(newList);
-      ps.putSession("AppBarApplications" + WindowId, newList);
-    }
-  });
+  StartListeners(appArray, setAppArray);
+
   // Notify.Balloon("AppBar", applications.length + " Apps in state");
   let className = "applicationBar";
   let arrow = "<";
@@ -84,3 +77,23 @@ const addApplicationToBar = (appName: string, existingApps: any[]) => {
   applications.set(appName, createAppButton(appName, appName));
   return [appName].concat(existingApps);
 };
+
+const removeAppFromBar = (appName: string) =>{
+  
+}
+
+const StartListeners = (appArray: string[], setAppArray: React.Dispatch<React.SetStateAction<string[]>>) => {
+  const listener = "AppBar";
+  ipcRenderer.removeAllListeners(listener);
+  ipcRenderer.on(listener, (event: any, value: any) => {
+    if (!appArray.includes(value)) {
+      const newList = addApplicationToBar(value, appArray);
+      setAppArray(newList);
+      ps.putSession("AppBarApplications" + WindowId, newList);
+    }
+  });
+  ipcRenderer.on("closeApplication", (event: any, value: any) => {
+    applications.delete(value);
+  });
+};
+

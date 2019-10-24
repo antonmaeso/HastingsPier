@@ -41,7 +41,8 @@ export const AppButton = (props: any) => {
 
   return (
     <React.Fragment>
-      <div className="closeApp glyphicon glyphicon-remove" title={"Close"}></div>
+      <div className="closeApp glyphicon glyphicon-remove" title={"Remove Application"}
+      onClick={()=>{closeApp(props.appName);}}></div>
       <div
         className={className}
         title={props.title}

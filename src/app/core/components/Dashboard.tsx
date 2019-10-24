@@ -65,10 +65,18 @@ const setupListeners = (setRunningApplication: React.Dispatch<React.SetStateActi
       addAppToDom(value);
     }
   });
+  ipcRenderer.on("closeApplication", (event: any, value: any) => {
+    removeAppFromDom(value)
+  });
+
 };
 
 const resetVisible = () => {
 
+}
+
+const removeAppFromDom = (app: string) => {
+  loadedApps.delete(app);
 }
 
 const addAppToDom = (app: string) => {
