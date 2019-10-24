@@ -34,6 +34,8 @@ export const Dashboard = (props: any) => {
     }
   }
 
+  addAppToDom(RunningApplication);
+
   React.useEffect(() => {
     // save state on window unmount
     return () => { // return is ~ the same as will unmount
@@ -41,18 +43,11 @@ export const Dashboard = (props: any) => {
     };
   }, []);
 
-  const appToDisplay = appMap.get(RunningApplication).root;
-  const appWindow = <ApplicationWindow
-    key={RunningApplication}
-    Title={RunningApplication}
-    Active={RunningApplication}
-    App={appToDisplay} />;
-
   return (
     <div className="coreApplication">
       <div className="application">
         <ApplicationBar Active={RunningApplication} />
-        {appWindow}
+        {Array.from(loadedApps.values())}
       </div>
     </div>
   );
@@ -67,6 +62,23 @@ const setupListeners = (setRunningApplication: React.Dispatch<React.SetStateActi
     if (value !== undefined) {
       setRunningApplication(value);
       saveStateToSession(value);
+      addAppToDom(value);
     }
   });
+};
+
+const resetVisible = () => {
+
+}
+
+const addAppToDom = (app: string) => {
+  if (!Array.from(loadedApps.keys()).includes(app)) {
+    const App = appMap.get(app);
+    const appToDisplay = App.root;
+    const appWindow = <ApplicationWindow
+      key={app + "Window"}
+      identifier={app}
+      App={appToDisplay} />;
+    loadedApps.set(app, appWindow);
+  }
 };
