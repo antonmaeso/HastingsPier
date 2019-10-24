@@ -20,3 +20,6 @@ export const setActiveApplication = (App: string, window?: number) => {
     ipcRenderer.send("activeApplication", { Active: App, WindowId: window });
 };
 
+export const closeApplication = (App: string, windowId?: number) => {
+    ipcRenderer.send("closeApplication", { Close: App, WindowId: windowId });
+};

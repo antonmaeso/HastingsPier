@@ -40,18 +40,21 @@ export const AppButton = (props: any) => {
   // }, []);
 
   return (
-    <div
-      className={className}
-      title={props.title}
-      onClick={() => {
-        Notify.setWindowTitle(props.title);
-        Notify.setActiveApplication(props.appName);
-        setNotification("");
-      }}
-      onContextMenu={() => { rightClick(props.appName); }}
-    >
-      <div className="notify">{notification}</div>
-    </div>
+    <React.Fragment>
+      <div className="closeApp glyphicon glyphicon-remove" title={"Close"}></div>
+      <div
+        className={className}
+        title={props.title}
+        onClick={() => {
+          Notify.setWindowTitle(props.title);
+          Notify.setActiveApplication(props.appName);
+          setNotification("");
+        }}
+        onContextMenu={() => { rightClick(props.appName); }}
+      >
+        <div className="notify">{notification}</div>
+      </div>
+    </React.Fragment>
   );
 };
 
@@ -59,6 +62,10 @@ const rightClick = (AppToShow: string) => {
   // open app in new window
   ipcRenderer.send("WindowControl", { target: "createWindow", data: { appToShow: AppToShow } });
 };
+
+const closeApp = (appToClose: string) => {
+  Notify.closeApplication(appToClose);
+}
 
 const setupListeners = (
   props: any,

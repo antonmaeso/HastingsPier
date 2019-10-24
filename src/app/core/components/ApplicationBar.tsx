@@ -5,9 +5,10 @@ import * as ps from "../util/PersistantStorage";
 import { AppButton } from "./ApplicationButton";
 const WindowId = require("electron").remote.getCurrentWindow().id;
 
-let applications = [
-  <AppButton key="ApplicationSelectionPane" title="ApplicationSelection" appName="ApplicationSelection" />,
-];
+let applications = new Map<string, JSX.Element>([
+  [
+    "ApplicationSelection", <AppButton key="ApplicationSelectionPane" title="ApplicationSelection" appName="ApplicationSelection" />,
+  ]]);
 
 export const ApplicationBar = (props: any) => {
   const [appArray, setAppArray] = React.useState(["ApplicationSelection"]);
@@ -48,7 +49,7 @@ export const ApplicationBar = (props: any) => {
   return (
     <React.Fragment>
       <div className={className}>
-        {applications}
+        {Array.from(applications.values())}
       </div>
       <div className="CollapseBar"
         onClick={() => {
@@ -64,12 +65,12 @@ export const ApplicationBar = (props: any) => {
 };
 
 const buildAppsFromstore = (appArray: [], setAppArray: React.Dispatch<React.SetStateAction<any[]>>) => {
-  const newArray: JSX.Element[] = [];
+  const newMap = new Map<string, JSX.Element>();
   appArray.forEach((appName) => {
-    newArray.push(createAppButton(appName, appName));
+    newMap.set(appName, createAppButton(appName, appName));
   });
-  applications = newArray;
-  setAppArray(appArray);
+  applications = newMap;
+  setAppArray(Array.from(applications.values()));
 };
 
 const createAppButton = (appName: string, title: string) => {
@@ -80,6 +81,6 @@ const createAppButton = (appName: string, title: string) => {
 const addApplicationToBar = (appName: string, existingApps: any[]) => {
   // just update the existing array with a new element, might avoid redrawing
   // trigger the redraw by changing the array of app options
-  applications.push(createAppButton(appName, appName));
+  applications.set(appName, createAppButton(appName, appName));
   return [appName].concat(existingApps);
 };

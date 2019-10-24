@@ -23,7 +23,7 @@ export const ApplicationWindow = (props: any) => {
   }
 
   React.useEffect(() => {
-    console.log("ApplicationWindow useEffect")
+    console.log("ApplicationWindow useEffect");
     return () => { console.log("ApplicationWindow Unmounted"); };
   });
   let className = "applicationWindow";
