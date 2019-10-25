@@ -3,6 +3,8 @@ import { balloon, control, mainWindowId } from "../../../main";
 
 export class NotifyRouting {
 
+    private activeApplication: string;
+
     constructor() {
         this.initaliseListeners();
     }
@@ -35,14 +37,16 @@ export class NotifyRouting {
                 windowId = value.WindowId;
             }
             control.getWindow(windowId).webContents.send("activeApplication", value.Active);
+            this.activeApplication = value.Active;
         });
         // to remove an application from the DOM
         ipcMain.on("closeApplication", (event: any, value: any) => {
             let window = mainWindowId;
             if (value.WindowId !== undefined) {
-              window = value.WindowId;
+                window = value.WindowId;
             }
+            value.Active = this.activeApplication;
             control.getWindow(window).webContents.send("closeApplication", value);
-          });
+        });
     }
 }

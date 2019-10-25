@@ -68,9 +68,11 @@ const setupListeners = (setRunningApplication: React.Dispatch<React.SetStateActi
   });
   ipcRenderer.on("closeApplication", (event: any, value: any) => {
     removeAppFromDom(value.Close);
-    // if (value.Close === RunningApplication) {
-      N.setActiveApplication("ApplicationSelection");
-    // }
+    if (value.Close === value.Active) {
+      const RunningApplication = "ApplicationSelection";
+      N.setActiveApplication(RunningApplication);
+      N.setWindowTitle(RunningApplication);
+    }
   });
 
 };
