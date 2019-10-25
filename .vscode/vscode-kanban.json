@@ -5,6 +5,16 @@
       "assignedTo": {
         "name": "mannn"
       },
+      "creation_time": "2019-10-24T17:13:35.610Z",
+      "id": "2",
+      "prio": 5,
+      "references": [],
+      "title": "New browser window opens specific app"
+    },
+    {
+      "assignedTo": {
+        "name": "mannn"
+      },
       "category": "Remove Application",
       "creation_time": "2019-10-24T16:41:01.056Z",
       "description": {
@@ -12,6 +22,7 @@
         "mime": "text/markdown"
       },
       "id": "1",
+      "prio": 4,
       "references": [],
       "title": "Remove Application - App Bar"
     }

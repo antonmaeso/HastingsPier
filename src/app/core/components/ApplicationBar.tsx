@@ -80,7 +80,7 @@ const addApplicationToBar = (appName: string, existingApps: any[]) => {
 
 const removeAppFromBar = (appName: string) => {
 
-}
+};
 
 const StartListeners = (appArray: string[], setAppArray: React.Dispatch<React.SetStateAction<string[]>>) => {
   const listener = "AppBar";
