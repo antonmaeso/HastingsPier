@@ -30,6 +30,40 @@
   "testing": [],
   "todo": [
     {
+      "category": "Bugs",
+      "creation_time": "2019-10-25T14:11:59.309Z",
+      "description": {
+        "content": "When closing an app which is not the active one, if you add then try to open it again it does not display",
+        "mime": "text/markdown"
+      },
+      "details": {
+        "content": "When closing an app which is not the active one, if you add then try to open it again it does not display. I think this is because its loading the state from the session where it was hidden. Maybe have some kind of call to see which application is meant to be active",
+        "mime": "text/markdown"
+      },
+      "id": "5",
+      "references": [],
+      "title": "When reoping closed app, its not shown",
+      "type": "bug"
+    },
+    {
+      "assignedTo": {
+        "name": "mannn"
+      },
+      "category": "Features",
+      "creation_time": "2019-10-25T14:20:55.583Z",
+      "description": {
+        "content": "Currently notifications on appBar buttons just display the notification. Needs more",
+        "mime": "text/markdown"
+      },
+      "details": {
+        "content": "Currently notifications on appBar buttons just display the notification. Change it to display a count of the undread notifications.\nMaybe when the app loads have a notification bar at the top with the undread notifications.\nOr on hover over the counter show a popout with the details in.",
+        "mime": "text/markdown"
+      },
+      "id": "6",
+      "references": [],
+      "title": "App Notification counter"
+    },
+    {
       "assignedTo": {
         "name": "mannn"
       },

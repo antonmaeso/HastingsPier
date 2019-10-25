@@ -2,10 +2,22 @@ import { ipcRenderer } from "electron";
 import * as React from "react";
 import * as Notify from "../util/Notify";
 import * as ps from "../util/PersistantStorage";
+import { ButtonNotification } from "./AppButtonNotification";
 const WindowId = require("electron").remote.getCurrentWindow().id;
 
+export class NotifyObject {
+  public notification: string;
+  public read = false;
+
+  constructor(info: string) {
+      this.notification = info;
+  }
+}
+
+const notifications: NotifyObject[] = [new NotifyObject("Nothing To See Here")];
+
 export const AppButton = (props: any) => {
-  const [notification, setNotification] = React.useState("0");
+  const [notification, setNotification] = React.useState(false);
   const [active, setActive] = React.useState(false);
   const [listeners, setListeners] = React.useState(false);
   const [reloaded, setReloaded] = React.useState(false);
@@ -51,11 +63,12 @@ export const AppButton = (props: any) => {
         onClick={() => {
           Notify.setWindowTitle(props.title);
           Notify.setActiveApplication(props.appName);
-          setNotification("");
+          setNotification(false);
         }}
         onContextMenu={() => { rightClick(props.appName); }}
       >
-        <div className="notify">{notification}</div>
+        <div className="notifyCount">{notifications.length}</div>
+        <ButtonNotification notifications = {notifications} setRead = {setNotification}/>
       </div>
     </React.Fragment>
   );
@@ -72,13 +85,13 @@ const closeApp = (appToClose: string) => {
 
 const setupListeners = (
   props: any,
-  setNotification: React.Dispatch<React.SetStateAction<string>>,
-  setActive: React.Dispatch<React.SetStateAction<boolean>>
-) => {
+  setNotification: React.Dispatch<React.SetStateAction<boolean>>,
+  setActive: React.Dispatch<React.SetStateAction<boolean>>) => {
   ipcRenderer.removeAllListeners("notify" + props.appName);
   ipcRenderer.on("notify" + props.appName, (event: any, value: any) => {
-    setNotification(value);
+    setNotification(true);
     ps.putSession("notify" + props.appName + WindowId, value);
+    Notify.Balloon(props.appName, value, props.appName);
   });
   ipcRenderer.on("activeApplication", (event: any, value: any) => {
     setActive(value === props.appName);

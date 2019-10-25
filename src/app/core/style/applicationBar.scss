@@ -42,7 +42,7 @@
     opacity: 1;
 }
 
-.notify {
+.notifyCount {
     display: flex;
     height: 30px;
     width: 30px;
@@ -79,4 +79,12 @@
 
 .closeApp:hover {
     opacity: 1;
+}
+
+.notifyList {
+    display: none;
+}
+
+.notifyCount:hover \ .notifyList {
+    display: flex;
 }
