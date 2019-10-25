@@ -144,7 +144,7 @@ ipcMain.on("WindowControl", (event: any, value: any, responseTarget: string) => 
 //   });
 // });
 
-ipcMain.on("CallMe", () =>{
+ipcMain.on("CallMe", () => {
   control.getWindow(mainWindowId).webContents.send("CallMe");
 })
 
@@ -167,4 +167,3 @@ ipcMain.on("NewWindow", (event: any, value: any) => {
     .getWindow(mainWindowId)
     .webContents.send("webpageLauncher", newWindow);
 });
-

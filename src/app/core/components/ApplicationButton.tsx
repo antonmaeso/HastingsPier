@@ -41,8 +41,10 @@ export const AppButton = (props: any) => {
 
   return (
     <React.Fragment>
-      <div className="closeApp glyphicon glyphicon-remove" title={"Remove Application"}
-      onClick={()=>{closeApp(props.appName);}}></div>
+      {props.appName === "ApplicationSelection" ? null :
+        <div className="closeApp glyphicon glyphicon-remove" title={"Remove Application"}
+          onClick={() => { closeApp(props.appName); }}></div>
+      }
       <div
         className={className}
         title={props.title}
@@ -66,7 +68,7 @@ const rightClick = (AppToShow: string) => {
 
 const closeApp = (appToClose: string) => {
   Notify.closeApplication(appToClose);
-}
+};
 
 const setupListeners = (
   props: any,

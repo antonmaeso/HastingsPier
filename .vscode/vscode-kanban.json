@@ -28,5 +28,38 @@
     }
   ],
   "testing": [],
-  "todo": []
+  "todo": [
+    {
+      "assignedTo": {
+        "name": "mannn"
+      },
+      "category": "Remove App",
+      "creation_time": "2019-10-25T12:41:38.686Z",
+      "description": {
+        "content": "When Removing an app with the close on AppBar, if the app open is the one being closed, default to AppSelection",
+        "mime": "text/markdown"
+      },
+      "id": "3",
+      "references": [],
+      "title": "Move to default if app removed is loaded"
+    },
+    {
+      "assignedTo": {
+        "name": "mannn"
+      },
+      "category": "Refactor",
+      "creation_time": "2019-10-25T12:47:50.775Z",
+      "description": {
+        "content": "AppBar needs cleaning up. ",
+        "mime": "text/markdown"
+      },
+      "details": {
+        "content": "Currently Application bar uses both maps and arrays, it should be possible to just use a map. So Refactor for that",
+        "mime": "text/markdown"
+      },
+      "id": "4",
+      "references": [],
+      "title": "Refactor ApplicationBar.tsx"
+    }
+  ]
 }

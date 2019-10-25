@@ -1,5 +1,4 @@
 $AppSquareSize: 200px;
-
 .AppSelection {
     justify-content: space-evenly;
     display: flex !important;
@@ -45,4 +44,8 @@ $AppSquareSize: 200px;
 
 .ApplicationSelection .notify {
     display: none;
+}
+
+.appButton.ApplicationSelection {
+    margin-top: 10px;
 }

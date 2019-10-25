@@ -36,5 +36,13 @@ export class NotifyRouting {
             }
             control.getWindow(windowId).webContents.send("activeApplication", value.Active);
         });
+        // to remove an application from the DOM
+        ipcMain.on("closeApplication", (event: any, value: any) => {
+            let window = mainWindowId;
+            if (value.WindowId !== undefined) {
+              window = value.WindowId;
+            }
+            control.getWindow(window).webContents.send("closeApplication", value);
+          });
     }
 }

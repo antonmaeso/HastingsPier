@@ -2,6 +2,7 @@ import { ipcRenderer } from "electron";
 import * as React from "react";
 import "../style/style.scss";
 import { appMap } from "../util/ApplicationManifest";
+import * as N from "../util/Notify";
 import * as ps from "../util/PersistantStorage";
 import { ApplicationBar } from "./ApplicationBar";
 import { ApplicationWindow } from "./ApplicationWindow";
@@ -66,18 +67,22 @@ const setupListeners = (setRunningApplication: React.Dispatch<React.SetStateActi
     }
   });
   ipcRenderer.on("closeApplication", (event: any, value: any) => {
-    removeAppFromDom(value)
+    removeAppFromDom(value.Close);
+    // if (value.Close === RunningApplication) {
+      N.setActiveApplication("ApplicationSelection");
+    // }
   });
 
 };
 
 const resetVisible = () => {
 
-}
+};
 
 const removeAppFromDom = (app: string) => {
-  loadedApps.delete(app);
-}
+  loadedApps.delete(app); // need something to refresh the page
+  console.log(app + " Removed from Map: " + !(loadedApps.has(app)));
+};
 
 const addAppToDom = (app: string) => {
   if (!Array.from(loadedApps.keys()).includes(app)) {
