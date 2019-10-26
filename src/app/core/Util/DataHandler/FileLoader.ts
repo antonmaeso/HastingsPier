@@ -11,8 +11,7 @@ export class FileLoader implements ICRUD {
       return false;
     }
   }
-  read(source: string): string | false {
-    const filePath = path.join(path.resolve(), source);
+  read(filePath: string): string | false {
     if (fs.existsSync(filePath)) {
       return fs.readFileSync(filePath, "utf-8");
     } else {

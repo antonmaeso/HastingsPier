@@ -11,7 +11,10 @@ import { Logger } from "./app/core/util/Logger";
 import { NotifyRouting } from "./app/core/util/NotifyRouting";
 import { WindowControl } from "./app/core/util/WindowManager";
 import { ICRUD } from "./app/core/util/DataHandler/ICRUD";
-import { DataHandler } from "./app/core/util/DataHandler/DataHandler";
+import {
+  DataHandler,
+  IFileOperations
+} from "./app/core/util/DataHandler/DataHandler";
 
 export let mainWindowId: number;
 const Path = app.getAppPath();
@@ -109,18 +112,13 @@ export function balloon(displayTitle: string, contents: string, other?: any) {
 // create static util classes
 
 ipcMain.on("apps", (event: any, value: any) => {
-  let file: ICRUD = new DataHandler();
-  const appManefest = path.join(path.resolve() + "/HastingsPier.json");
+  let file: IFileOperations = DataHandler.createDataHandler();
+  const appManefest = DataHandler.projectDist + "/HastingsPier.json";
   let config: string | boolean = false;
-  while (config === false) {
-    config = file.read("/dist/HastingsPier.json");
-    if (config === false) {
-      fr.createFile(
-        appManefest,
-        '{"apps":[{"appName":"TheAppFinderGeneral"}]}'
-      );
-    }
-  }
+  config = file.readOrCreateThenRead(
+    appManefest,
+    '{"apps":[{"appName":"TheAppFinderGeneral"}]}'
+  );
   control.getWindow(mainWindowId).webContents.send("appsResponse", config);
 });
 

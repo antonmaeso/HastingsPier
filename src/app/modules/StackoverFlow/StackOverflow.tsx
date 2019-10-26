@@ -28,12 +28,12 @@ export const Google = (props: any) => {
   };
 
   const readFile = () => {
-    let config: ICRUD = new DataHandler();
-    console.log(config.read("/dist/HastingsPier.json"));
+    let config: ICRUD = DataHandler.createDataHandler();
+    console.log(config.read(DataHandler.projectDist + "/HastingsPier.json"));
   };
 
   const webRequest = () => {
-    let test: IHTTP = new DataHandler();
+    let test: IHTTP = DataHandler.createDataHandler();
     test
       .get("https://jsonplaceholder.typicode.com/todos")
       .then(result => console.log(result));
