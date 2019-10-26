@@ -9,7 +9,7 @@ export interface WebRequest {
 
 export interface CRUD {
   create(): Function;
-  read(source: string): string;
+  read(source: string): string | false;
   update(): Function;
   delete(): Function;
 }
@@ -20,7 +20,7 @@ export class DataHandler implements CRUD, WebRequest {
   create(): Function {
     throw new Error("Method not implemented.");
   }
-  read(source: string): string {
+  read(source: string): string | false {
     const filePath = path.join(path.resolve(), source);
     return fr.readFile(filePath);
   }

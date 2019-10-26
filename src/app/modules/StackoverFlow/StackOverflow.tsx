@@ -31,12 +31,12 @@ export const Google = (props: any) => {
   };
 
   const readFile = () => {
-    let config: CRUD = new DataHandler(DataSource.FILE);
-    console.log(config.read("/dist/HastingsPier.json"));
+    let config: CRUD = new DataHandler();
+    console.log(config.read("/dist/kkkHastingsPier.json"));
   };
 
   const webRequest = () => {
-    let test: WebRequest = new DataHandler(DataSource.FILE);
+    let test: WebRequest = new DataHandler();
     test
       .get("https://jsonplaceholder.typicode.com/todos")
       .then(result => console.log(result));
