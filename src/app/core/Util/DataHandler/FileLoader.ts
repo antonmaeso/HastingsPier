@@ -1,15 +1,22 @@
 import * as fs from "fs";
 import { ICRUD } from "./ICRUD";
+const path = require("path");
 
 export class FileLoader implements ICRUD {
-  create(): Function {
-    throw new Error("Method not implemented.");
+  create(Path: string, contents?: string): boolean {
+    if (!fs.existsSync(Path)) {
+      fs.writeFileSync(Path, contents);
+      return true;
+    } else {
+      return false;
+    }
   }
   read(source: string): string | false {
-    if (fs.existsSync(source)) {
-      return fs.readFileSync(source, "utf-8");
+    const filePath = path.join(path.resolve(), source);
+    if (fs.existsSync(filePath)) {
+      return fs.readFileSync(filePath, "utf-8");
     } else {
-      throw "Path not found" + source;
+      throw "Path not found" + filePath;
     }
   }
   update(): Function {

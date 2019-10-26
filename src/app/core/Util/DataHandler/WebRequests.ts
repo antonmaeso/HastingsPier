@@ -1,6 +1,7 @@
 import { IHTTP } from "./IHTTP";
+import { FileLoader } from "./FileLoader";
 
-export class WebRequests implements IHTTP {
+export class WebRequests extends FileLoader implements IHTTP {
   post(): Function {
     throw new Error("Method not implemented.");
   }

@@ -1,5 +1,5 @@
 export interface ICRUD {
-  create(): Function;
+  create(Path: string, contents?: string): boolean;
   read(source: string): string | false;
   update(): Function;
   delete(): Function;
