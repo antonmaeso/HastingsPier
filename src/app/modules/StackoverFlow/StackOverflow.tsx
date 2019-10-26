@@ -3,11 +3,9 @@ import { ipcRenderer, ipcMain } from "electron";
 import "./style/rmDash.scss";
 import React, { useState, useEffect } from "react";
 import { Button } from "../../core/components/library/Button";
-import {
-  DataHandler,
-  WebRequest
-} from "../../core/util/DataHandler/DataHandler";
+import { DataHandler } from "../../core/util/DataHandler/DataHandler";
 import { ICRUD } from "../../core/util/DataHandler/ICRUD";
+import { IHTTP } from "../../core/util/DataHandler/IHTTP";
 
 export const Google = (props: any) => {
   const Src = "https://stackoverflow.com/";
@@ -35,7 +33,7 @@ export const Google = (props: any) => {
   };
 
   const webRequest = () => {
-    let test: WebRequest = new DataHandler();
+    let test: IHTTP = new DataHandler();
     test
       .get("https://jsonplaceholder.typicode.com/todos")
       .then(result => console.log(result));
