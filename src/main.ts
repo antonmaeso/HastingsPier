@@ -1,4 +1,4 @@
-import * as fr from "./app/core/util/FileLoader";
+import * as fr from "./app/core/util/DataHandler/FileLoader";
 const url = require("url");
 const path = require("path");
 // const os = require("os");
@@ -10,6 +10,8 @@ import { IpcMainRouting } from "./app/core/util/IpcMainRouting";
 import { Logger } from "./app/core/util/Logger";
 import { NotifyRouting } from "./app/core/util/NotifyRouting";
 import { WindowControl } from "./app/core/util/WindowManager";
+import { ICRUD } from "./app/core/util/DataHandler/ICRUD";
+import { DataHandler } from "./app/core/util/DataHandler/DataHandler";
 
 export let mainWindowId: number;
 const Path = app.getAppPath();
@@ -18,24 +20,26 @@ export const control = new WindowControl(iconpath, logger);
 const NR = new NotifyRouting();
 
 const createWindow = () => {
-  mainWindowId = control.createNewWindow({
-    frame: false,
-    height: 600,
-    icon: iconpath,
-    minHeight: 300,
-    minWidth: 300,
-    webPreferences: {
-      nodeIntegration: true,
-      webviewTag: true,
+  mainWindowId = control.createNewWindow(
+    {
+      frame: false,
+      height: 600,
+      icon: iconpath,
+      minHeight: 300,
+      minWidth: 300,
+      webPreferences: {
+        nodeIntegration: true,
+        webviewTag: true
+      },
+      width: 800
     },
-    width: 800,
-  }, "index.html");
-
+    "index.html"
+  );
 
   createTray();
 
   // BrowserWindow.addDevToolsExtension(
-  //   path.join(os.homedir(), 
+  //   path.join(os.homedir(),
   //  '/AppData/Local/Google/Chrome/User Data/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/4.2.0_0')
   // )
 };
@@ -58,34 +62,40 @@ app.on("activate", () => {
 let appIcon: Tray = null;
 let lastBalloonMessage = "";
 const createTray = () => {
-  appIcon = new Tray(nativeImage.createFromPath(iconpath).resize({ width: 16, height: 16 }));
+  appIcon = new Tray(
+    nativeImage.createFromPath(iconpath).resize({ width: 16, height: 16 })
+  );
 
-  const contextMenu = Menu.buildFromTemplate([{
-    click() {
-      control.getWindow(mainWindowId).show();
+  const contextMenu = Menu.buildFromTemplate([
+    {
+      click() {
+        control.getWindow(mainWindowId).show();
+      },
+      label: "Show"
     },
-    label: "Show",
-  },
-  {
-    label: "Quit",
-    click() {
-      app.quit();
+    {
+      label: "Quit",
+      click() {
+        app.quit();
+      }
     },
-  },
-  {
-    label: "Last message",
-    click() {
-      balloon("Last message", lastBalloonMessage);
-    },
-  },
+    {
+      label: "Last message",
+      click() {
+        balloon("Last message", lastBalloonMessage);
+      }
+    }
   ]);
 
   appIcon.setContextMenu(contextMenu);
   appIcon.setToolTip("Hastings Pier");
-  appIcon.on("double-click", () => { control.getWindow(mainWindowId).show(); });
-  appIcon.on("balloon-click", () => { control.getWindow(mainWindowId).show(); });
+  appIcon.on("double-click", () => {
+    control.getWindow(mainWindowId).show();
+  });
+  appIcon.on("balloon-click", () => {
+    control.getWindow(mainWindowId).show();
+  });
 };
-
 
 export function balloon(displayTitle: string, contents: string, other?: any) {
   try {
@@ -99,23 +109,29 @@ export function balloon(displayTitle: string, contents: string, other?: any) {
 // create static util classes
 
 ipcMain.on("apps", (event: any, value: any) => {
-  const appManefest = path.join(path.resolve() + "/dist", "/HastingsPier.json");
-
+  let file: ICRUD = new DataHandler();
+  const appManefest = path.join(path.resolve() + "/HastingsPier.json");
   let config: string | boolean = false;
   while (config === false) {
-    config = fr.readFile(appManefest);
+    config = file.read("/dist/HastingsPier.json");
     if (config === false) {
-      fr.createFile(appManefest, '{"apps":[{"appName":"TheAppFinderGeneral"}]}');
+      fr.createFile(
+        appManefest,
+        '{"apps":[{"appName":"TheAppFinderGeneral"}]}'
+      );
     }
   }
   control.getWindow(mainWindowId).webContents.send("appsResponse", config);
 });
 
 // to request a new window open
-ipcMain.on("WindowControl", (event: any, value: any, responseTarget: string) => {
-  const toReturn = control.route(value);
-  return toReturn;
-});
+ipcMain.on(
+  "WindowControl",
+  (event: any, value: any, responseTarget: string) => {
+    const toReturn = control.route(value);
+    return toReturn;
+  }
+);
 
 // ipcMain.on("WindowControl", (event: any, arg: any, responseTarget: string) => {
 //   new Promise((resolve, reject) => {
@@ -146,7 +162,7 @@ ipcMain.on("WindowControl", (event: any, value: any, responseTarget: string) => 
 
 ipcMain.on("CallMe", () => {
   control.getWindow(mainWindowId).webContents.send("CallMe");
-})
+});
 
 ipcMain.on("NewWindow", (event: any, value: any) => {
   let newWindow: number;

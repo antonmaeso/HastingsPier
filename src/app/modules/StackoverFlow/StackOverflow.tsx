@@ -5,10 +5,9 @@ import React, { useState, useEffect } from "react";
 import { Button } from "../../core/components/library/Button";
 import {
   DataHandler,
-  DataSource,
-  CRUD,
   WebRequest
-} from "../../core/util/DataHandler";
+} from "../../core/util/DataHandler/DataHandler";
+import { ICRUD } from "../../core/util/DataHandler/ICRUD";
 
 export const Google = (props: any) => {
   const Src = "https://stackoverflow.com/";
@@ -31,8 +30,8 @@ export const Google = (props: any) => {
   };
 
   const readFile = () => {
-    let config: CRUD = new DataHandler();
-    console.log(config.read("/dist/kkkHastingsPier.json"));
+    let config: ICRUD = new DataHandler();
+    console.log(config.read("/dist/HastingsPier.json"));
   };
 
   const webRequest = () => {
