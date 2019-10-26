@@ -25,6 +25,20 @@
       "prio": 4,
       "references": [],
       "title": "Remove Application - App Bar"
+    },
+    {
+      "assignedTo": {
+        "name": "anton_maeso"
+      },
+      "category": "refactor",
+      "creation_time": "2019-10-26T10:16:40.458Z",
+      "description": {
+        "content": "The aim is so that our users can call a single overloaded method to request data from different sources.\n\nI plan on creating a single class that makes takes a enum that might be file ipc and web then it would take a route and a return address. I havent worked out the specifics yet.",
+        "mime": "text/markdown"
+      },
+      "id": "7",
+      "references": [],
+      "title": "Create a more general way of acsessing data"
     }
   ],
   "testing": [],
