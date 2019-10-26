@@ -20,14 +20,6 @@ export class FileLoader implements ICRUD {
   }
 }
 
-// export const readFile = (Path: string) => {
-//   if (fs.existsSync(Path)) {
-//     return fs.readFileSync(Path, "utf-8");
-//   } else {
-//     throw "Path not found" + Path;
-//   }
-// };
-
 export const createFile = (Path: string, contents: string) => {
   if (!fs.existsSync(Path)) {
     fs.writeFileSync(Path, contents);
