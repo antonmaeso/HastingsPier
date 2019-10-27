@@ -19,7 +19,7 @@ export class DataHandler extends WebRequests
   public static projectDir: string = path.resolve();
   public static projectDist: string = path.join(path.resolve(), "/dist");
   public static DataHandlerInstance: DataHandler;
-  private constructor() {
+  constructor() {
     super();
   }
 

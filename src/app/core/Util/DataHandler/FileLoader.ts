@@ -1,9 +1,8 @@
 import * as fs from "fs";
 import { ICRUD } from "./ICRUD";
-const path = require("path");
 
 export class FileLoader implements ICRUD {
-  create(Path: string, contents?: string): boolean {
+  public create(Path: string, contents?: string): boolean {
     if (!fs.existsSync(Path)) {
       fs.writeFileSync(Path, contents);
       return true;
