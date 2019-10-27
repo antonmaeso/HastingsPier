@@ -1,4 +1,5 @@
 module.exports = {
+    "jest.showCoverageOnLoad": true,
     roots: ["<rootDir>/src"],
     transform: {
     "^.+\\.tsx?$": "ts-jest"
