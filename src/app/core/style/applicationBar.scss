@@ -83,8 +83,15 @@
 
 .notifyList {
     display: none;
+    position: absolute;
 }
 
-.notifyCount:hover \ .notifyList {
+.notifyCount:hover+.notifyList {
+    display: block;
+    border: solid;
+    border-color: yellow;
+}
+
+.notifyLine {
     display: flex;
 }

@@ -13,9 +13,11 @@ export const ButtonNotification = (props: any) => {
         toShow.push(notificationLine(notification.notification));
     });
 
-    return <div className="notifyList">{toShow}</div>;
+    return <div id={"divnotify" + props.appName} className="notifyList">{toShow}</div>;
 };
 
 const notificationLine = (toShow: string) => {
     return <div className="notifyline">{toShow}</div>;
 };
+
+// make the notification apear at the mouse

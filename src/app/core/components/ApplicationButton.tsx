@@ -10,7 +10,7 @@ export class NotifyObject {
   public read = false;
 
   constructor(info: string) {
-      this.notification = info;
+    this.notification = info;
   }
 }
 
@@ -67,8 +67,8 @@ export const AppButton = (props: any) => {
         }}
         onContextMenu={() => { rightClick(props.appName); }}
       >
-        <div className="notifyCount">{notifications.length}</div>
-        <ButtonNotification notifications = {notifications} setRead = {setNotification}/>
+        <div className="notifyCount" title={notifications.length.toString()}>{notifications.length}</div>
+        <ButtonNotification appName = {props.appName} notifications={notifications} setRead={setNotification} />
       </div>
     </React.Fragment>
   );
