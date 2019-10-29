@@ -82,14 +82,22 @@
 }
 
 .notifyList {
+    margin-left: 115px;
     display: none;
     position: absolute;
+    margin-top: 70px;
+    background-color: black;
+    padding: 1px;
+    border: solid;
+    z-index: 1;
 }
 
 .notifyCount:hover+.notifyList {
-    display: block;
-    border: solid;
-    border-color: yellow;
+    display: flex;
+}
+
+.notifyList:hover {
+    display: flex;
 }
 
 .notifyLine {

@@ -1,4 +1,4 @@
-import { IFrame } from "../../core/components/library/Iframe";
+import { Webview } from "../../core/components/library/Webview";
 import { ipcRenderer, ipcMain } from "electron";
 import "./style/rmDash.scss";
 import React, { useState, useEffect } from "react";
