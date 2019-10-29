@@ -5,7 +5,7 @@ const path = require("path");
 import logo from "./app/core/assets/Ant.png";
 const iconpath = path.join(__dirname + "\\" + logo);
 
-import { app, BrowserWindow, ipcMain, Menu, nativeImage, Tray } from "electron";
+import { app, BrowserWindow, ipcMain, Menu, nativeImage, Tray, BrowserView, Rectangle } from "electron";
 import { IpcMainRouting } from "./app/core/util/IpcMainRouting";
 import { Logger } from "./app/core/util/Logger";
 import { NotifyRouting } from "./app/core/util/NotifyRouting";
@@ -162,6 +162,23 @@ ipcMain.on("CallMe", () => {
   control.getWindow(mainWindowId).webContents.send("CallMe");
 });
 
+ipcMain.on("CreateBrowserView", (event: any, value: any) => {
+  const Src = value.src;
+  const view = new BrowserView();
+  control.getWindow(mainWindowId).setBrowserView(view);
+  const bound: Rectangle = { x: value.x, y: value.y, width: value.width, height: value.height };
+  view.setAutoResize({ width: true, height: true, horizontal: true, vertical: false });
+  view.setBounds(bound);
+  // view.setBounds({ x: 2, y: 123, width: 667, height: 577 });
+  // view.setBounds({
+  //   height: value.height as number,
+  //   width: value.width as number,
+  //   x: value.x as number,
+  //   y: value.y as number,
+  // });
+  view.webContents.loadURL(Src);
+});
+
 ipcMain.on("NewWindow", (event: any, value: any) => {
   let newWindow: number;
   newWindow = control.createNewWindow({
@@ -171,9 +188,9 @@ ipcMain.on("NewWindow", (event: any, value: any) => {
     minHeight: 300,
     minWidth: 300,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
     },
-    width: 800
+    width: 800,
   });
   control.getWindow(newWindow).show();
   control.getWindow(newWindow).loadURL(value);

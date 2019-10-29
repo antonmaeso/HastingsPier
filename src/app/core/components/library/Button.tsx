@@ -2,7 +2,7 @@ import * as React from "react";
 
 export const Button = (props: any) => {
   let button = <button onClick={props.onClick}>{props.text}</button>;
-  if (props.type == "menuItem") {
+  if (props.type === "menuItem") {
     button = MenuItemButton(props);
   }
   return button;

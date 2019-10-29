@@ -7,5 +7,5 @@ export const Webview = (props: any) => {
     if (props.MaxSize) {
         className = "fullIframe";
     }
-    return <webview id={props.uniqueId} className={className} src={props.Src} />;
+    return <div id={props.uniqueId} className={className} ></div>;
 };
