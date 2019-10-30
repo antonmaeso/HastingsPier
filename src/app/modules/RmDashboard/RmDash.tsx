@@ -1,21 +1,23 @@
-import * as React from "react";
-import { Button } from "../../core/components/library/Button";
-import { Webview } from "../../core/components/library/Webview";
-import * as N from "../../core/util/Notify";
+// import { ipcRenderer } from "electron";
+// import * as React from "react";
+// import { Button } from "../../core/components/library/Button";
+// import { Webview } from "../../core/components/library/Webview";
+import * as BV from "../../core/util/BrowserViewUtil";
+// import * as N from "../../core/util/Notify";
 import "./style/rmDash.scss";
-import { BrowserWindow, BrowserView, remote, ipcRenderer } from "electron";
 
 const webviewId = "RMDash";
 const Src = "https://rmdashboard.network.uk.ad/";
 
 export const RmDash = (props: any) => {
-    // addListener();
-    return <React.Fragment>
-        <div className="RmDash">
-            <Webview Src={Src} MaxSize={true} uniqueId={webviewId} />
-        </div>
-        <Button onClick={addBrowserView} text="Find env table" />
-    </React.Fragment>;
+    addBrowserView();
+    return null;
+    // return <React.Fragment>
+    //     <div className="RmDash">
+    //         <Webview Src={Src} MaxSize={true} uniqueId={webviewId} />
+    //     </div>
+    //     <Button onClick={addBrowserView} text="Find env table" />
+    // </React.Fragment>;
 };
 
 const status = new Map<string, string>([
@@ -45,21 +47,18 @@ const addListener = () => {
     // BrowserWindow.getFocusedWindow().webContents.addListener()
 };
 
-const myalert = () => {
-    N.Balloon("From Dom", "I was called from the dom");
-};
 
 const addBrowserView = () => {
-    const containter = document.getElementById(webviewId);
+    const bounding = document.getElementsByClassName("applicationWindow")[0].getBoundingClientRect();
 
-    const bounding = containter.getBoundingClientRect();
+    BV.createView(bounding.left, bounding.top, bounding.height, bounding.width, Src, "RMDash");
 
-
-    ipcRenderer.send("CreateBrowserView", {
-        height: Math.round(bounding.height),
-        src: Src,
-        width: Math.round(bounding.width),
-        x: Math.round(bounding.left),
-        y: Math.round(bounding.top),
-    });
+    // ipcRenderer.send("CreateBrowserView", {
+    //     height: Math.round(bounding.height),
+    //     src: Src,
+    //     viewApplication: "RMDash",
+    //     width: Math.round(bounding.width),
+    //     x: Math.round(bounding.left),
+    //     y: Math.round(bounding.top),
+    // });
 };

@@ -15,6 +15,7 @@ import {
   DataHandler,
   IFileOperations
 } from "./app/core/util/DataHandler/DataHandler";
+import { any } from "prop-types";
 
 export let mainWindowId: number;
 const Path = app.getAppPath();
@@ -162,22 +163,59 @@ ipcMain.on("CallMe", () => {
   control.getWindow(mainWindowId).webContents.send("CallMe");
 });
 
+// map of browser views. Key is the app name in the view. Value is the view
+const activeViews = new Map<string, BrowserView>();
 ipcMain.on("CreateBrowserView", (event: any, value: any) => {
   const Src = value.src;
+  const viewApplication = value.viewApplication;
   const view = new BrowserView();
   control.getWindow(mainWindowId).setBrowserView(view);
   const bound: Rectangle = { x: value.x, y: value.y, width: value.width, height: value.height };
-  view.setAutoResize({ width: true, height: true, horizontal: true, vertical: false });
+  view.setAutoResize({ width: true, height: true, horizontal: false, vertical: false });
   view.setBounds(bound);
-  // view.setBounds({ x: 2, y: 123, width: 667, height: 577 });
-  // view.setBounds({
-  //   height: value.height as number,
-  //   width: value.width as number,
-  //   x: value.x as number,
-  //   y: value.y as number,
-  // });
   view.webContents.loadURL(Src);
+
+  // add to dictionary
+  activeViews.set(viewApplication, view);
+
+  // recentView.webContents.executeJavaScript()
 });
+
+ipcMain.on("CloseBrowserView", (event: any, value: any) => {
+  const viewApplication = value.viewApplication;
+
+  const viewToClose = activeViews.get(viewApplication);
+  viewToClose.destroy(); // currently only way to get rid of view
+
+});
+
+ipcMain.on("ShowBrowserView", (event: any, value: any) => {
+  const viewApplication = value.viewApplication;
+  const bound: Rectangle = { x: value.x, y: value.y, width: value.width, height: value.height };
+  const viewToShow = activeViews.get(viewApplication);
+  viewToShow.setBounds(bound); // to show, move it back on the screen
+  // maybe make views stored in objects containing the last location they were shown?
+});
+
+const hideView = (view: BrowserView) => {
+  view.setBounds({ x: 3000, y: 3000, height: 10, width: 10 });
+};
+
+ipcMain.on("HideBrowserView", (event: any, value: any) => {
+  const viewApplication = value.viewApplication;
+
+  const viewToHide = activeViews.get(viewApplication);
+  hideView(viewToHide); // to hide, move it off the screen
+});
+
+ipcMain.on("HideAllBrowserView", () => {
+  // loop through all views and hide them
+  Array.from(activeViews.keys()).forEach((key) => {
+    hideView(activeViews.get(key));
+  });
+});
+
+
 
 ipcMain.on("NewWindow", (event: any, value: any) => {
   let newWindow: number;

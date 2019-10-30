@@ -79,6 +79,38 @@
     },
     {
       "assignedTo": {
+        "name": "trekimann"
+      },
+      "category": "BrowserView",
+      "creation_time": "2019-10-30T10:41:07.278Z",
+      "description": {
+        "content": "When the AppBar is hidden, BrowserWindows should resize automaticaly",
+        "mime": "text/markdown"
+      },
+      "id": "9",
+      "references": [],
+      "title": "BrowserView resize automatically on appbar hide"
+    },
+    {
+      "assignedTo": {
+        "name": "trekimann"
+      },
+      "category": "Tech Debt",
+      "creation_time": "2019-10-30T10:38:07.101Z",
+      "description": {
+        "content": "We should have JDoc descriptions on Util exports",
+        "mime": "text/markdown"
+      },
+      "details": {
+        "content": "We should have JDoc descriptions on Util exports so that it is nice and clear what each one is doing.",
+        "mime": "text/markdown"
+      },
+      "id": "8",
+      "references": [],
+      "title": "JDoc description on util exports"
+    },
+    {
+      "assignedTo": {
         "name": "mannn"
       },
       "category": "Remove App",
