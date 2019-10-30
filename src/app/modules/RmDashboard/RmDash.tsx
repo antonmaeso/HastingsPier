@@ -1,23 +1,25 @@
 // import { ipcRenderer } from "electron";
-// import * as React from "react";
-// import { Button } from "../../core/components/library/Button";
-// import { Webview } from "../../core/components/library/Webview";
+import * as React from "react";
+import { Button } from "../../core/components/library/Button";
+import { Webview } from "../../core/components/library/Webview";
 import * as BV from "../../core/util/BrowserViewUtil";
 // import * as N from "../../core/util/Notify";
 import "./style/rmDash.scss";
 
 const webviewId = "RMDash";
 const Src = "https://rmdashboard.network.uk.ad/";
+const viewName = "RmDash";
 
 export const RmDash = (props: any) => {
     addBrowserView();
-    return null;
-    // return <React.Fragment>
-    //     <div className="RmDash">
-    //         <Webview Src={Src} MaxSize={true} uniqueId={webviewId} />
-    //     </div>
-    //     <Button onClick={addBrowserView} text="Find env table" />
-    // </React.Fragment>;
+    // return null;
+    return <React.Fragment>
+        <div className="RmDash">
+            {/* <Webview Src={Src} MaxSize={true} uniqueId={webviewId} /> */}
+        </div>
+        {/* <Button onClick={hideView} text="Hide View" />
+        <Button onClick={showView} text="Show View" /> */}
+    </React.Fragment>;
 };
 
 const status = new Map<string, string>([
@@ -47,11 +49,19 @@ const addListener = () => {
     // BrowserWindow.getFocusedWindow().webContents.addListener()
 };
 
+const hideView = () => {
+    BV.hideView(viewName);
+};
+
+const showView = () => {
+    const bounding = document.getElementsByClassName("applicationWindow active")[0].getBoundingClientRect();
+    BV.showView(viewName, bounding.left, bounding.top, bounding.height, bounding.width);
+};
 
 const addBrowserView = () => {
-    const bounding = document.getElementsByClassName("applicationWindow")[0].getBoundingClientRect();
+    const bounding = document.getElementsByClassName("applicationWindow active")[0].getBoundingClientRect();
 
-    BV.createView(bounding.left, bounding.top, bounding.height, bounding.width, Src, "RMDash");
+    BV.createView(bounding.left, bounding.top, bounding.height, bounding.width, Src, viewName);
 
     // ipcRenderer.send("CreateBrowserView", {
     //     height: Math.round(bounding.height),

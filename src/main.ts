@@ -183,15 +183,22 @@ ipcMain.on("CreateBrowserView", (event: any, value: any) => {
 
 ipcMain.on("CloseBrowserView", (event: any, value: any) => {
   const viewApplication = value.viewApplication;
-
-  const viewToClose = activeViews.get(viewApplication);
-  viewToClose.destroy(); // currently only way to get rid of view
-
+  activeViews.get(viewApplication).destroy(); // currently only way to get rid of view
+  activeViews.delete(viewApplication);
 });
 
 ipcMain.on("ShowBrowserView", (event: any, value: any) => {
   const viewApplication = value.viewApplication;
-  const bound: Rectangle = { x: value.x, y: value.y, width: value.width, height: value.height };
+  let bound: Rectangle;
+  if (value.x !== null && value.x !== undefined &&
+    value.y !== null && value.y !== undefined &&
+    value.width !== null && value.width !== undefined &&
+    value.height !== null && value.height !== undefined) {
+    bound = { x: value.x, y: value.y, width: value.width, height: value.height };
+  } else {
+    const bounding = document.getElementsByClassName("applicationWindow active")[0].getBoundingClientRect();
+    bound = { x: bounding.left, y: bounding.top, height: bounding.height, width: bounding.width };
+  }
   const viewToShow = activeViews.get(viewApplication);
   viewToShow.setBounds(bound); // to show, move it back on the screen
   // maybe make views stored in objects containing the last location they were shown?

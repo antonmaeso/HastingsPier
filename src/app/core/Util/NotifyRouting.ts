@@ -1,5 +1,6 @@
 import { ipcMain } from "electron";
 import { balloon, control, mainWindowId } from "../../../main";
+import * as BV from "./BrowserViewUtil";
 
 export class NotifyRouting {
 
@@ -31,6 +32,7 @@ export class NotifyRouting {
             control.getWindow(windowId).webContents.send("menuTitle", value.Title);
         });
         // to choose Active Application
+        // TODO: Make it check for open BrowserViews and act accordingly
         ipcMain.on("activeApplication", (event: any, value: any) => {
             let windowId = mainWindowId;
             if (value.WindowId !== undefined && value.WindowId !== null) {
@@ -38,8 +40,19 @@ export class NotifyRouting {
             }
             control.getWindow(windowId).webContents.send("activeApplication", value.Active);
             this.activeApplication = value.Active;
+            
+            //loop through active browser windows and hide all unless they are the active application
+            Array.from(activeViews.keys()).forEach(key => {
+                 if(key !== value.Active){
+                     BV.hideView(key);
+                 }else{
+                     BV.showView(key);
+                 }               
+            });
         });
+
         // to remove an application from the DOM
+        // TODO: Make it check for open BrowserViews and act accordingly
         ipcMain.on("closeApplication", (event: any, value: any) => {
             let window = mainWindowId;
             if (value.WindowId !== undefined) {

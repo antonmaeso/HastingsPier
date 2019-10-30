@@ -24,6 +24,6 @@ const clickApp = (app: string) => {
   // signal to the util that an app has been clicked on
   // for now just use ipcRenderer. Extract to util when better idea of how it looks
   ipcRenderer.send("AppBar", app);
-  Notify.AppNotification(app, "W");
+  // Notify.AppNotification(app, "W");
   // Notify.setWindowTitle(app);
 };

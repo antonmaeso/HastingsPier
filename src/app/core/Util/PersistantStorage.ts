@@ -39,7 +39,7 @@ export const getLocal = (key: string) => {
 
 /**
  * Saves a value to Session storage. Can not be retrieved after an application has closed.
- * If you need to retrieve after the application has close, use Local
+ * If you need to retrieve after the application has close, use Local.
  * Uses JSON.stringify to store
  */
 export const putSession = (key: string, value: any) => {

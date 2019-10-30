@@ -29,6 +29,8 @@ export const ApplicationWindow = (props: any) => {
   let className = "applicationWindow";
   if (!display) {
     className += " hidden";
+  } else if (display) {
+    className += " active";
   }
 
   return <div className={className}>{props.App}</div>;

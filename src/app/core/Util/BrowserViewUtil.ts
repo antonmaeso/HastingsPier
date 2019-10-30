@@ -41,14 +41,16 @@ export const hideAllView = () => {
 
 /**
  * Show an already existing BrowserView by moving it back onto the screen to a specified location.
+ * If you want to make the application fill the availible ApplicationWindow space dont pass any x,y, height or width.
  * Also used to resize an existing view
  */
 export const showView = (
     Application: string,
-    x: number,
-    y: number,
-    height: number,
-    width: number) => {
+    x?: number,
+    y?: number,
+    height?: number,
+    width?: number,
+) => {
     ipcRenderer.send("ShowBrowserView", {
         height: Math.round(height),
         viewApplication: Application,
@@ -57,3 +59,4 @@ export const showView = (
         y: Math.round(y),
     });
 };
+
