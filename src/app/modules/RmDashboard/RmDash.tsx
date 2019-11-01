@@ -1,17 +1,43 @@
 // import { ipcRenderer } from "electron";
+import { ipcRenderer } from "electron";
 import * as React from "react";
-import { Button } from "../../core/components/library/Button";
-import { Webview } from "../../core/components/library/Webview";
+// import { Button } from "../../core/components/library/Button";
+// import { Webview } from "../../core/components/library/Webview";
 import * as BV from "../../core/util/BrowserViewUtil";
+import * as ps from "../../core/util/PersistantStorage";
 // import * as N from "../../core/util/Notify";
 import "./style/rmDash.scss";
+const WindowId = require('electron').remote.getCurrentWindow().id;
 
-const webviewId = "RMDash";
 const Src = "https://rmdashboard.network.uk.ad/";
-const viewName = "RmDash";
+const viewName = "RmDashboard";
 
 export const RmDash = (props: any) => {
-    addBrowserView();
+    const [display, setDisplay] = React.useState(true);
+    const [listener, setListeners] = React.useState(false);
+
+    if (!listener) {
+        setupListeners(setDisplay, viewName);
+        setListeners(true);
+    }
+    const [reloaded, setReloaded] = React.useState(false);
+    if (!reloaded) {
+        const loaded = ps.getSession(viewName + WindowId);
+        if (loaded !== undefined && loaded !== null) {
+            setDisplay(loaded);
+        }
+        setReloaded(true);
+    }
+    const [initialised, setInitialised] = React.useState(false);
+
+    if (display && initialised) {
+        showView();
+    } else if (display && !initialised) {
+        addBrowserView(setInitialised);
+    } else if (!display && initialised) {
+        hideView();
+    }
+
     // return null;
     return <React.Fragment>
         <div className="RmDash">
@@ -37,16 +63,19 @@ const status = new Map<string, string>([
 
 // find the env table. Look at each row. the env_name is the environment.
 // Look in the row for a TD containing an img. Use img src to indicate status.
-const addListener = () => {
-    const EnvTable = document;
-    const WebView = document.querySelector("webview");
-    console.log(WebView);
 
-    // WebView.addEventListener("")
-    // WebView.executeScript({ code: "document.body.style.backgroundColor = 'red'" });
-    const table = WebView.getElementsByClassName("title_left");
-    console.log(table);
-    // BrowserWindow.getFocusedWindow().webContents.addListener()
+const setupListeners = (setDisplay: React.Dispatch<React.SetStateAction<boolean>>, identifier: string) => {
+    ipcRenderer.on("activeApplication", (event: any, value: any) => {
+        if (value !== undefined) {
+            const show = (value === identifier);
+            setDisplay(show);
+            saveStateToSession(show);
+        }
+    });
+};
+
+const saveStateToSession = (display: boolean) => {
+    ps.putSession(viewName + WindowId, display);
 };
 
 const hideView = () => {
@@ -58,10 +87,11 @@ const showView = () => {
     BV.showView(viewName, bounding.left, bounding.top, bounding.height, bounding.width);
 };
 
-const addBrowserView = () => {
+const addBrowserView = (setInitialised: React.Dispatch<React.SetStateAction<boolean>>) => {
     const bounding = document.getElementsByClassName("applicationWindow active")[0].getBoundingClientRect();
 
     BV.createView(bounding.left, bounding.top, bounding.height, bounding.width, Src, viewName);
+    setInitialised(true);
 
     // ipcRenderer.send("CreateBrowserView", {
     //     height: Math.round(bounding.height),
