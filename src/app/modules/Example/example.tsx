@@ -31,14 +31,14 @@ export const Example = (props: any) => {
     <div className="applicationWindow Example">
       EXAMPLE<br></br>
       <Button
-        text="Load File"
+        Text="Load File"
         onClick={() => {
           ipcRenderer.send("apps");
         }}
       />
       <br></br>
       <Button
-        text={"Send Notification" + count.toString()}
+        Text={"Send Notification" + count.toString()}
         onClick={() => {
           setCount(count + 1);
           Notify.AppNotification("Octane", (count + 1).toString());
@@ -47,51 +47,51 @@ export const Example = (props: any) => {
       />
       <br></br>
       <Button
-        text="Send Balloon of click count"
+        Text="Send Balloon of click count"
         onClick={() => {
           Notify.Balloon("Example", count.toString());
         }} />
       <br></br>
       <Button
-        text={"Save Count in local"}
+        Text={"Save Count in local"}
         onClick={() => {
           ps.putLocal("noteCount", count);
         }}
       />
       <Button
-        text={"Return Count from local"}
+        Text={"Return Count from local"}
         onClick={() => {
           setLocal(ps.getLocal("noteCount"));
         }}
       />
       <div>Local stored Count: {local}</div>
       <Button
-        text={"Save Count in Session"}
+        Text={"Save Count in Session"}
         onClick={() => {
           ps.putLocal("noteCountSes", count);
         }}
       />
       <Button
-        text={"Return Count from Session"}
+        Text={"Return Count from Session"}
         onClick={() => {
           setSession(ps.getLocal("noteCountSes"));
         }}
       />
       <div>Local stored Count: {session}</div>
       <Button
-        text={"Save Array in local"}
+        Text={"Save Array in local"}
         onClick={() => {
           ps.putLocal("noteCountArray", [count, count, count]);
         }}
       />
       <Button
-        text={"Return Array from local"}
+        Text={"Return Array from local"}
         onClick={() => {
           const returned = ps.getLocal("noteCountArray");
         }}
       />
       <Button
-        text={"Save Map in local"}
+        Text={"Save Map in local"}
         onClick={() => {
           const toStore = new Map<string, number>();
           toStore.set("1", count);
@@ -101,34 +101,34 @@ export const Example = (props: any) => {
         }}
       />
       <Button
-        text={"Return Map from local"}
+        Text={"Return Map from local"}
         onClick={() => {
           const returned = new Map(ps.getLocal("noteCountMap"));
         }}
       />
       <br></br>
       <Button
-        text="Send to main external class"
+        Text="Send to main external class"
         onClick={() => {
           ipcRenderer.send("SeperateClass");
         }} />
       <br></br>
       <Button
-        text="Set Second Window to specific app"
+        Text="Set Second Window to specific app"
         onClick={() => {
           Notify.setActiveApplication("BatManager", 2);
           Notify.setWindowTitle("BatManager", 2);
         }} />
       <br></br>
       <Button
-        text="Change props in child"
+        Text="Change props in child"
         onClick={() => {
           setKidText("Bars are on me" + count);
         }} />
       <br></br>
       <Kid key="Milkybar" text={kidText} />
       <Button
-        text="Set up listener"
+        Text="Set up listener"
         onClick={() => {
           ipcRenderer.removeAllListeners("CallMe");
           ipcRenderer.on("CallMe", () => {
