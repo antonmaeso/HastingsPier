@@ -17,6 +17,10 @@ button {
     background-color: $secondaryColour;
 }
 
+video {
+    max-width: 100%;
+}
+
 .hidden {
     display: none !important;
 }

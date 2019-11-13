@@ -42,10 +42,11 @@ export class Button extends React.Component<{
   private CssImgButton() {
     // used when you want to set the image in a button though a CSS class
     return (
-      <div className={this.props.className}
+      <div
+        className={this.props.className}
         onClick={this.props.onClick}
         onDoubleClick={this.props.onDblclick}
-        title={this.props.HoverText} />
+        title={this.props.Text} />
     );
   }
 
@@ -54,7 +55,7 @@ export class Button extends React.Component<{
       <div
         className={"glyphiconButton glyphicon glyphicon-" + this.props.className}
         onClick={this.props.onClick}
-        title={this.props.HoverText}
+        title={this.props.Text}
       />
     );
   }
