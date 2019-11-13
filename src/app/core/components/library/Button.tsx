@@ -30,8 +30,8 @@ export class Button extends React.Component<{
       case "glyphiconButton": {
         return this.glyphiconButton();
       }
-      case "imgButton": {
-        return this.ImgButton();
+      case "cssImgButton": {
+        return this.CssImgButton();
       }
       default: {
         return this.StandardButton();
@@ -39,16 +39,20 @@ export class Button extends React.Component<{
     }
   }
 
-  private ImgButton() {
+  private CssImgButton() {
+    // used when you want to set the image in a button though a CSS class
     return (
-      <div className={this.props.className} />
+      <div className={this.props.className}
+        onClick={this.props.onClick}
+        onDoubleClick={this.props.onDblclick}
+        title={this.props.HoverText} />
     );
   }
 
   private glyphiconButton() {
     return (
       <div
-        className={"glyphiconButton glyphicon glyphicon-" + this.props.Text}
+        className={"glyphiconButton glyphicon glyphicon-" + this.props.className}
         onClick={this.props.onClick}
         title={this.props.HoverText}
       />
@@ -64,7 +68,7 @@ export class Button extends React.Component<{
         onMouseUp={this.props.MouseUp}
         onMouseDown={this.props.MouseDown}
         title={this.props.HoverText}
-        onContextMenu={this.rightClick}>
+        onContextMenu={this.rightClick}>{this.props.Text}
       </button>
     );
   }

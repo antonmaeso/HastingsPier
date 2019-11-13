@@ -136,7 +136,7 @@ export const Example = (props: any) => {
             sethiddenListenerText("listener Called");
           })
         }} />
-        <div>{hiddenListenerText}</div>
+      <div>{hiddenListenerText}</div>
       <br></br>
 
     </div>

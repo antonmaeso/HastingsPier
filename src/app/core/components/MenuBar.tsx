@@ -4,28 +4,28 @@ import { Button } from "./library/Button";
 
 const menuItems = [
   <Button
-    Text="remove"
+    className="remove"
     key="MenuRemove"
     type="glyphiconButton"
-    HoverText="Close Window"
+    Text="Close Window"
     onClick={() => {
       closeWindow();
     }}
   />,
   <Button
-    Text="fullscreen"
+    className="fullscreen"
     key="MenuMaximise"
     type="glyphiconButton"
-    HoverText="Fullscreen Window"
+    Text="Fullscreen Window"
     onClick={() => {
       maxWindow();
     }}
   />,
   <Button
-    Text="minus"
+    className="minus"
     key="MenuMin"
     type="glyphiconButton"
-    HoverText="Minimise Window"
+    Text="Minimise Window"
     onClick={() => {
       minWindow();
     }}
