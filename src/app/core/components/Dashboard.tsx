@@ -78,7 +78,6 @@ const setupListeners = (setRunningApplication: React.Dispatch<React.SetStateActi
 
 };
 
-
 const removeAppFromDom = (app: string) => {
   loadedApps.delete(app); // need something to refresh the page
   console.log(app + " Removed from Map: " + !(loadedApps.has(app)));

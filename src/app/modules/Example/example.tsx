@@ -117,7 +117,7 @@ export const Example = (props: any) => {
         text="Set Second Window to specific app"
         onClick={() => {
           Notify.setActiveApplication("BatManager", 2);
-          Notify.setWindowTitle("BatManager", 2);;
+          Notify.setWindowTitle("BatManager", 2);
         }} />
       <br></br>
       <Button

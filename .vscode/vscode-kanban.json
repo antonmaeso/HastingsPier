@@ -114,6 +114,24 @@
       "assignedTo": {
         "name": "trekimann"
       },
+      "category": "ipcRenderer",
+      "creation_time": "2019-11-13T10:03:21.150Z",
+      "description": {
+        "content": "Currently there is a generic ipcRenderer.on(\"activeApplication\" function used in Application Window, make it specific",
+        "mime": "text/markdown"
+      },
+      "details": {
+        "content": "Currently there is a generic ipcRenderer.on(\"activeApplication\" function used in Application Window, make it specific for each application window so that the listener can be removed when the application window is removed",
+        "mime": "text/markdown"
+      },
+      "id": "12",
+      "references": [],
+      "title": "Change ipcRenderer.on(\"activeApplication\" to be specific for application"
+    },
+    {
+      "assignedTo": {
+        "name": "trekimann"
+      },
       "creation_time": "2019-11-13T09:18:34.342Z",
       "description": {
         "content": "There are too many IPC listeneners being created for closeApplication",
