@@ -6,6 +6,7 @@ import { OctaneParent } from "../../modules/OctaneBurner/OctaneParent";
 import { RmDash } from "../../modules/RmDashboard/RmDash";
 import { Google } from "../../modules/StackoverFlow/StackOverflow";
 import { Tapestry } from "../../modules/Tapestry/Tapestry";
+import { VideoRecording } from "../../modules/VideoRecording/VideoRecording";
 
 class App {
     public root: JSX.Element;
@@ -43,4 +44,5 @@ export const appMap = new Map<string, App>([
   ],
   ["HastingsTapestry", new App(<Tapestry />, "Load Tapestry", "Tapestry")],
   ["Google", new App(<Google />, "Show google", "Loading Google")],
+  ["VideoRecording", new App(<VideoRecording />, "Record videos of your pc", "Video Recording")],
 ]);

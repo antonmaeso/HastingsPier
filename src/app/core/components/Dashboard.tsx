@@ -76,7 +76,6 @@ const setupListeners = (setRunningApplication: React.Dispatch<React.SetStateActi
       N.setWindowTitle(RunningApplication);
     }
   });
-
 };
 
 const removeAppFromDom = (app: string) => {
