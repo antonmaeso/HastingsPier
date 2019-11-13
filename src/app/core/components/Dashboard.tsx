@@ -4,6 +4,7 @@ import "../style/style.scss";
 import { appMap } from "../util/ApplicationManifest";
 import * as N from "../util/Notify";
 import * as ps from "../util/PersistantStorage";
+import * as BV from "../util/BrowserViewUtil";
 import { ApplicationBar } from "./ApplicationBar";
 import { ApplicationWindow } from "./ApplicationWindow";
 const WindowId = require('electron').remote.getCurrentWindow().id;
@@ -80,6 +81,8 @@ const setupListeners = (setRunningApplication: React.Dispatch<React.SetStateActi
 
 const removeAppFromDom = (app: string) => {
   loadedApps.delete(app); // need something to refresh the page
+  // if its a browser window, destroy it
+  BV.closeView(app);
   console.log(app + " Removed from Map: " + !(loadedApps.has(app)));
 };
 

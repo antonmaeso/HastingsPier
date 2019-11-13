@@ -183,8 +183,11 @@ ipcMain.on("CreateBrowserView", (event: any, value: any) => {
 
 ipcMain.on("CloseBrowserView", (event: any, value: any) => {
   const viewApplication = value.viewApplication;
-  activeViews.get(viewApplication).destroy(); // currently only way to get rid of view
-  activeViews.delete(viewApplication);
+  const view = activeViews.get(viewApplication);
+  if (view !== undefined && view !== null) {
+    view.destroy(); // currently only way to get rid of view
+    activeViews.delete(viewApplication);
+  }
 });
 
 ipcMain.on("ShowBrowserView", (event: any, value: any) => {
