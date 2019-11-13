@@ -44,6 +44,25 @@
   "testing": [],
   "todo": [
     {
+      "assignedTo": {
+        "name": "trekimann"
+      },
+      "category": "BrowserView",
+      "creation_time": "2019-11-13T09:12:40.017Z",
+      "description": {
+        "content": "When switching to RMDash from another app, the browser view is only half the availible width",
+        "mime": "text/markdown"
+      },
+      "details": {
+        "content": "When switching to RMDash from another app, the browser view is only half the availible width. Need to look into why and sort it.",
+        "mime": "text/markdown"
+      },
+      "id": "10",
+      "references": [],
+      "title": "Fix Browser view not full screen in Application window",
+      "type": "bug"
+    },
+    {
       "category": "Bugs",
       "creation_time": "2019-10-25T14:11:59.309Z",
       "description": {
@@ -90,6 +109,23 @@
       "id": "9",
       "references": [],
       "title": "BrowserView resize automatically on appbar hide"
+    },
+    {
+      "assignedTo": {
+        "name": "trekimann"
+      },
+      "creation_time": "2019-11-13T09:18:34.342Z",
+      "description": {
+        "content": "There are too many IPC listeneners being created for closeApplication",
+        "mime": "text/markdown"
+      },
+      "details": {
+        "content": "There are too many IPC listeneners being created for closeApplication. Need to change components to destroy listeners when the components are removed. Its possible that the util classes are creating the extras, maybe make them static or create a single instance on main.ts which is then called by components",
+        "mime": "text/markdown"
+      },
+      "id": "11",
+      "references": [],
+      "title": "Dispose of ipc listeners when component removed"
     },
     {
       "assignedTo": {
