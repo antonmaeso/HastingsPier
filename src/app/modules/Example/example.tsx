@@ -130,6 +130,7 @@ export const Example = (props: any) => {
       <Button
         text="Set up listener"
         onClick={() => {
+          ipcRenderer.removeAllListeners("CallMe");
           ipcRenderer.on("CallMe", () => {
             Notify.Balloon("Example", "listener Called");
             sethiddenListenerText("listener Called");

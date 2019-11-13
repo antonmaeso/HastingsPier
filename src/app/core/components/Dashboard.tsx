@@ -59,6 +59,7 @@ const saveStateToSession = (active: string) => {
 };
 
 const setupListeners = (setRunningApplication: React.Dispatch<React.SetStateAction<string>>) => {
+  console.log("Dashboard Creating listeners: ActiveApplication, closeApplication");
   ipcRenderer.on("activeApplication", (event: any, value: any) => {
     if (value !== undefined) {
       setRunningApplication(value);
@@ -77,9 +78,6 @@ const setupListeners = (setRunningApplication: React.Dispatch<React.SetStateActi
 
 };
 
-const resetVisible = () => {
-
-};
 
 const removeAppFromDom = (app: string) => {
   loadedApps.delete(app); // need something to refresh the page

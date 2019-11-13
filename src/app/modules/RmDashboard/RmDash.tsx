@@ -65,6 +65,7 @@ const status = new Map<string, string>([
 // Look in the row for a TD containing an img. Use img src to indicate status.
 
 const setupListeners = (setDisplay: React.Dispatch<React.SetStateAction<boolean>>, identifier: string) => {
+    console.log("RmDash Creating listeners: ActiveApplication");
     ipcRenderer.on("activeApplication", (event: any, value: any) => {
         if (value !== undefined) {
             const show = (value === identifier);

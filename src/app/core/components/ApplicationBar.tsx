@@ -23,13 +23,13 @@ export const ApplicationBar = (props: any) => {
     if (appsLoaded !== null) {
       buildAppsFromstore(appsLoaded.reverse(), setAppArray);
     }
+    StartListeners(appArray, setAppArray);
     if (barState !== null) {
       setShowBar(barState);
     }
     setReloaded(true);
   }
 
-  StartListeners(appArray, setAppArray);
 
   // Notify.Balloon("AppBar", applications.length + " Apps in state");
   let className = "applicationBar";
@@ -84,6 +84,7 @@ const removeAppFromBar = (appName: string) => {
 
 const StartListeners = (appArray: string[], setAppArray: React.Dispatch<React.SetStateAction<string[]>>) => {
   const listener = "AppBar";
+  console.log("ApplicationBar Creating listeners: " + listener + ", closeApplication");
   ipcRenderer.removeAllListeners(listener);
   ipcRenderer.on(listener, (event: any, value: any) => {
     if (!appArray.includes(value)) {

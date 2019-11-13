@@ -68,7 +68,7 @@ export const AppButton = (props: any) => {
         onContextMenu={() => { rightClick(props.appName); }}
       >
         <div className="notifyCount" title={notifications.length.toString()}>{notifications.length}</div>
-        <ButtonNotification appName = {props.appName} notifications={notifications} setRead={setNotification} />
+        <ButtonNotification appName={props.appName} notifications={notifications} setRead={setNotification} />
       </div>
     </React.Fragment>
   );
@@ -87,6 +87,7 @@ const setupListeners = (
   props: any,
   setNotification: React.Dispatch<React.SetStateAction<boolean>>,
   setActive: React.Dispatch<React.SetStateAction<boolean>>) => {
+  console.log("ApplicationButton Creating listeners: notify"+props.appName+", activeApplication");
   ipcRenderer.removeAllListeners("notify" + props.appName);
   ipcRenderer.on("notify" + props.appName, (event: any, value: any) => {
     setNotification(true);

@@ -41,6 +41,7 @@ const saveStateToSession = (display: boolean, identifier: string) => {
 };
 
 const setupListeners = (setDisplay: React.Dispatch<React.SetStateAction<boolean>>, identifier: string) => {
+  console.log("ApplicationWindow Creating listeners: ActiveApplication");
   ipcRenderer.on("activeApplication", (event: any, value: any) => {
     if (value !== undefined) {
       const show = (value === identifier);
