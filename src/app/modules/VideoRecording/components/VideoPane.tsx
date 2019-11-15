@@ -29,6 +29,18 @@ export class VideoPane extends React.Component<{
         }
     }
 
+    public componentWillUnmount() {
+        const vid = document.getElementById(this.props.id) as HTMLVideoElement;
+        if (vid !== null) {
+            vid.pause();
+        }
+    }
+
+    public componentWillReceiveProps(props: any) {
+        const vid = document.getElementById(this.props.id);
+        this.initialiseStream(vid, props.captureSrc.id);
+    }
+
     public render() {
         return this.createElement();
     }
@@ -37,14 +49,18 @@ export class VideoPane extends React.Component<{
         return <video id={this.props.id} controls />;
     }
 
-    private initialiseStream = (videoElement: any) => {
+    private initialiseStream = (videoElement: any, capId?: string) => {
+        let screen = this.props.captureSrc.id;
+        if (capId !== undefined) {
+            screen = capId;
+        }
         navigator.mediaDevices.getUserMedia(
             {
                 video: {
                     // deviceId: src.id,
                     mandatory: {
                         chromeMediaSource: "desktop",
-                        chromeMediaSourceId: this.props.captureSrc.id,
+                        chromeMediaSourceId: screen,
                     },
                 },
             }).then((stream: MediaStream) => {
