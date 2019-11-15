@@ -13,21 +13,21 @@ const codec = " codecs=vp9";
 const video = "video/webm";
 
 export class VideoRecording extends React.Component<{}, {
-    CaptureOptions: Option[],
+    CaptureOptions: Map<string, Option>,
     ChosenOption: string,
     ErrorMessage: string,
 }> {
     constructor(props: any) {
         super(props);
         this.state = {
-            CaptureOptions: new Array<Option>(),
-            ChosenOption: "",
+            CaptureOptions: new Map<string, Option>(),
+            ChosenOption: null,
             ErrorMessage: null,
         };
     }
     public render() {
         // On initial load of parent component add record options to app menu bar
-        // A drop down with all the availible options for capture
+        // A drop down with all the availible options for capture - Done
         // Select an option and it starts the preview
         // Press record to start recording
         // Change menu bar icon, maybe app tray icon too, to a recording in progress icon
@@ -36,29 +36,33 @@ export class VideoRecording extends React.Component<{}, {
         // Click save, present save file dialog
         // If they press record again, warn about overwriting existing option.
         // On app remove from Dom, remove recording icons from menu
-        this.state.CaptureOptions.length === 0 ? this.getCaptureOptions() : null;
+        this.state.CaptureOptions.size === 0 ? this.getCaptureOptions() : null;
         return <React.Fragment>
             <div>{this.state.ErrorMessage}</div>
-            {this.state.CaptureOptions.length === 0 ? null :
+            {this.state.CaptureOptions.size === 0 ? null :
                 <React.Fragment>
                     <div style={{ width: "100%", display: "flex" }}>
                         <DropDown className="sources"
-                            Options={this.state.CaptureOptions}
+                            Options={Array.from(this.state.CaptureOptions.values())}
                             onChange={this.sourceSelected} />
                         <Button className="sources" Text="Refresh" onClick={() => this.getCaptureOptions()} />
                     </div>
                 </React.Fragment>
             }
-            <VideoPane id="videoElement" />
+            {this.state.ChosenOption ?
+                <VideoPane id="videoElement"
+                    captureSrc={this.state.CaptureOptions.get(this.state.ChosenOption).Other} />
+                : null}
         </React.Fragment>;
     }
 
     private sourceSelected = (event: any) => {
-        this.setState({ ChosenOption: event.target.value });
+        const chosen = event.target.value;
+        this.setState({ ChosenOption: chosen });
     }
 
     private getCaptureOptions() {
-        const options = new Array<Option>();
+        const opt = new Map<string, Option>();
         desktopCapturer.getSources({
             thumbnailSize: {
                 height: 256,
@@ -72,9 +76,9 @@ export class VideoRecording extends React.Component<{}, {
                 throw error;
             }
             for (const src of srcs) {
-                options.push(new Option(src.id, src.name, src));
+                opt.set(src.id, new Option(src.id, src.name, src));
             }
-            this.setState({ CaptureOptions: options });
+            this.setState({ CaptureOptions: opt });
         });
     }
 }

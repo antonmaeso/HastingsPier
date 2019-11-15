@@ -43,8 +43,9 @@ export class DropDown extends React.Component<{
 
     private buildOptions = () => {
         const options = new Array();
+        options.push(<option>Please chose an option</option>);
         this.props.Options.forEach((opt) => {
-            const toadd = <option value={opt.Value}>{opt.Text ? opt.Text : opt.Value}</option>;
+            const toadd = <option key = {opt.Value} value={opt.Value}>{opt.Text ? opt.Text : opt.Value}</option>;
             options.push(toadd);
         });
         return options;
