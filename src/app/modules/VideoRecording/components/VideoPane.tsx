@@ -4,6 +4,7 @@ import * as React from "react";
 export class VideoPane extends React.Component<{
     src?: any,
     captureSrc?: DesktopCapturerSource,
+    setVideoStream?: any,
     id: string,
 }, {
     VideoElement: HTMLVideoElement,
@@ -67,6 +68,7 @@ export class VideoPane extends React.Component<{
                 if (videoElement) {
                     videoElement.srcObject = stream;
                     videoElement.play();
+                    this.props.setVideoStream(stream);
                 }
             });
         return true;

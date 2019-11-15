@@ -16,6 +16,7 @@ export class VideoRecording extends React.Component<{}, {
     CaptureOptions: Map<string, Option>,
     ChosenOption: string,
     ErrorMessage: string,
+    VideoStream: MediaStream,
 }> {
     constructor(props: any) {
         super(props);
@@ -23,6 +24,7 @@ export class VideoRecording extends React.Component<{}, {
             CaptureOptions: new Map<string, Option>(),
             ChosenOption: null,
             ErrorMessage: null,
+            VideoStream: null,
         };
     }
     public render() {
@@ -30,6 +32,7 @@ export class VideoRecording extends React.Component<{}, {
         // A drop down with all the availible options for capture - Done
         // Select an option and it starts the preview
         // Press record to start recording
+        // Dissable stream selection while recording
         // Change menu bar icon, maybe app tray icon too, to a recording in progress icon
         // Press stop to stop recording, change icon back
         // Present option to save file
@@ -51,9 +54,15 @@ export class VideoRecording extends React.Component<{}, {
             }
             {this.state.ChosenOption ?
                 <VideoPane id="videoElement"
-                    captureSrc={this.state.CaptureOptions.get(this.state.ChosenOption).Other} />
+                    captureSrc={this.state.CaptureOptions.get(this.state.ChosenOption).Other}
+                    // setVideoStream={this.setVideoStream} 
+                    />
                 : null}
         </React.Fragment>;
+    }
+
+    private setVideoStream = (stream: MediaStream) => {
+        this.setState({ VideoStream: stream });
     }
 
     private sourceSelected = (event: any) => {
