@@ -14,11 +14,31 @@ export class Option {
 
 // tslint:disable-next-line: max-classes-per-file
 export class DropDown extends React.Component<{
-    Options: Option[];
-}, {}> {
+    Options: Option[],
+    onChange: any,
+    className?: string,
+}, {
+    Value: string,
+}> {
+
+    constructor(props: any) {
+        super(props);
+        this.state = {
+            Value: "",
+        };
+
+        this.handleChange = this.handleChange.bind(this);
+    }
 
     public render() {
-        return <select>{this.buildOptions()}</select>;
+        return <select className={this.props.className}
+            value={this.state.Value}
+            onChange={this.handleChange}>{this.buildOptions()}</select>;
+    }
+
+    private handleChange = (event: any) => {
+        this.props.onChange(event);
+        this.setState({ Value: event.target.value });
     }
 
     private buildOptions = () => {
