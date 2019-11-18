@@ -1,8 +1,9 @@
-import {desktopCapturer, DesktopCapturerSource } from "electron";
+import { desktopCapturer, DesktopCapturerSource } from "electron";
 import * as React from "react";
 import { Button } from "../../core/components/library/Button";
 import { DropDown } from "../../core/components/library/DropDown";
 import { Option } from "../../core/components/library/DropDown";
+import * as N from "../../core/util/Notify";
 import { VideoControls } from "./components/VideoControls";
 import { VideoPane } from "./components/VideoPane";
 import "./style/VideoRecord.scss";
@@ -14,7 +15,7 @@ const { app, dialog } = require("electron").remote;
 let mediaRecorder: MediaRecorder = null;
 let SuperBlob: Blob = null;
 let VideoStream: MediaStream = null;
-const codec = " codecs=vp9";
+const codec = "codecs=vp9";
 const recordedChunks: any[] = [];
 const video = "video/webm";
 const videoId = "videoElement";
@@ -23,6 +24,7 @@ export class VideoRecording extends React.Component<{}, {
     ChosenOption: string,
     ErrorMessage: string,
     Source: any,
+    notify: string,
 }> {
     constructor(props: any) {
         super(props);
@@ -31,6 +33,7 @@ export class VideoRecording extends React.Component<{}, {
             ChosenOption: null,
             ErrorMessage: null,
             Source: null,
+            notify: "",
         };
     }
     public render() {
@@ -49,14 +52,12 @@ export class VideoRecording extends React.Component<{}, {
         return <React.Fragment>
             <div>{this.state.ErrorMessage}</div>
             {this.state.CaptureOptions.size === 0 ? null :
-                <React.Fragment>
                     <div style={{ width: "100%", display: "flex" }}>
                         <DropDown className="sources"
                             Options={Array.from(this.state.CaptureOptions.values())}
                             onChange={this.sourceSelected} />
                         <Button className="sources" Text="Refresh" onClick={() => this.getCaptureOptions()} />
                     </div>
-                </React.Fragment>
             }
             {this.state.ChosenOption ?
                 <React.Fragment>
@@ -71,9 +72,10 @@ export class VideoRecording extends React.Component<{}, {
                         stopRecord={this.stopRecording}
                         liveView={this.switchToLive}
                         save={this.saveLocation}
-                        />
+                    />
                 </React.Fragment>
                 : null}
+            <div>{this.state.notify}</div>
         </React.Fragment>;
     }
 
@@ -87,29 +89,27 @@ export class VideoRecording extends React.Component<{}, {
     }
 
     private bigSave = (file: string) => {
-        const blob = new Blob(recordedChunks, { type: video });
         const fileReader = new FileReader();
-        fileReader.onload = function () {
+        fileReader.onload = function() {
             const ab = this.result;
             const buffer = new Buffer(ab.byteLength);
             const arr = new Uint8Array(ab);
             for (let i = 0; i < arr.byteLength; i++) {
                 buffer[i] = arr[i];
             }
-            // const file = `./videos/example.webm`;
-            fs.writeFile(file, buffer, (err) => {
+            fs.writeFile(file, buffer, (err: any) => {
                 if (err) {
                     console.error("Failed to save video " + err);
-                    // ipcRenderer.send("balloon", { title: "Video", contents: "Failed to save video" });
+                    N.Balloon("Video", "Failed to save video");
                     // ipcRenderer.send("logging", { Log: "Failed to save video: " + err });
                 } else {
                     console.log("Saved video: " + file);
-                    // ipcRenderer.send("balloon", { title: "Video", contents: "Saved video: " + file });
+                    N.Balloon("Video", "Saved video: " + file);
                     // ipcRenderer.send("logging", { Log: "Saved video: " + file });
                 }
             });
         };
-        fileReader.readAsArrayBuffer(blob);
+        fileReader.readAsArrayBuffer(SuperBlob);
     }
 
     private playBackRecording = () => {
@@ -133,6 +133,7 @@ export class VideoRecording extends React.Component<{}, {
             mediaRecorder = new MediaRecorder(VideoStream, options);
             mediaRecorder.ondataavailable = this.handleDataAvailable;
             mediaRecorder.start();
+            N.Balloon("Video", "Recording started");
         }
     }
 
