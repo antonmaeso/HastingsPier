@@ -7,8 +7,10 @@ import { VideoControls } from "./components/VideoControls";
 import { VideoPane } from "./components/VideoPane";
 import "./style/VideoRecord.scss";
 
-let mediaRecorder: any = null;
+let mediaRecorder: MediaRecorder = null;
 let recordedChunks: any[] = [];
+let SuperBlob: Blob = null;
+let VideoStream: MediaStream = null;
 const codec = " codecs=vp9";
 const video = "video/webm";
 
@@ -16,7 +18,6 @@ export class VideoRecording extends React.Component<{}, {
     CaptureOptions: Map<string, Option>,
     ChosenOption: string,
     ErrorMessage: string,
-    VideoStream: MediaStream,
 }> {
     constructor(props: any) {
         super(props);
@@ -24,7 +25,6 @@ export class VideoRecording extends React.Component<{}, {
             CaptureOptions: new Map<string, Option>(),
             ChosenOption: null,
             ErrorMessage: null,
-            VideoStream: null,
         };
     }
     public render() {
@@ -53,16 +53,53 @@ export class VideoRecording extends React.Component<{}, {
                 </React.Fragment>
             }
             {this.state.ChosenOption ?
-                <VideoPane id="videoElement"
-                    captureSrc={this.state.CaptureOptions.get(this.state.ChosenOption).Other}
-                    // setVideoStream={this.setVideoStream} 
+                <React.Fragment>
+                    <VideoPane id="videoElement"
+                        captureSrc={this.state.CaptureOptions.get(this.state.ChosenOption).Other}
+                        setVideoStream={this.setVideoStream}
                     />
+                    <VideoControls 
+                    recordFunction={this.startRecording}
+                    stopRecord={this.stopRecording} />
+                </React.Fragment>
                 : null}
         </React.Fragment>;
     }
 
+    private playBackRecording = () => {
+        const videoElement: HTMLVideoElement | null = document.getElementById("videoElement");
+        SuperBlob = new Blob(recordedChunks);
+        videoElement.src = window.URL.createObjectURL(SuperBlob);
+    }
+
+    private stopRecording = () => {
+        const videoElement: HTMLVideoElement | null = document.getElementById("videoElement");
+        if (videoElement.srcObject !== null) {
+            videoElement.pause();
+            videoElement.srcObject = null;
+        }
+        mediaRecorder.onstop = () => { this.playBackRecording(); };
+        mediaRecorder.stop();
+    }
+
+    private startRecording = () => {
+        const options = { mimeType: video + ";" + codec, videoBitsPerSecond: 500000 };
+        recordedChunks.length = 0;
+        if (VideoStream !== undefined && VideoStream !== null) {
+            mediaRecorder = new MediaRecorder(VideoStream, options);
+            mediaRecorder.ondataavailable = this.handleDataAvailable;
+            mediaRecorder.start();
+        }
+    }
+
+    private handleDataAvailable(event: any) {
+        if (event.data.size > 0) {
+            recordedChunks.push(event.data);
+        }
+    }
+
     private setVideoStream = (stream: MediaStream) => {
-        this.setState({ VideoStream: stream });
+        VideoStream = stream;
     }
 
     private sourceSelected = (event: any) => {
