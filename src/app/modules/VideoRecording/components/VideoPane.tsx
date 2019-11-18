@@ -51,10 +51,6 @@ export class VideoPane extends React.Component<{
         return <video id={this.props.id} controls />;
     }
 
-    private createElement = () => {
-        return <video id={this.props.id} controls />;
-    }
-
     private initialiseStream = (videoElement: any, capId?: string) => {
         let screen = this.props.captureSrc.id;
         if (capId !== undefined) {

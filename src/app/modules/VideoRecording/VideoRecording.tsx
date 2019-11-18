@@ -1,4 +1,4 @@
-import { desktopCapturer, DesktopCapturerSource } from "electron";
+import {desktopCapturer, DesktopCapturerSource } from "electron";
 import * as React from "react";
 import { Button } from "../../core/components/library/Button";
 import { DropDown } from "../../core/components/library/DropDown";
@@ -6,6 +6,10 @@ import { Option } from "../../core/components/library/DropDown";
 import { VideoControls } from "./components/VideoControls";
 import { VideoPane } from "./components/VideoPane";
 import "./style/VideoRecord.scss";
+
+const fs = require("fs");
+
+const { app, dialog } = require("electron").remote;
 
 let mediaRecorder: MediaRecorder = null;
 let SuperBlob: Blob = null;
@@ -65,14 +69,51 @@ export class VideoRecording extends React.Component<{}, {
                     <VideoControls
                         recordFunction={this.startRecording}
                         stopRecord={this.stopRecording}
-                        liveView={this.switchToLive} />
+                        liveView={this.switchToLive}
+                        save={this.saveLocation}
+                        />
                 </React.Fragment>
                 : null}
         </React.Fragment>;
     }
 
+    private saveLocation = () => {
+        const localPath = app.getPath("desktop");
+        const filter = [{ name: "webm video", extensions: ["webm"] }];
+        const savePath = dialog.showSaveDialogSync({ defaultPath: localPath, filters: filter });
+        if (savePath) {
+            this.bigSave(savePath);
+        }
+    }
+
+    private bigSave = (file: string) => {
+        const blob = new Blob(recordedChunks, { type: video });
+        const fileReader = new FileReader();
+        fileReader.onload = function () {
+            const ab = this.result;
+            const buffer = new Buffer(ab.byteLength);
+            const arr = new Uint8Array(ab);
+            for (let i = 0; i < arr.byteLength; i++) {
+                buffer[i] = arr[i];
+            }
+            // const file = `./videos/example.webm`;
+            fs.writeFile(file, buffer, (err) => {
+                if (err) {
+                    console.error("Failed to save video " + err);
+                    // ipcRenderer.send("balloon", { title: "Video", contents: "Failed to save video" });
+                    // ipcRenderer.send("logging", { Log: "Failed to save video: " + err });
+                } else {
+                    console.log("Saved video: " + file);
+                    // ipcRenderer.send("balloon", { title: "Video", contents: "Saved video: " + file });
+                    // ipcRenderer.send("logging", { Log: "Saved video: " + file });
+                }
+            });
+        };
+        fileReader.readAsArrayBuffer(blob);
+    }
+
     private playBackRecording = () => {
-        SuperBlob = new Blob(recordedChunks);
+        SuperBlob = new Blob(recordedChunks, { type: video });
         this.setState({ Source: window.URL.createObjectURL(SuperBlob) });
     }
 
@@ -81,11 +122,6 @@ export class VideoRecording extends React.Component<{}, {
     }
 
     private stopRecording = () => {
-        // const videoElement: HTMLVideoElement | null = document.getElementById(videoId);
-        // if (videoElement.srcObject !== null) {
-        //     videoElement.pause();
-        //     videoElement.srcObject = null;
-        // }
         mediaRecorder.onstop = () => { this.playBackRecording(); };
         mediaRecorder.stop();
     }
