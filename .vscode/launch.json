@@ -5,6 +5,14 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "type": "chrome",
+      "request": "attach",
+      "name": "Electron: Renderer",
+      "port": 9222,
+      "webRoot": "${workspaceFolder}",
+      "timeout": 30000
+    },
+    {
       "name": "Debug Jest Tests",
       "type": "node",
       "request": "launch",
@@ -27,7 +35,7 @@
       "outFiles": ["${workspaceFolder}/dist/**/*.js"]
     },
     {
-      "name": "Debug Main Process",
+      "name": "Electron: Main",
       "type": "node",
       "request": "launch",
       "cwd": "${workspaceRoot}",
@@ -35,8 +43,14 @@
       "windows": {
         "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron.cmd"
       },
-      "args" : ["."],
+      "args": ["."],
       "outputCapture": "std"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Electron: All",
+      "configurations": ["Electron: Main", "Electron: Renderer"]
     }
   ]
 }
