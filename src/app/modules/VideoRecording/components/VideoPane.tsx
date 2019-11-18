@@ -38,12 +38,17 @@ export class VideoPane extends React.Component<{
     }
 
     public componentWillReceiveProps(props: any) {
-        const vid = document.getElementById(this.props.id);
-        this.initialiseStream(vid, props.captureSrc.id);
+        const vid = document.getElementById(this.props.id) as HTMLVideoElement;
+        if (props.src !== null && props.src !== undefined) {
+            vid.srcObject = null;
+            vid.src = props.src;
+        } else {
+            this.initialiseStream(vid, props.captureSrc.id);
+        }
     }
 
     public render() {
-        return this.createElement();
+        return <video id={this.props.id} controls />;
     }
 
     private createElement = () => {

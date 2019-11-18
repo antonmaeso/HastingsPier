@@ -8,16 +8,17 @@ import { VideoPane } from "./components/VideoPane";
 import "./style/VideoRecord.scss";
 
 let mediaRecorder: MediaRecorder = null;
-let recordedChunks: any[] = [];
 let SuperBlob: Blob = null;
 let VideoStream: MediaStream = null;
 const codec = " codecs=vp9";
+const recordedChunks: any[] = [];
 const video = "video/webm";
-
+const videoId = "videoElement";
 export class VideoRecording extends React.Component<{}, {
     CaptureOptions: Map<string, Option>,
     ChosenOption: string,
     ErrorMessage: string,
+    Source: any,
 }> {
     constructor(props: any) {
         super(props);
@@ -25,6 +26,7 @@ export class VideoRecording extends React.Component<{}, {
             CaptureOptions: new Map<string, Option>(),
             ChosenOption: null,
             ErrorMessage: null,
+            Source: null,
         };
     }
     public render() {
@@ -54,30 +56,36 @@ export class VideoRecording extends React.Component<{}, {
             }
             {this.state.ChosenOption ?
                 <React.Fragment>
-                    <VideoPane id="videoElement"
+                    <VideoPane
+                        id={videoId}
                         captureSrc={this.state.CaptureOptions.get(this.state.ChosenOption).Other}
                         setVideoStream={this.setVideoStream}
+                        src={this.state.Source}
                     />
-                    <VideoControls 
-                    recordFunction={this.startRecording}
-                    stopRecord={this.stopRecording} />
+                    <VideoControls
+                        recordFunction={this.startRecording}
+                        stopRecord={this.stopRecording}
+                        liveView={this.switchToLive} />
                 </React.Fragment>
                 : null}
         </React.Fragment>;
     }
 
     private playBackRecording = () => {
-        const videoElement: HTMLVideoElement | null = document.getElementById("videoElement");
         SuperBlob = new Blob(recordedChunks);
-        videoElement.src = window.URL.createObjectURL(SuperBlob);
+        this.setState({ Source: window.URL.createObjectURL(SuperBlob) });
+    }
+
+    private switchToLive = () => {
+        this.setState({ Source: null });
     }
 
     private stopRecording = () => {
-        const videoElement: HTMLVideoElement | null = document.getElementById("videoElement");
-        if (videoElement.srcObject !== null) {
-            videoElement.pause();
-            videoElement.srcObject = null;
-        }
+        // const videoElement: HTMLVideoElement | null = document.getElementById(videoId);
+        // if (videoElement.srcObject !== null) {
+        //     videoElement.pause();
+        //     videoElement.srcObject = null;
+        // }
         mediaRecorder.onstop = () => { this.playBackRecording(); };
         mediaRecorder.stop();
     }
