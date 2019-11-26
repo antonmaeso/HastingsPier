@@ -3,11 +3,8 @@ import * as React from "React";
 import { Button } from "../../../core/components/library/Button";
 import { TextInput } from "../../../core/components/library/TextInput";
 import * as N from "../../../core/util/Notify";
-// import { ApiUtil } from "../../Util/ApiUtil";
-const bStyle = {
-    fontSize: "18px",
-    padding: "18px",
-};
+import * as Ps from "../../../core/util/PersistantStorage";
+import { ApiUtil } from "../Util/ApiUtil";
 
 const errorStyle = {
     color: "red",
@@ -15,7 +12,7 @@ const errorStyle = {
 };
 
 export class OctaneLogin extends React.Component<
-    { LoggingIn: any, LoggedIn: any },
+    { className?: string, LoggingIn: any, LoggedIn: any },
     { userName: string, password: string, failedLogin: boolean, failedReason: any }> {
 
     constructor(props: any) {
@@ -63,12 +60,20 @@ export class OctaneLogin extends React.Component<
             loginWindow.webContents.executeJavaScript(passclick);
             this.wait(3000);
             loginWindow.close();
-            // ApiUtil.getWorkspaceId(null);
+            ApiUtil.getWorkspaceId(null);
         });
         mainWindow.focus();
     }
 
     public componentDidMount(): void {
+        // load up any saved log in details
+        const fromStore = Ps.getLocal("OctaneBurnerUserName");
+        if (fromStore !== null) {
+            this.setState({ userName: fromStore });
+        }
+
+        // TODO: all of this needs replacing and replicating
+
         ipcRenderer.on("usernameRetrieve", this.onRetrieve);
         ipcRenderer.on("workspaceSuccess", this.logInSuccess);
         ipcRenderer.on("workspaceFail", this.loginFail);
@@ -90,7 +95,9 @@ export class OctaneLogin extends React.Component<
         // this sets the state to logged in, put into check success action
         // value should be the workspaceID for the user.
         N.Balloon("Success", "Logged in");
-        // ApiUtil.updateUsername(this.state.userName);
+        // save username to local storage
+        Ps.putLocal("OctaneBurnerUserName", this.state.userName);
+        ApiUtil.updateUsername(this.state.userName);
         this.props.LoggingIn(false, true);
     }
 
@@ -103,7 +110,8 @@ export class OctaneLogin extends React.Component<
     public render() {
         const ph = "Email@hastingsdirect.com";
         const pw = "password";
-        return <div className = "OctaneLoginContainer">
+
+        return <div className={"OctaneLoginContainer " + this.props.className}>
             This tool loads stories from Octane based on Tasks with you as the Owner.
             If there are no tasks with you as the Owner, nothing will be displayed
             <TextInput className="LoginBoxes" Placeholder={ph} Change={this.username} Text={this.state.userName} />

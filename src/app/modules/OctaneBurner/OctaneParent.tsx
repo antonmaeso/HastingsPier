@@ -1,4 +1,3 @@
-import { ipcRenderer, remote } from "electron";
 import * as React from "react";
 import { OctaneLogin } from "./components/OctaneLoading";
 import { Spinner } from "./components/Spinner";
@@ -9,13 +8,24 @@ export const OctaneParent = (props: any) => {
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [loggingIn, setLoggingIn] = React.useState(false);
 
+  let hide = "";
+  if (loggingIn) {
+    hide = "hidden";
+  }
+
   return (
     <React.Fragment>
       {loggedIn ? <div>Logged in. {UserId}</div> : <React.Fragment>
         {loggingIn ? <Spinner /> : null}
         <OctaneLogin
-          LoggedIn={(pending: boolean, LIN: boolean) => { setLoggingIn(pending); setLoggedIn(LIN); }}
-          LoggingIn={(id: string) => { setUserId(id); }}
+          className={hide}
+          LoggingIn={(pending: boolean, LIN: boolean) => {
+            setLoggingIn(pending);
+            setLoggedIn(LIN);
+          }}
+          LoggedIn={(id: string) => {
+            setUserId(id);
+          }}
         />
       </React.Fragment>}
     </React.Fragment>

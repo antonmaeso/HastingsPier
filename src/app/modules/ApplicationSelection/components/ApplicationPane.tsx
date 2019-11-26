@@ -2,7 +2,14 @@ import { ipcRenderer } from "electron";
 import * as React from "react";
 import * as Notify from "../../../core/util/Notify";
 
-export const AppPane = (props: any) => {
+interface IProps {
+  appName: string;
+  title: string;
+  description: string;
+  glyphicon?: string;
+}
+
+export const AppPane = (props: IProps) => {
   let className = "AppPane " + props.appName;
   if (props.glyphicon !== undefined) {
     className += " " + props.glyphicon;
