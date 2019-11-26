@@ -1,16 +1,5 @@
 {
-  "done": [],
-  "in-progress": [
-    {
-      "assignedTo": {
-        "name": "mannn"
-      },
-      "creation_time": "2019-10-24T17:13:35.610Z",
-      "id": "2",
-      "prio": 5,
-      "references": [],
-      "title": "New browser window opens specific app"
-    },
+  "done": [
     {
       "assignedTo": {
         "name": "mannn"
@@ -27,6 +16,48 @@
       "title": "Remove Application - App Bar"
     },
     {
+      "category": "Bugs",
+      "creation_time": "2019-10-25T14:11:59.309Z",
+      "description": {
+        "content": "When closing an app which is not the active one, if you add then try to open it again it does not display",
+        "mime": "text/markdown"
+      },
+      "details": {
+        "content": "When closing an app which is not the active one, if you add then try to open it again it does not display. I think this is because its loading the state from the session where it was hidden. Maybe have some kind of call to see which application is meant to be active",
+        "mime": "text/markdown"
+      },
+      "id": "5",
+      "references": [],
+      "title": "When reoping closed app, its not shown",
+      "type": "bug"
+    },
+    {
+      "assignedTo": {
+        "name": "mannn"
+      },
+      "category": "Remove App",
+      "creation_time": "2019-10-25T12:41:38.686Z",
+      "description": {
+        "content": "When Removing an app with the close on AppBar, if the app open is the one being closed, default to AppSelection",
+        "mime": "text/markdown"
+      },
+      "id": "3",
+      "references": [],
+      "title": "Move to default if app removed is loaded"
+    }
+  ],
+  "in-progress": [
+    {
+      "assignedTo": {
+        "name": "mannn"
+      },
+      "creation_time": "2019-10-24T17:13:35.610Z",
+      "id": "2",
+      "prio": 5,
+      "references": [],
+      "title": "New browser window opens specific app"
+    },
+    {
       "assignedTo": {
         "name": "anton_maeso"
       },
@@ -39,6 +70,24 @@
       "id": "7",
       "references": [],
       "title": "Create a more general way of acsessing data"
+    },
+    {
+      "assignedTo": {
+        "name": "trekimann"
+      },
+      "category": "Tech Debt",
+      "creation_time": "2019-10-30T10:38:07.101Z",
+      "description": {
+        "content": "We should have JDoc descriptions on Util exports",
+        "mime": "text/markdown"
+      },
+      "details": {
+        "content": "We should have JDoc descriptions on Util exports so that it is nice and clear what each one is doing.",
+        "mime": "text/markdown"
+      },
+      "id": "8",
+      "references": [],
+      "title": "JDoc description on util exports"
     }
   ],
   "testing": [],
@@ -54,28 +103,12 @@
         "mime": "text/markdown"
       },
       "details": {
-        "content": "When switching to RMDash from another app, the browser view is only half the availible width. Need to look into why and sort it.",
+        "content": "When switching to RMDash from another app, the browser view is only half the availible width. Need to look into why and sort it. Clicking the app button again fits the browserView to the avilible space.",
         "mime": "text/markdown"
       },
       "id": "10",
       "references": [],
       "title": "Fix Browser view not full screen in Application window",
-      "type": "bug"
-    },
-    {
-      "category": "Bugs",
-      "creation_time": "2019-10-25T14:11:59.309Z",
-      "description": {
-        "content": "When closing an app which is not the active one, if you add then try to open it again it does not display",
-        "mime": "text/markdown"
-      },
-      "details": {
-        "content": "When closing an app which is not the active one, if you add then try to open it again it does not display. I think this is because its loading the state from the session where it was hidden. Maybe have some kind of call to see which application is meant to be active",
-        "mime": "text/markdown"
-      },
-      "id": "5",
-      "references": [],
-      "title": "When reoping closed app, its not shown",
       "type": "bug"
     },
     {
@@ -134,48 +167,16 @@
       },
       "creation_time": "2019-11-13T09:18:34.342Z",
       "description": {
-        "content": "There are too many IPC listeneners being created for closeApplication",
+        "content": "There are too many IPC listeneners being created for closeApplication and ActiveApplication",
         "mime": "text/markdown"
       },
       "details": {
-        "content": "There are too many IPC listeneners being created for closeApplication. Need to change components to destroy listeners when the components are removed. Its possible that the util classes are creating the extras, maybe make them static or create a single instance on main.ts which is then called by components",
+        "content": "There are too many IPC listeneners being created for closeApplication and ActiveApplication. Need to change components to destroy listeners when the components are removed. Its possible that the util classes are creating the extras, maybe make them static or create a single instance on main.ts which is then called by components",
         "mime": "text/markdown"
       },
       "id": "11",
       "references": [],
       "title": "Dispose of ipc listeners when component removed"
-    },
-    {
-      "assignedTo": {
-        "name": "trekimann"
-      },
-      "category": "Tech Debt",
-      "creation_time": "2019-10-30T10:38:07.101Z",
-      "description": {
-        "content": "We should have JDoc descriptions on Util exports",
-        "mime": "text/markdown"
-      },
-      "details": {
-        "content": "We should have JDoc descriptions on Util exports so that it is nice and clear what each one is doing.",
-        "mime": "text/markdown"
-      },
-      "id": "8",
-      "references": [],
-      "title": "JDoc description on util exports"
-    },
-    {
-      "assignedTo": {
-        "name": "mannn"
-      },
-      "category": "Remove App",
-      "creation_time": "2019-10-25T12:41:38.686Z",
-      "description": {
-        "content": "When Removing an app with the close on AppBar, if the app open is the one being closed, default to AppSelection",
-        "mime": "text/markdown"
-      },
-      "id": "3",
-      "references": [],
-      "title": "Move to default if app removed is loaded"
     },
     {
       "assignedTo": {

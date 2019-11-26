@@ -15,6 +15,7 @@ export class Option {
 // tslint:disable-next-line: max-classes-per-file
 export class DropDown extends React.Component<{
     Options: Option[],
+    disabled?: boolean,
     onChange: any,
     className?: string,
 }, {
@@ -31,9 +32,17 @@ export class DropDown extends React.Component<{
     }
 
     public render() {
-        return <select className={this.props.className}
-            value={this.state.Value}
-            onChange={this.handleChange}>{this.buildOptions()}</select>;
+        let toReturn;
+        if (this.props.disabled) {
+            toReturn = <select disabled className={this.props.className}
+                value={this.state.Value}
+                onChange={this.handleChange}>{this.buildOptions()}</select>;
+        } else {
+            toReturn = <select className={this.props.className}
+                value={this.state.Value}
+                onChange={this.handleChange}>{this.buildOptions()}</select>;
+        }
+        return toReturn;
     }
 
     private handleChange = (event: any) => {
@@ -45,7 +54,7 @@ export class DropDown extends React.Component<{
         const options = new Array();
         // options.push(<option>Please chose an option</option>);
         this.props.Options.forEach((opt) => {
-            const toadd = <option key = {opt.Value} value={opt.Value}>{opt.Text ? opt.Text : opt.Value}</option>;
+            const toadd = <option key={opt.Value} value={opt.Value}>{opt.Text ? opt.Text : opt.Value}</option>;
             options.push(toadd);
         });
         return options;

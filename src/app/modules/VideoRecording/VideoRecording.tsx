@@ -24,6 +24,7 @@ export class VideoRecording extends React.Component<{}, {
     ChosenOption: string,
     ErrorMessage: string,
     Source: any,
+    Recording: boolean,
     notify: string,
 }> {
     constructor(props: any) {
@@ -32,6 +33,7 @@ export class VideoRecording extends React.Component<{}, {
             CaptureOptions: new Map<string, Option>(),
             ChosenOption: null,
             ErrorMessage: null,
+            Recording: false,
             Source: null,
             notify: "",
         };
@@ -39,9 +41,9 @@ export class VideoRecording extends React.Component<{}, {
     public render() {
         // On initial load of parent component add record options to app menu bar
         // A drop down with all the availible options for capture - Done
-        // Select an option and it starts the preview
-        // Press record to start recording
-        // Dissable stream selection while recording
+        // Select an option and it starts the preview - Done
+        // Press record to start recording - Done
+        // Dissable stream selection while recording - Done
         // Change menu bar icon, maybe app tray icon too, to a recording in progress icon
         // Press stop to stop recording, change icon back
         // Present option to save file
@@ -55,7 +57,9 @@ export class VideoRecording extends React.Component<{}, {
                 <div style={{ width: "100%", display: "flex" }}>
                     <DropDown className="sources"
                         Options={Array.from(this.state.CaptureOptions.values())}
-                        onChange={this.sourceSelected} />
+                        onChange={this.sourceSelected}
+                        disabled={this.state.Recording}
+                    />
                     <Button className="sources" Text="Refresh" onClick={() => this.getCaptureOptions()} />
                 </div>
             }
@@ -122,7 +126,7 @@ export class VideoRecording extends React.Component<{}, {
     }
 
     private switchToLive = () => {
-        this.setState({ Source: null });
+        this.setState({ Source: null, Recording: false });
     }
 
     private stopRecording = () => {
@@ -138,6 +142,7 @@ export class VideoRecording extends React.Component<{}, {
             mediaRecorder.ondataavailable = this.handleDataAvailable;
             mediaRecorder.start();
             N.Balloon("Video", "Recording started");
+            this.setState({ Recording: true });
         }
     }
 
