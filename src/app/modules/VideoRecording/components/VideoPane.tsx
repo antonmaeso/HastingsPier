@@ -10,7 +10,6 @@ export class VideoPane extends React.Component<{
     VideoElement: HTMLVideoElement,
     StreamInitialised: boolean,
 }> {
-
     constructor(props: any) {
         super(props);
         this.state = {

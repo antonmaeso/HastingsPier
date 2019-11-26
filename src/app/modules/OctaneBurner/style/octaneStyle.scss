@@ -1,4 +1,24 @@
-.Example{
+.Example {
     height: 100%;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.OctSpinner {
+    align-items: center;
+    display: flex;
+    height: 90vh;
+    justify-content: center;
+}
+
+.OctaneLoginContainer {
+    left: 0px;
+    position: relative;
+    top: 40%;
+    width: 100%;
+}
+
+.LoginBoxes {
+    border: none;
+    color: black;
+    width: 100%;
 }
