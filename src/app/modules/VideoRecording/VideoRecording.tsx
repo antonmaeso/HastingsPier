@@ -52,12 +52,12 @@ export class VideoRecording extends React.Component<{}, {
         return <React.Fragment>
             <div>{this.state.ErrorMessage}</div>
             {this.state.CaptureOptions.size === 0 ? null :
-                    <div style={{ width: "100%", display: "flex" }}>
-                        <DropDown className="sources"
-                            Options={Array.from(this.state.CaptureOptions.values())}
-                            onChange={this.sourceSelected} />
-                        <Button className="sources" Text="Refresh" onClick={() => this.getCaptureOptions()} />
-                    </div>
+                <div style={{ width: "100%", display: "flex" }}>
+                    <DropDown className="sources"
+                        Options={Array.from(this.state.CaptureOptions.values())}
+                        onChange={this.sourceSelected} />
+                    <Button className="sources" Text="Refresh" onClick={() => this.getCaptureOptions()} />
+                </div>
             }
             {this.state.ChosenOption ?
                 <React.Fragment>
@@ -74,7 +74,7 @@ export class VideoRecording extends React.Component<{}, {
                         save={this.saveLocation}
                     />
                 </React.Fragment>
-                : null}
+                : <div>Please Choose an Option</div>}
             <div>{this.state.notify}</div>
         </React.Fragment>;
     }
@@ -88,9 +88,13 @@ export class VideoRecording extends React.Component<{}, {
         }
     }
 
+    private setNotification = (Notify: string) => {
+        this.setState({ notify: Notify });
+    }
+
     private bigSave = (file: string) => {
         const fileReader = new FileReader();
-        fileReader.onload = function() {
+        fileReader.onload = function () {
             const ab = this.result;
             const buffer = new Buffer(ab.byteLength);
             const arr = new Uint8Array(ab);
