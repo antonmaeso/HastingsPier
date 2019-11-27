@@ -34,6 +34,7 @@ build/Release
 
 # Dependency directories
 node_modules/
+node_modules_OLD/
 node_modules.zip
 node_modules.7z
 jspm_packages/

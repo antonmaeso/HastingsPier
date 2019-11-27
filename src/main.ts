@@ -5,23 +5,23 @@ const path = require("path");
 import logo from "./app/core/assets/Ant.png";
 const iconpath = path.join(__dirname + "\\" + logo);
 
-import { app, BrowserWindow, ipcMain, Menu, nativeImage, Tray, BrowserView, Rectangle } from "electron";
+import { app, BrowserView, BrowserWindow, ipcMain, Menu, nativeImage, Rectangle, Tray } from "electron";
+import {
+  DataHandler,
+  IFileOperations,
+} from "./app/core/util/DataHandler/DataHandler";
+import { ICRUD } from "./app/core/util/DataHandler/ICRUD";
 import { IpcMainRouting } from "./app/core/util/IpcMainRouting";
 import { Logger } from "./app/core/util/Logger";
 import { NotifyRouting } from "./app/core/util/NotifyRouting";
 import { WindowControl } from "./app/core/util/WindowManager";
-import { ICRUD } from "./app/core/util/DataHandler/ICRUD";
-import {
-  DataHandler,
-  IFileOperations
-} from "./app/core/util/DataHandler/DataHandler";
-import { any } from "prop-types";
 
 export let mainWindowId: number;
 const Path = app.getAppPath();
 const logger = new Logger(Path + "\\log.log");
 export const control = new WindowControl(iconpath, logger);
 const NR = new NotifyRouting();
+const IpcMain = new IpcMainRouting();
 
 const createWindow = () => {
   mainWindowId = control.createNewWindow(
@@ -33,11 +33,11 @@ const createWindow = () => {
       minWidth: 300,
       webPreferences: {
         nodeIntegration: true,
-        webviewTag: true
+        webviewTag: true,
       },
-      width: 800
+      width: 800,
     },
-    "index.html"
+    "index.html",
   );
 
   createTray();
@@ -67,7 +67,7 @@ let appIcon: Tray = null;
 let lastBalloonMessage = "";
 const createTray = () => {
   appIcon = new Tray(
-    nativeImage.createFromPath(iconpath).resize({ width: 16, height: 16 })
+    nativeImage.createFromPath(iconpath).resize({ width: 16, height: 16 }),
   );
 
   const contextMenu = Menu.buildFromTemplate([
@@ -75,20 +75,20 @@ const createTray = () => {
       click() {
         control.getWindow(mainWindowId).show();
       },
-      label: "Show"
+      label: "Show",
     },
     {
       label: "Quit",
       click() {
         app.quit();
-      }
+      },
     },
     {
       label: "Last message",
       click() {
         balloon("Last message", lastBalloonMessage);
-      }
-    }
+      },
+    },
   ]);
 
   appIcon.setContextMenu(contextMenu);
@@ -110,15 +110,13 @@ export function balloon(displayTitle: string, contents: string, other?: any) {
   }
 }
 
-// create static util classes
-
 ipcMain.on("apps", (event: any, value: any) => {
-  let file: IFileOperations = DataHandler.createDataHandler();
+  const file: IFileOperations = DataHandler.createDataHandler();
   const appManefest = DataHandler.projectDist + "/HastingsPier.json";
   let config: string | boolean = false;
   config = file.readOrCreateThenRead(
     appManefest,
-    '{"apps":[{"appName":"TheAppFinderGeneral"}]}'
+    '{"apps":[{"appName":"TheAppFinderGeneral"}]}',
   );
   control.getWindow(mainWindowId).webContents.send("appsResponse", config);
 });
@@ -129,7 +127,7 @@ ipcMain.on(
   (event: any, value: any, responseTarget: string) => {
     const toReturn = control.route(value);
     return toReturn;
-  }
+  },
 );
 
 // ipcMain.on("WindowControl", (event: any, arg: any, responseTarget: string) => {

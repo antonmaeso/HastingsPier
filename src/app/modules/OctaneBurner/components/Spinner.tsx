@@ -1,5 +1,5 @@
 import { ipcRenderer } from "electron";
-import * as React from "React";
+import * as React from "react";
 import styled, { keyframes } from "styled-components";
 import octIcon from "./../assets/octaneIcon.png";
 
@@ -28,4 +28,4 @@ export const Spinner = (props: any) => {
       <div>{props.LoadingMessage}</div>
     </div>
   </React.Fragment>;
-}
+};
