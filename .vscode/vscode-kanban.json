@@ -113,6 +113,24 @@
     },
     {
       "assignedTo": {
+        "name": "trekimann"
+      },
+      "category": "Features",
+      "creation_time": "2019-11-28T17:01:45.150Z",
+      "description": {
+        "content": "As a core piece of functionality, we should look to impliment a draft-js based text box",
+        "mime": "text/markdown"
+      },
+      "details": {
+        "content": "As a core piece of functionality, we should look to impliment a draft-js based text box. This should be reusable for all text fields from single line inputs through to long text entry.",
+        "mime": "text/markdown"
+      },
+      "id": "13",
+      "references": [],
+      "title": "Add draft-js based text input"
+    },
+    {
+      "assignedTo": {
         "name": "mannn"
       },
       "category": "Features",

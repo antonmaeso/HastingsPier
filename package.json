@@ -58,6 +58,7 @@
   "dependencies": {
     "@types/jest": "^24.0.23",
     "bootstrap": "^4.4.0",
+    "draft-js": "^0.11.2",
     "electron-main-window": "^1.0.4",
     "electron-window-manager": "^1.0.6",
     "fs": "0.0.1-security",
