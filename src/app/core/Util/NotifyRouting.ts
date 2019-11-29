@@ -4,6 +4,7 @@ import { balloon, control, mainWindowId } from "../../../main";
 export class NotifyRouting {
 
     private activeApplication: string;
+    private applicationList: Map<string, boolean> = new Map<string, boolean>([["ApplicationSelection", true]]);
 
     constructor() {
         this.initaliseListeners();
@@ -36,9 +37,18 @@ export class NotifyRouting {
             if (value.WindowId !== undefined && value.WindowId !== null) {
                 windowId = value.WindowId;
             }
-            control.getWindow(windowId).webContents.send("activeApplication", value.Active);
             this.activeApplication = value.Active;
+            // add to active list if its not there
+            if (!this.applicationList.has(value.Active)) {
+                this.applicationList.set(value.Active, true);
+            }
+            // loop thorugh list to set the active flag and send the ipc notifications out
+            Array.from(this.applicationList.keys()).forEach((key) => {
+                this.applicationList.set(key, (key === value.Active));
+                control.getWindow(windowId).webContents.send("activeApplication" + key, value.Active);
+            });
 
+            control.getWindow(windowId).webContents.send("activeApplication", value.Active);
         });
 
         // to remove an application from the DOM
@@ -49,6 +59,9 @@ export class NotifyRouting {
             }
             value.Active = this.activeApplication;
             control.getWindow(window).webContents.send("closeApplication", value);
+            if (this.applicationList.has(value.Active)) {
+                this.applicationList.delete(value.Active);
+            }
         });
     }
 }

@@ -5,7 +5,12 @@ const WindowId = require('electron').remote.getCurrentWindow().id;
 
 // TODO: call a util class to ask which one to show.
 
-export const ApplicationWindow = (props: any) => {
+interface IProps {
+  identifier: string;
+  App: JSX.Element;
+}
+
+export const ApplicationWindow = (props: IProps) => {
   const [display, setDisplay] = React.useState(true);
   const [listener, setListeners] = React.useState(false);
 
@@ -24,8 +29,10 @@ export const ApplicationWindow = (props: any) => {
 
   React.useEffect(() => {
     console.log("ApplicationWindow useEffect");
-    return () => { console.log("ApplicationWindow Unmounted"); };
-  });
+    return () => {
+      ipcRenderer.removeAllListeners("activeApplication" + props.identifier);
+    };
+  }, []);
   let className = "applicationWindow";
   if (!display) {
     className += " hidden";
@@ -42,7 +49,7 @@ const saveStateToSession = (display: boolean, identifier: string) => {
 
 const setupListeners = (setDisplay: React.Dispatch<React.SetStateAction<boolean>>, identifier: string) => {
   console.log("ApplicationWindow Creating listeners: ActiveApplication");
-  ipcRenderer.on("activeApplication", (event: any, value: any) => {
+  ipcRenderer.on("activeApplication" + identifier, (event: any, value: any) => {
     if (value !== undefined) {
       const show = (value === identifier);
       setDisplay(show);

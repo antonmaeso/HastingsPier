@@ -14,9 +14,14 @@ export class NotifyObject {
   }
 }
 
+interface IProps {
+  appName: string;
+  title: string;
+}
+
 const notifications: NotifyObject[] = [new NotifyObject("Nothing To See Here")];
 
-export const AppButton = (props: any) => {
+export const AppButton = (props: IProps) => {
   const [notification, setNotification] = React.useState(false);
   const [active, setActive] = React.useState(false);
   const [listeners, setListeners] = React.useState(false);
@@ -80,6 +85,7 @@ const rightClick = (AppToShow: string) => {
 };
 
 const closeApp = (appToClose: string) => {
+  ipcRenderer.removeAllListeners("activeApplication" + appToClose);
   Notify.closeApplication(appToClose);
 };
 
@@ -87,14 +93,14 @@ const setupListeners = (
   props: any,
   setNotification: React.Dispatch<React.SetStateAction<boolean>>,
   setActive: React.Dispatch<React.SetStateAction<boolean>>) => {
-  console.log("ApplicationButton Creating listeners: notify"+props.appName+", activeApplication");
+  console.log("ApplicationButton Creating listeners: notify" + props.appName + ", activeApplication");
   ipcRenderer.removeAllListeners("notify" + props.appName);
   ipcRenderer.on("notify" + props.appName, (event: any, value: any) => {
     setNotification(true);
     ps.putSession("notify" + props.appName + WindowId, value);
     Notify.Balloon(props.appName, value, props.appName);
   });
-  ipcRenderer.on("activeApplication", (event: any, value: any) => {
+  ipcRenderer.on("activeApplication" + props.appName, (event: any, value: any) => {
     setActive(value === props.appName);
     ps.putSession("activeApplication" + props.appName + WindowId, (value === props.appName));
   });

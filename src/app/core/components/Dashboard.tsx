@@ -42,6 +42,7 @@ export const Dashboard = (props: any) => {
     // save state on window unmount
     return () => { // return is ~ the same as will unmount
       saveStateToSession(RunningApplication);
+      ipcRenderer.removeAllListeners("activeApplication")
     };
   }, []);
 

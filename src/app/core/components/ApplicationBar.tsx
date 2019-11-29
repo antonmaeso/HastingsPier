@@ -98,4 +98,3 @@ const StartListeners = (appArray: string[], setAppArray: React.Dispatch<React.Se
     setAppArray(Array.from(applications.keys()));
   });
 };
-
