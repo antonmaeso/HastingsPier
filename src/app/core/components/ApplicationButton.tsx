@@ -22,7 +22,6 @@ interface IProps {
 // const notifications: NotifyObject[] = [new NotifyObject("Nothing To See Here")];
 
 export const AppButton = (props: IProps) => {
-  const [notification, setNotification] = React.useState(false);
   const [active, setActive] = React.useState(false);
   const [listeners, setListeners] = React.useState(false);
   const [reloaded, setReloaded] = React.useState(false);
@@ -32,7 +31,7 @@ export const AppButton = (props: IProps) => {
     // re load state from session
     const oldNoti = ps.getSession("notify" + props.appName + WindowId);
     if (oldNoti !== undefined && oldNoti !== null) {
-      setNotification(oldNoti);
+      setNotifications(oldNoti);
     }
     setActive((ps.getSession("activeApplication" + WindowId) === props.appName));
     setReloaded(true);
@@ -53,10 +52,9 @@ export const AppButton = (props: IProps) => {
 
   ipcRenderer.on("notify" + props.appName, (event: any, value: any) => {
     ipcRenderer.removeAllListeners("notify" + props.appName);
-    setNotification(true);
     const newNoti = notifications.concat(new NotifyObject(value));
     setNotifications(newNoti);
-    ps.putSession("notify" + props.appName + WindowId, value);
+    ps.putSession("notify" + props.appName + WindowId, newNoti);
     Notify.Balloon(props.appName, value, props.appName);
   });
 
@@ -86,7 +84,6 @@ export const AppButton = (props: IProps) => {
         onClick={() => {
           Notify.setWindowTitle(props.title);
           Notify.setActiveApplication(props.appName);
-          setNotification(false);
         }}
       // onContextMenu={() => { rightClick(props.appName); }}
       >
@@ -95,8 +92,7 @@ export const AppButton = (props: IProps) => {
             <div className="notifyCount" title={(notifications.length).toString()}>{notifications.length}</div>
             <ButtonNotification
               appName={props.appName}
-              notifications={notifications}
-              setRead={setNotification} />
+              notifications={notifications} />
           </React.Fragment> : null
         }
       </div>

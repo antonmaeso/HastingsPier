@@ -3,7 +3,6 @@ import { NotifyObject } from "./ApplicationButton";
 
 interface IProps {
     notifications: NotifyObject[];
-    setRead: React.Dispatch<React.SetStateAction<boolean>>;
     appName: string;
 }
 
@@ -12,7 +11,6 @@ export const ButtonNotification = (props: IProps) => {
     // Hover shows this under the location of the hover
     // display a scrolling list of the unread notifications.
     // include a button to show old notifications?
-    const setRead = props.setRead;
     const notifications = props.notifications;
     const toShow: JSX.Element[] = [];
     notifications.forEach((notification: NotifyObject) => {
