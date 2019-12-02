@@ -30,17 +30,19 @@ export const RmDash = (props: any) => {
     }
     const [initialised, setInitialised] = React.useState(false);
 
+    let methodToRun: any;
     if (display && initialised) {
-        showView();
+        methodToRun = () => { showView(); };
     } else if (display && !initialised) {
-        addBrowserView(setInitialised);
+        methodToRun = () => { addBrowserView(setInitialised); };
     } else if (!display && initialised) {
-        hideView();
+        methodToRun = () => { hideView(); };
     }
 
     // return null;
     return <React.Fragment>
         <div className="RmDash">
+            {methodToRun()}
             {/* <Webview Src={Src} MaxSize={true} uniqueId={webviewId} /> */}
         </div>
         {/* <Button onClick={hideView} text="Hide View" />
@@ -84,14 +86,16 @@ const hideView = () => {
 };
 
 const showView = () => {
-    const bounding = document.getElementsByClassName("applicationWindow active")[0].getBoundingClientRect();
-    BV.showView(viewName, bounding.left, bounding.top, bounding.height, bounding.width);
+    try {
+        const bounding = document.getElementsByClassName("applicationWindow active")[0].getBoundingClientRect();
+        BV.showView(viewName, bounding.left, bounding.top, bounding.height, bounding.width);
+    } catch{ }
 };
 
 const addBrowserView = (setInitialised: React.Dispatch<React.SetStateAction<boolean>>) => {
-    const bounding = document.getElementsByClassName("applicationWindow active")[0].getBoundingClientRect();
+    // const bounding = document.getElementsByClassName("applicationWindow active")[0].getBoundingClientRect();
 
-    BV.createView(bounding.left, bounding.top, bounding.height, bounding.width, Src, viewName);
+    BV.createView(10, 10, 10, 10, Src, viewName);
     setInitialised(true);
 
     // ipcRenderer.send("CreateBrowserView", {

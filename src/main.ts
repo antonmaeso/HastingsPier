@@ -188,30 +188,32 @@ ipcMain.on("CloseBrowserView", (event: any, value: any) => {
   }
 });
 
+const resizeView = (view: BrowserView, X: number, Y: number, Height: number, Width: number) => {
+  view.setBounds({ x: X, y: Y, height: Height, width: Width });
+};
+
 ipcMain.on("ShowBrowserView", (event: any, value: any) => {
   const viewApplication = value.viewApplication;
-  let bound: Rectangle;
+  const viewToShow = activeViews.get(viewApplication);
+  // to show, move it back on the screen
   if (value.x !== null && value.x !== undefined &&
     value.y !== null && value.y !== undefined &&
     value.width !== null && value.width !== undefined &&
     value.height !== null && value.height !== undefined) {
-    bound = { x: value.x, y: value.y, width: value.width, height: value.height };
+    resizeView(viewToShow, value.x, value.y, value.height, value.width);
   } else {
     const bounding = document.getElementsByClassName("applicationWindow active")[0].getBoundingClientRect();
-    bound = { x: bounding.left, y: bounding.top, height: bounding.height, width: bounding.width };
+    resizeView(viewToShow, bounding.left, bounding.top, bounding.height, bounding.width);
   }
-  const viewToShow = activeViews.get(viewApplication);
-  viewToShow.setBounds(bound); // to show, move it back on the screen
   // maybe make views stored in objects containing the last location they were shown?
 });
 
 const hideView = (view: BrowserView) => {
-  view.setBounds({ x: 3000, y: 3000, height: 10, width: 10 });
+  resizeView(view, 3000, 3000, 10, 10);
 };
 
 ipcMain.on("HideBrowserView", (event: any, value: any) => {
   const viewApplication = value.viewApplication;
-
   const viewToHide = activeViews.get(viewApplication);
   hideView(viewToHide); // to hide, move it off the screen
 });
@@ -222,7 +224,6 @@ ipcMain.on("HideAllBrowserView", () => {
     hideView(activeViews.get(key));
   });
 });
-
 
 
 ipcMain.on("NewWindow", (event: any, value: any) => {

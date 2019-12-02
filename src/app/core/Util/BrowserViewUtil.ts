@@ -59,4 +59,3 @@ export const showView = (
         y: Math.round(y),
     });
 };
-
