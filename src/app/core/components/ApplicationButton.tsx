@@ -19,32 +19,50 @@ interface IProps {
   title: string;
 }
 
-const notifications: NotifyObject[] = [new NotifyObject("Nothing To See Here")];
+// const notifications: NotifyObject[] = [new NotifyObject("Nothing To See Here")];
 
 export const AppButton = (props: IProps) => {
   const [notification, setNotification] = React.useState(false);
   const [active, setActive] = React.useState(false);
   const [listeners, setListeners] = React.useState(false);
   const [reloaded, setReloaded] = React.useState(false);
+  const [notifications, setNotifications] = React.useState(new Array<NotifyObject>());
 
   if (!reloaded) {
     // re load state from session
-    const oldNotes = ps.getSession("notify" + props.appName + WindowId);
-    if (oldNotes !== undefined && oldNotes !== null) {
-      setNotification(oldNotes);
+    const oldNoti = ps.getSession("notify" + props.appName + WindowId);
+    if (oldNoti !== undefined && oldNoti !== null) {
+      setNotification(oldNoti);
     }
     setActive((ps.getSession("activeApplication" + WindowId) === props.appName));
     setReloaded(true);
   }
 
-  if (!listeners) {
-    setupListeners(props, setNotification, setActive);
-    setListeners(true);
-  }
-
-  let className = "appButton " + props.title;
+  let className = "appButton " + props.appName;
   if (active) {
     className += " activeApp";
+  }
+
+  const setupListeners = () => {
+    console.log("ApplicationButton Creating listeners: activeApplication");
+    ipcRenderer.on("activeApplication" + props.appName, (event: any, value: any) => {
+      setActive(value === props.appName);
+      ps.putSession("activeApplication" + props.appName + WindowId, (value === props.appName));
+    });
+  };
+
+  ipcRenderer.on("notify" + props.appName, (event: any, value: any) => {
+    ipcRenderer.removeAllListeners("notify" + props.appName);
+    setNotification(true);
+    const newNoti = notifications.concat(new NotifyObject(value));
+    setNotifications(newNoti);
+    ps.putSession("notify" + props.appName + WindowId, value);
+    Notify.Balloon(props.appName, value, props.appName);
+  });
+
+  if (!listeners) {
+    setupListeners();
+    setListeners(true);
   }
 
   // React.useEffect(() => {
@@ -70,10 +88,17 @@ export const AppButton = (props: IProps) => {
           Notify.setActiveApplication(props.appName);
           setNotification(false);
         }}
-        onContextMenu={() => { rightClick(props.appName); }}
+      // onContextMenu={() => { rightClick(props.appName); }}
       >
-        <div className="notifyCount" title={notifications.length.toString()}>{notifications.length}</div>
-        <ButtonNotification appName={props.appName} notifications={notifications} setRead={setNotification} />
+        {notifications.length > 0 ?
+          <React.Fragment>
+            <div className="notifyCount" title={(notifications.length).toString()}>{notifications.length}</div>
+            <ButtonNotification
+              appName={props.appName}
+              notifications={notifications}
+              setRead={setNotification} />
+          </React.Fragment> : null
+        }
       </div>
     </React.Fragment>
   );
@@ -87,21 +112,4 @@ const rightClick = (AppToShow: string) => {
 const closeApp = (appToClose: string) => {
   ipcRenderer.removeAllListeners("activeApplication" + appToClose);
   Notify.closeApplication(appToClose);
-};
-
-const setupListeners = (
-  props: any,
-  setNotification: React.Dispatch<React.SetStateAction<boolean>>,
-  setActive: React.Dispatch<React.SetStateAction<boolean>>) => {
-  console.log("ApplicationButton Creating listeners: notify" + props.appName + ", activeApplication");
-  ipcRenderer.removeAllListeners("notify" + props.appName);
-  ipcRenderer.on("notify" + props.appName, (event: any, value: any) => {
-    setNotification(true);
-    ps.putSession("notify" + props.appName + WindowId, value);
-    Notify.Balloon(props.appName, value, props.appName);
-  });
-  ipcRenderer.on("activeApplication" + props.appName, (event: any, value: any) => {
-    setActive(value === props.appName);
-    ps.putSession("activeApplication" + props.appName + WindowId, (value === props.appName));
-  });
 };

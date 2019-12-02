@@ -7,7 +7,7 @@ const WindowId = require("electron").remote.getCurrentWindow().id;
 
 let applications = new Map<string, JSX.Element>([
   [
-    "ApplicationSelection", <AppButton key="ApplicationSelectionPane" title="ApplicationSelection" appName="ApplicationSelection" />,
+    "ApplicationSelection", <AppButton key="ApplicationSelectionPane" title="Hastings Pier" appName="ApplicationSelection" />,
   ]]);
 
 export const ApplicationBar = (props: any) => {
@@ -71,10 +71,10 @@ const createAppButton = (appName: string, title: string) => {
 };
 
 
-const addApplicationToBar = (appName: string, existingApps: any[]) => {
+const addApplicationToBar = (appName: string, appTitle: string, existingApps: any[]) => {
   // just update the existing array with a new element, might avoid redrawing
   // trigger the redraw by changing the array of app options
-  applications.set(appName, createAppButton(appName, appName));
+  applications.set(appName, createAppButton(appName, appTitle));
   return [appName].concat(existingApps);
 };
 
@@ -88,7 +88,7 @@ const StartListeners = (appArray: string[], setAppArray: React.Dispatch<React.Se
   ipcRenderer.removeAllListeners(listener);
   ipcRenderer.on(listener, (event: any, value: any) => {
     if (!appArray.includes(value)) {
-      const newList = addApplicationToBar(value, appArray);
+      const newList = addApplicationToBar(value.app, value.title, appArray);
       setAppArray(newList);
       ps.putSession("AppBarApplications" + WindowId, newList);
     }

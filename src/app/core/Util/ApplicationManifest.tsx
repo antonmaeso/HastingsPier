@@ -8,17 +8,22 @@ import { Google } from "../../modules/StackoverFlow/StackOverflow";
 import { Tapestry } from "../../modules/Tapestry/Tapestry";
 import { VideoRecording } from "../../modules/VideoRecording/VideoRecording";
 
+/**
+ * @param root React component which serves as the foundation for your app
+ * @param description Description of your app which is displayed on the app selction window. Try to keep it ~120 chars
+ * @param title The title Pier should show when your application is loaded
+ */
 class App {
-    public root: JSX.Element;
-    public description: string;
-    public title: string;
+  public root: JSX.Element;
+  public description: string;
+  public title: string;
 
-    constructor(component: JSX.Element, description: string, title: string) {
-        this.root = component;
-        this.description = description;
-        this.title = title;
-    }
+  constructor(component: JSX.Element, description: string, title: string) {
+    this.root = component;
+    this.description = description;
+    this.title = title;
   }
+}
 // add your component to the map. The Key is assigned as the class to your apps selection pane and
 // its icon in the appBar
 export const appMap = new Map<string, App>([

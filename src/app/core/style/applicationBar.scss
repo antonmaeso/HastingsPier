@@ -82,22 +82,21 @@
 }
 
 .notifyList {
-    margin-left: 115px;
     display: none;
     position: absolute;
     margin-top: 70px;
     background-color: black;
     padding: 1px;
     border: solid;
-    z-index: 1;
+    z-index: 2;
 }
 
 .notifyCount:hover+.notifyList {
-    display: flex;
+    display: inline-grid;
 }
 
 .notifyList:hover {
-    display: flex;
+    display: inline-grid;
 }
 
 .notifyLine {

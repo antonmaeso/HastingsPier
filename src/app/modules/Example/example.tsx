@@ -41,7 +41,7 @@ export const Example = (props: any) => {
         Text={"Send Notification" + count.toString()}
         onClick={() => {
           setCount(count + 1);
-          Notify.AppNotification("Octane", (count + 1).toString());
+          Notify.AppNotification("Octane", " this is a long notification string: " + (count + 1).toString());
           // ipcRenderer.send("notify", { notify: count, App: "Octane" });
         }}
       />

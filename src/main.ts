@@ -44,7 +44,7 @@ const createWindow = () => {
 
   // BrowserWindow.addDevToolsExtension(
   //   path.join(os.homedir(),
-  //  '/AppData/Local/Google/Chrome/User Data/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/4.2.0_0')
+  //  '/AppData/Local/Google/Chrome/User Data/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/4.2.1_0')
   // )
 };
 

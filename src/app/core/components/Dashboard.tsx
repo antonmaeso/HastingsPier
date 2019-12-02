@@ -42,7 +42,7 @@ export const Dashboard = (props: any) => {
     // save state on window unmount
     return () => { // return is ~ the same as will unmount
       saveStateToSession(RunningApplication);
-      ipcRenderer.removeAllListeners("activeApplication")
+      ipcRenderer.removeAllListeners("activeApplication");
     };
   }, []);
 
@@ -74,7 +74,7 @@ const setupListeners = (setRunningApplication: React.Dispatch<React.SetStateActi
     if (value.Close === value.Active) {
       const RunningApplication = "ApplicationSelection";
       N.setActiveApplication(RunningApplication);
-      N.setWindowTitle(RunningApplication);
+      N.setWindowTitle("Hasting Pier");
     }
   });
 };

@@ -146,7 +146,7 @@ export class WindowControl {
         if (app === undefined) {
             app = currentWindows.get(windowId).LoadedApp;
             N.setActiveApplication(app, windowId);
-            N.setWindowTitle(app, windowId);
+            // N.setWindowTitle(app, windowId);
             return app;
         } else {
             currentWindows.get(windowId).LoadedApp = app;
