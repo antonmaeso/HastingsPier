@@ -5,7 +5,7 @@ const path = require("path");
 import logo from "./app/core/assets/Ant.png";
 const iconpath = path.join(__dirname + "\\" + logo);
 
-import { app, BrowserWindow, ipcMain, Menu, nativeImage, Tray } from "electron";
+import { app, ipcMain, Menu, nativeImage, Tray } from "electron";
 import { BrowserViewControl } from "./app/core/util/BrowserViewControl";
 import {
   DataHandler,
@@ -150,4 +150,16 @@ ipcMain.on("NewWindow", (event: any, value: any) => {
   control
     .getWindow(mainWindowId)
     .webContents.send("webpageLauncher", newWindow);
+});
+
+
+// --------- Notify Routing ---------
+// to choose Active Application
+ipcMain.on("activeApplication", (event: any, value: any) => {
+  NR.setActiveApplication = value.Active;
+  let windowId = mainWindowId;
+  if (value.WindowId !== undefined && value.WindowId !== null) {
+      windowId = value.WindowId;
+  }
+  NR.activeApp(value.Active, windowId);
 });

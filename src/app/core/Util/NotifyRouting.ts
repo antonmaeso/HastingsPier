@@ -32,24 +32,16 @@ export class NotifyRouting {
             control.getWindow(windowId).webContents.send("menuTitle", value.Title);
         });
         // to choose Active Application
-        ipcMain.on("activeApplication", (event: any, value: any) => {
-            let windowId = mainWindowId;
-            if (value.WindowId !== undefined && value.WindowId !== null) {
-                windowId = value.WindowId;
-            }
-            this.activeApplication = value.Active;
-            // add to active list if its not there
-            if (!this.applicationList.has(value.Active)) {
-                this.applicationList.set(value.Active, true);
-            }
-            // loop thorugh list to set the active flag and send the ipc notifications out
-            Array.from(this.applicationList.keys()).forEach((key) => {
-                this.applicationList.set(key, (key === value.Active));
-                control.getWindow(windowId).webContents.send("activeApplication" + key, value.Active);
-            });
+        // ipcMain.on("activeApplication", (event: any, value: any) => {
+        //     this.activeApplication = value.Active;
+        //     let windowId = mainWindowId;
+        //     if (value.WindowId !== undefined && value.WindowId !== null) {
+        //         windowId = value.WindowId;
+        //     }
+        //     this.activeApp(value.Active, windowId);
 
-            control.getWindow(windowId).webContents.send("activeApplication", value.Active);
-        });
+        //     control.getWindow(windowId).webContents.send("activeApplication", value.Active);
+        // });
 
         // to remove an application from the DOM
         ipcMain.on("closeApplication", (event: any, value: any) => {
@@ -70,5 +62,40 @@ export class NotifyRouting {
                 control.getWindow(mainWindowId).webContents.send("AppBarResized" + key);
             });
         });
+    }
+
+    public setActiveApplication(app: string) {
+        this.activeApplication = app;
+    }
+
+    public addToActiveList(app: string, active?: boolean) {
+        if (active === undefined || active === null) {
+            active = true;
+        }
+        this.applicationList.set(app, active);
+    }
+
+    public removeFromActiveList(remove: string) {
+        this.applicationList.delete(remove);
+    }
+
+    public activeApp(app?: string, WindowId?: number) {
+        let Active = this.activeApplication;
+        if (app !== null && app !== undefined) {
+            Active = app;
+        }
+        // add to active list if its not there
+        if (!this.applicationList.has(Active)) {
+            this.addToActiveList(Active, true);
+        }
+        // loop thorugh list to set the active flag and send the ipc notifications out
+
+        // the map is not staying updated. I think we will need to change the main.ts to hold the info.
+        Array.from(this.applicationList.keys()).forEach((key) => {
+            this.applicationList.set(key, (key === Active));
+            control.getWindow(WindowId).webContents.send("activeApplication" + key, Active);
+        });
+
+        control.getWindow(WindowId).webContents.send("activeApplication", app);
     }
 }

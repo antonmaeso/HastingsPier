@@ -13,12 +13,8 @@ interface IProps {
 export const ApplicationWindow = (props: IProps) => {
   const [display, setDisplay] = React.useState(true);
   const [listener, setListeners] = React.useState(false);
-
-  if (!listener) {
-    setupListeners(setDisplay, props.identifier);
-    setListeners(true);
-  }
   const [reloaded, setReloaded] = React.useState(false);
+
   if (!reloaded) {
     const loaded = ps.getSession("AppWindow" + props.identifier + WindowId);
     if (loaded !== undefined && loaded !== null) {
@@ -27,10 +23,16 @@ export const ApplicationWindow = (props: IProps) => {
     setReloaded(true);
   }
 
+  if (!listener) {
+    setupListeners(setDisplay, props.identifier);
+    setListeners(true);
+  }
+
   React.useEffect(() => {
     console.log("ApplicationWindow useEffect");
     return () => {
       ipcRenderer.removeAllListeners("activeApplication" + props.identifier);
+      saveStateToSession(display, props.identifier);
     };
   }, []);
   let className = "applicationWindow";

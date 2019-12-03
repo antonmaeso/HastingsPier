@@ -48,14 +48,14 @@ export const AppButton = (props: IProps) => {
       setActive(value === props.appName);
       ps.putSession("activeApplication" + props.appName + WindowId, (value === props.appName));
     });
+    ipcRenderer.on("notify" + props.appName, (event: any, value: any) => {
+      // ipcRenderer.removeAllListeners("notify" + props.appName);
+      const newNoti = notifications.concat(new NotifyObject(value));
+      setNotifications(newNoti);
+      ps.putSession("notify" + props.appName + WindowId, newNoti);
+      Notify.Balloon(props.appName, value, props.appName);
+    });
   };
-  ipcRenderer.on("notify" + props.appName, (event: any, value: any) => {
-    ipcRenderer.removeAllListeners("notify" + props.appName);
-    const newNoti = notifications.concat(new NotifyObject(value));
-    setNotifications(newNoti);
-    ps.putSession("notify" + props.appName + WindowId, newNoti);
-    Notify.Balloon(props.appName, value, props.appName);
-  });
 
   if (!listeners) {
     setupListeners();
