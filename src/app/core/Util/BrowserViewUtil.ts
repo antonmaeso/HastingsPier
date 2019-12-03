@@ -46,10 +46,10 @@ export const hideAllView = () => {
  */
 export const showView = (
     Application: string,
-    x?: number,
-    y?: number,
-    height?: number,
-    width?: number,
+    x: number,
+    y: number,
+    height: number,
+    width: number,
 ) => {
     ipcRenderer.send("ShowBrowserView", {
         height: Math.round(height),

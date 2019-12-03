@@ -196,15 +196,13 @@ ipcMain.on("ShowBrowserView", (event: any, value: any) => {
   const viewApplication = value.viewApplication;
   const viewToShow = activeViews.get(viewApplication);
   // to show, move it back on the screen
-  if (value.x !== null && value.x !== undefined &&
-    value.y !== null && value.y !== undefined &&
-    value.width !== null && value.width !== undefined &&
-    value.height !== null && value.height !== undefined) {
+  try {
     resizeView(viewToShow, value.x, value.y, value.height, value.width);
-  } else {
-    const bounding = document.getElementsByClassName("applicationWindow active")[0].getBoundingClientRect();
-    resizeView(viewToShow, bounding.left, bounding.top, bounding.height, bounding.width);
   }
+  catch{
+    console.log("Not enough information was sent to show Browser View");
+  }   // const bounding = document.getElementsByClassName("applicationWindow active")[0].getBoundingClientRect();
+  // resizeView(viewToShow, bounding.left, bounding.top, bounding.height, bounding.width);
   // maybe make views stored in objects containing the last location they were shown?
 });
 

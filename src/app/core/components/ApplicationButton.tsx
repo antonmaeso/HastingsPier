@@ -48,29 +48,26 @@ export const AppButton = (props: IProps) => {
       setActive(value === props.appName);
       ps.putSession("activeApplication" + props.appName + WindowId, (value === props.appName));
     });
+    ipcRenderer.on("notify" + props.appName, (event: any, value: any) => {
+      ipcRenderer.removeAllListeners("notify" + props.appName);
+      const newNoti = notifications.concat(new NotifyObject(value));
+      setNotifications(newNoti);
+      ps.putSession("notify" + props.appName + WindowId, newNoti);
+      Notify.Balloon(props.appName, value, props.appName);
+    });
   };
-
-  ipcRenderer.on("notify" + props.appName, (event: any, value: any) => {
-    ipcRenderer.removeAllListeners("notify" + props.appName);
-    const newNoti = notifications.concat(new NotifyObject(value));
-    setNotifications(newNoti);
-    ps.putSession("notify" + props.appName + WindowId, newNoti);
-    Notify.Balloon(props.appName, value, props.appName);
-  });
 
   if (!listeners) {
     setupListeners();
     setListeners(true);
   }
 
-  // React.useEffect(() => {
-  //   // save state on window close/refresh/unmount
-  //   window.addEventListener("beforeunload", () => { saveStateToSession(props, notification, active);});
-  //   return () => { // return is the same as will unmount
-  //     saveStateToSession(props, notification, active);
-  //     window.removeEventListener("beforeunload", () => { saveStateToSession(props, notification, active); });
-  //   };
-  // }, []);
+  React.useEffect(() => {
+    return () => { // return is the same as will unmount
+      ipcRenderer.removeAllListeners("activeApplication" + props.appName);
+      ipcRenderer.removeAllListeners("notify" + props.appName);
+    };
+  }, []);
 
   return (
     <React.Fragment>

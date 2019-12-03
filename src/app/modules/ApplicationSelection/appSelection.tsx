@@ -19,7 +19,7 @@ export const AppSelection = (props: any) => {
 
 const loadOptions = () => {
   const toReturn: JSX.Element[] = [];
-  Array.from(appMap.keys()).forEach(app => {
+  Array.from(appMap.keys()).forEach((app) => {
     if (app !== "ApplicationSelection") {
       const appDetails = appMap.get(app);
       toReturn.push(<AppPane key={app + "pane"}

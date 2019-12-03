@@ -7,17 +7,70 @@ import * as BV from "../../core/util/BrowserViewUtil";
 import * as ps from "../../core/util/PersistantStorage";
 // import * as N from "../../core/util/Notify";
 import "./style/rmDash.scss";
-const WindowId = require('electron').remote.getCurrentWindow().id;
+const Window = require('electron').remote.getCurrentWindow();
+const WindowId = Window.id;
 
 const Src = "https://rmdashboard.network.uk.ad/";
 const viewName = "RmDashboard";
+
+const status = new Map<string, string>([
+    ["./assets/img/green.png", "Working"],
+    ["./assets/img/red.png", "Down"],
+    ["./assets/img/unresponsive.png", "Unresponsive"],
+    ["./assets/img/up_green.png", "Starting up"],
+    ["./assets/img/down_red.png", "Stopping"],
+    ["./assets/img/blue.png", "Draining"],
+    ["./assets/img/purple.png", "Deploying"],
+    ["./assets/img/unstable.png", "Unstable"],
+    ["./assets/img/grey.png", "Switched Off"],
+    ["./assets/img/purple_warning.png", "Deployment Error"],
+]);
 
 export const RmDash = (props: any) => {
     const [display, setDisplay] = React.useState(true);
     const [listener, setListeners] = React.useState(false);
 
+    const setupListeners = () => {
+        console.log("RmDash Creating listeners: ActiveApplication");
+        ipcRenderer.on("activeApplication" + viewName, (event: any, value: any) => {
+            if (value !== undefined) {
+                const show = (value === viewName);
+                setDisplay(show);
+                saveStateToSession();
+            }
+        });
+    };
+
+    const saveStateToSession = () => {
+        ps.putSession(viewName + WindowId, display);
+    };
+
+    const hideView = () => {
+        BV.hideView(viewName);
+    };
+
+    const showView = () => {
+        try {
+            Window.webContents.findInPage("RmDashboard Loading");
+            Window.webContents.once("found-in-page", () => {
+                Window.webContents.stopFindInPage("keepSelection");
+                const bounding = document.getElementsByClassName("applicationWindow active")[0].getBoundingClientRect();
+                BV.showView(viewName, bounding.left, bounding.top, bounding.height, bounding.width);
+            });
+        } catch {
+            console.log("Error showing view");
+        }
+    };
+
+    const addBrowserView = () => {
+        // create the browser view off the screen to start
+        BV.createView(5000, 5000, 10, 10, Src, viewName);
+        setInitialised(true);
+    };
+
+
     if (!listener) {
-        setupListeners(setDisplay, viewName);
+        setupListeners();
         setListeners(true);
     }
     const [reloaded, setReloaded] = React.useState(false);
@@ -34,76 +87,25 @@ export const RmDash = (props: any) => {
     if (display && initialised) {
         methodToRun = () => { showView(); };
     } else if (display && !initialised) {
-        methodToRun = () => { addBrowserView(setInitialised); };
+        methodToRun = () => { addBrowserView(); };
     } else if (!display && initialised) {
         methodToRun = () => { hideView(); };
     }
 
+    React.useEffect(() => {
+        return () => { // return is ~ the same as will unmount
+            ipcRenderer.removeAllListeners("activeApplication" + viewName);
+        };
+    }, []);
+
     // return null;
     return <React.Fragment>
         <div className="RmDash">
+            RmDashboard Loading
             {methodToRun()}
-            {/* <Webview Src={Src} MaxSize={true} uniqueId={webviewId} /> */}
         </div>
-        {/* <Button onClick={hideView} text="Hide View" />
-        <Button onClick={showView} text="Show View" /> */}
     </React.Fragment>;
 };
 
-const status = new Map<string, string>([
-    ["./assets/img/green.png", "Working"],
-    ["./assets/img/red.png", "Down"],
-    ["./assets/img/unresponsive.png", "Unresponsive"],
-    ["./assets/img/up_green.png", "Starting up"],
-    ["./assets/img/down_red.png", "Stopping"],
-    ["./assets/img/blue.png", "Draining"],
-    ["./assets/img/purple.png", "Deploying"],
-    ["./assets/img/unstable.png", "Unstable"],
-    ["./assets/img/grey.png", "Switched Off"],
-    ["./assets/img/purple_warning.png", "Deployment Error"],
-]);
-
 // find the env table. Look at each row. the env_name is the environment.
 // Look in the row for a TD containing an img. Use img src to indicate status.
-
-const setupListeners = (setDisplay: React.Dispatch<React.SetStateAction<boolean>>, identifier: string) => {
-    console.log("RmDash Creating listeners: ActiveApplication");
-    ipcRenderer.on("activeApplication", (event: any, value: any) => {
-        if (value !== undefined) {
-            const show = (value === identifier);
-            setDisplay(show);
-            saveStateToSession(show);
-        }
-    });
-};
-
-const saveStateToSession = (display: boolean) => {
-    ps.putSession(viewName + WindowId, display);
-};
-
-const hideView = () => {
-    BV.hideView(viewName);
-};
-
-const showView = () => {
-    try {
-        const bounding = document.getElementsByClassName("applicationWindow active")[0].getBoundingClientRect();
-        BV.showView(viewName, bounding.left, bounding.top, bounding.height, bounding.width);
-    } catch{ }
-};
-
-const addBrowserView = (setInitialised: React.Dispatch<React.SetStateAction<boolean>>) => {
-    // const bounding = document.getElementsByClassName("applicationWindow active")[0].getBoundingClientRect();
-
-    BV.createView(10, 10, 10, 10, Src, viewName);
-    setInitialised(true);
-
-    // ipcRenderer.send("CreateBrowserView", {
-    //     height: Math.round(bounding.height),
-    //     src: Src,
-    //     viewApplication: "RMDash",
-    //     width: Math.round(bounding.width),
-    //     x: Math.round(bounding.left),
-    //     y: Math.round(bounding.top),
-    // });
-};
