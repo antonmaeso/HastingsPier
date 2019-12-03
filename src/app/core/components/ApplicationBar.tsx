@@ -48,6 +48,8 @@ export const ApplicationBar = (props: any) => {
         onClick={() => {
           setShowBar(!showBar);
           ps.putSession("AppBarOpen" + WindowId, !showBar);
+          // signal the resizing so any browserview or other are aware of the new space
+          ipcRenderer.send("AppBarResized");
         }} >
         <div style={{ display: "flex", alignSelf: "center" }}>
           {arrow}

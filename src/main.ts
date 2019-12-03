@@ -161,6 +161,10 @@ ipcMain.on("CallMe", () => {
   control.getWindow(mainWindowId).webContents.send("CallMe");
 });
 
+ipcMain.on("AppBarResized", () => {
+  control.getWindow(mainWindowId).webContents.send("AppBarResized");
+});
+
 // map of browser views. Key is the app name in the view. Value is the view
 const activeViews = new Map<string, BrowserView>();
 ipcMain.on("CreateBrowserView", (event: any, value: any) => {

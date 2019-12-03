@@ -39,6 +39,11 @@ export const RmDash = (props: any) => {
                 saveStateToSession();
             }
         });
+        ipcRenderer.on("AppBarResized", () => {
+            if (display) {
+                showView();
+            }
+        });
     };
 
     const saveStateToSession = () => {
@@ -57,6 +62,30 @@ export const RmDash = (props: any) => {
                 const bounding = document.getElementsByClassName("applicationWindow active")[0].getBoundingClientRect();
                 BV.showView(viewName, bounding.left, bounding.top, bounding.height, bounding.width);
             });
+
+            // Window.webContents.once("dom-ready", () => {
+            //     console.log("webContents dom-ready");
+            // });
+            // Window.webContents.once("did-finish-load", () => {
+            //     console.log("webContents did-finish-load");
+            // });
+            // Window.webContents.once("did-stop-loading", () => {
+            //     console.log("webContents did-stop-loading");
+            // });
+            // Window.webContents.once("responsive", () => {
+            //     console.log("webContents responsive");
+            // });
+            // Window.webContents.once("did-frame-finish-load", () => {
+            //     console.log("webContents did-frame-finish-load");
+            // });
+
+            // Window.once("ready-to-show", () => {
+            //     console.log("window ready-to-show");
+            // });
+            // Window.once("responsive", () => {
+            //     console.log("webContents responsive");
+            // });
+
         } catch {
             console.log("Error showing view");
         }
