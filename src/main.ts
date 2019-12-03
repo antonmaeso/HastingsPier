@@ -5,7 +5,8 @@ const path = require("path");
 import logo from "./app/core/assets/Ant.png";
 const iconpath = path.join(__dirname + "\\" + logo);
 
-import { app, BrowserView, BrowserWindow, ipcMain, Menu, nativeImage, Rectangle, Tray } from "electron";
+import { app, BrowserWindow, ipcMain, Menu, nativeImage, Tray } from "electron";
+import { BrowserViewControl } from "./app/core/util/BrowserViewControl";
 import {
   DataHandler,
   IFileOperations,
@@ -22,6 +23,7 @@ const logger = new Logger(Path + "\\log.log");
 export const control = new WindowControl(iconpath, logger);
 const NR = new NotifyRouting();
 const IpcMain = new IpcMainRouting();
+const BV = new BrowserViewControl();
 
 const createWindow = () => {
   mainWindowId = control.createNewWindow(
@@ -129,96 +131,6 @@ ipcMain.on(
     return toReturn;
   },
 );
-
-// ipcMain.on("WindowControl", (event: any, arg: any, responseTarget: string) => {
-//   new Promise((resolve, reject) => {
-//     const response = control.route(arg);
-//     if (response !== undefined) {
-//       resolve(response);
-//     } else {
-//       reject(undefined);
-//     }
-//   }).then((res) => {
-//     // console.log("I was called successfully");
-//     // console.log(res);
-//     if (responseTarget !== undefined && responseTarget !== null) {
-//       let WindowId = mainWindowId;
-//       if (arg.windowId !== undefined && arg.windowId !== null) {
-//         WindowId = arg.windowId;
-//       }
-//       control.getWindow(WindowId).webContents.send(responseTarget, res);
-//     }
-//   }).catch((res) => {
-//     // tslint:disable: no-console
-//     console.log("I was not called successfully");
-//     console.log(res);
-//     console.log(arg.target);
-//     // console.log(arg.data);
-//   });
-// });
-
-// map of browser views. Key is the app name in the view. Value is the view
-const activeViews = new Map<string, BrowserView>();
-ipcMain.on("CreateBrowserView", (event: any, value: any) => {
-  const Src = value.src;
-  const viewApplication = value.viewApplication;
-  const view = new BrowserView();
-  control.getWindow(mainWindowId).setBrowserView(view);
-  const bound: Rectangle = { x: value.x, y: value.y, width: value.width, height: value.height };
-  view.setAutoResize({ width: true, height: true, horizontal: false, vertical: false });
-  view.setBounds(bound);
-  view.webContents.loadURL(Src);
-
-  // add to dictionary
-  activeViews.set(viewApplication, view);
-
-  // recentView.webContents.executeJavaScript()
-});
-
-ipcMain.on("CloseBrowserView", (event: any, value: any) => {
-  const viewApplication = value.viewApplication;
-  const view = activeViews.get(viewApplication);
-  if (view !== undefined && view !== null) {
-    view.destroy(); // currently only way to get rid of view
-    activeViews.delete(viewApplication);
-  }
-});
-
-const resizeView = (view: BrowserView, X: number, Y: number, Height: number, Width: number) => {
-  view.setBounds({ x: X, y: Y, height: Height, width: Width });
-};
-
-ipcMain.on("ShowBrowserView", (event: any, value: any) => {
-  const viewApplication = value.viewApplication;
-  const viewToShow = activeViews.get(viewApplication);
-  // to show, move it back on the screen
-  try {
-    resizeView(viewToShow, value.x, value.y, value.height, value.width);
-  }
-  catch{
-    console.log("Not enough information was sent to show Browser View");
-  }   // const bounding = document.getElementsByClassName("applicationWindow active")[0].getBoundingClientRect();
-  // resizeView(viewToShow, bounding.left, bounding.top, bounding.height, bounding.width);
-  // maybe make views stored in objects containing the last location they were shown?
-});
-
-const hideView = (view: BrowserView) => {
-  resizeView(view, 3000, 3000, 10, 10);
-};
-
-ipcMain.on("HideBrowserView", (event: any, value: any) => {
-  const viewApplication = value.viewApplication;
-  const viewToHide = activeViews.get(viewApplication);
-  hideView(viewToHide); // to hide, move it off the screen
-});
-
-ipcMain.on("HideAllBrowserView", () => {
-  // loop through all views and hide them
-  Array.from(activeViews.keys()).forEach((key) => {
-    hideView(activeViews.get(key));
-  });
-});
-
 
 ipcMain.on("NewWindow", (event: any, value: any) => {
   let newWindow: number;

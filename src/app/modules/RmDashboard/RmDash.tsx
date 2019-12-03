@@ -1,8 +1,6 @@
 // import { ipcRenderer } from "electron";
 import { ipcRenderer } from "electron";
 import * as React from "react";
-// import { Button } from "../../core/components/library/Button";
-// import { Webview } from "../../core/components/library/Webview";
 import * as BV from "../../core/util/BrowserViewUtil";
 import * as ps from "../../core/util/PersistantStorage";
 // import * as N from "../../core/util/Notify";
