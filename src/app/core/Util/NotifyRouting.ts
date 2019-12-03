@@ -63,5 +63,12 @@ export class NotifyRouting {
                 this.applicationList.delete(value.Active);
             }
         });
+
+        // when the app bar has resized   
+        ipcMain.on("AppBarResized", () => {
+            Array.from(this.applicationList.keys()).forEach((key) => {
+                control.getWindow(mainWindowId).webContents.send("AppBarResized" + key);
+            });
+        });
     }
 }

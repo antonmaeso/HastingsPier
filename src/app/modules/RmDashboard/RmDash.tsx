@@ -29,6 +29,8 @@ const status = new Map<string, string>([
 export const RmDash = (props: any) => {
     const [display, setDisplay] = React.useState(true);
     const [listener, setListeners] = React.useState(false);
+    const [reloaded, setReloaded] = React.useState(false);
+    const [initialised, setInitialised] = React.useState(false);
 
     const setupListeners = () => {
         console.log("RmDash Creating listeners: ActiveApplication");
@@ -39,12 +41,13 @@ export const RmDash = (props: any) => {
                 saveStateToSession();
             }
         });
-        ipcRenderer.on("AppBarResized", () => {
-            if (display) {
-                showView();
-            }
-        });
     };
+    ipcRenderer.removeAllListeners("AppBarResized" + viewName);
+    ipcRenderer.on("AppBarResized" + viewName, () => {
+        if (display) {
+            showView();
+        }
+    });
 
     const saveStateToSession = () => {
         ps.putSession(viewName + WindowId, display);
@@ -102,7 +105,7 @@ export const RmDash = (props: any) => {
         setupListeners();
         setListeners(true);
     }
-    const [reloaded, setReloaded] = React.useState(false);
+
     if (!reloaded) {
         const loaded = ps.getSession(viewName + WindowId);
         if (loaded !== undefined && loaded !== null) {
@@ -110,7 +113,6 @@ export const RmDash = (props: any) => {
         }
         setReloaded(true);
     }
-    const [initialised, setInitialised] = React.useState(false);
 
     let methodToRun: any;
     if (display && initialised) {
