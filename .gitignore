@@ -68,3 +68,6 @@ dist
 
 #release builds
 release-builds
+
+#temp office files
+~$*

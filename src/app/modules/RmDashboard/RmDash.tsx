@@ -98,7 +98,6 @@ export const RmDash = (props: any) => {
         setInitialised(true);
     };
 
-
     if (!listener) {
         setupListeners();
         setListeners(true);
