@@ -25,11 +25,7 @@ export class NotifyRouting {
         });
         // ipc routing to change Title
         ipcMain.on("menuTitle", (event: any, value: any) => {
-            let windowId = mainWindowId;
-            if (value.WindowId !== undefined && value.WindowId !== null) {
-                windowId = value.WindowId;
-            }
-            control.getWindow(windowId).webContents.send("menuTitle", value.Title);
+            this.MenuTitle(value.Title, value.WindowId);
         });
         // to choose Active Application
         // ipcMain.on("activeApplication", (event: any, value: any) => {
@@ -62,6 +58,14 @@ export class NotifyRouting {
                 control.getWindow(mainWindowId).webContents.send("AppBarResized" + key);
             });
         });
+    }
+
+    public MenuTitle(Title: string, WindowId?: number) {
+        let windowId = mainWindowId;
+        if (WindowId !== undefined && WindowId !== null) {
+            windowId = WindowId;
+        }
+        control.getWindow(windowId).webContents.send("menuTitle", Title);
     }
 
     public setActiveApplication(app: string) {

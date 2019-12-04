@@ -103,6 +103,7 @@ const createTray = () => {
   appIcon.on("balloon-click", () => {
     if (balloonSource !== "") {
       control.getWindow(mainWindowId).show();
+      // TODO: the set active does not set the Pier title so clicking on the balloon does not change the title.
       SetActive(balloonSource, balloonWindow);
     } else {
       control.getWindow(mainWindowId).show();
@@ -114,14 +115,10 @@ export function balloon(displayTitle: string, contents: string, Source?: any, Wi
   try {
     appIcon.displayBalloon({ title: displayTitle, content: contents });
     lastBalloonMessage = contents;
+    balloonSource = Source;
+    balloonWindow = WindowId;
   } catch (Exception) {
     appIcon.displayBalloon({ title: "Exception", content: Exception });
-  }
-  if (Source !== undefined && Source !== null) {
-    balloonSource = Source;
-  }
-  if (WindowId !== undefined && WindowId !== null) {
-    balloonWindow = WindowId;
   }
 }
 
