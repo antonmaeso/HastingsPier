@@ -131,6 +131,24 @@
     },
     {
       "assignedTo": {
+        "name": "trekimann"
+      },
+      "category": "Testing",
+      "creation_time": "2019-12-04T17:14:06.828Z",
+      "description": {
+        "content": "Currently tests run in JEST cant use async. Fix this",
+        "mime": "text/markdown"
+      },
+      "details": {
+        "content": "Currently tests run in JEST cant use async. Fix this by configuring webpack and babel fully.\nhttps://jestjs.io/docs/en/tutorial-async",
+        "mime": "text/markdown"
+      },
+      "id": "14",
+      "references": [],
+      "title": "Add full async JEST support"
+    },
+    {
+      "assignedTo": {
         "name": "mannn"
       },
       "category": "Features",
