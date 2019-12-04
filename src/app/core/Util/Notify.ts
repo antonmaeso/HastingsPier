@@ -3,8 +3,8 @@ import { ipcRenderer } from "electron";
 /**
  * Send a balloon notification with your title and contents
  */
-export const Balloon = (Title: string, Contents: string, Other?: any) => {
-    ipcRenderer.send("balloon", { title: Title, contents: Contents, other: Other });
+export const Balloon = (Title: string, Contents: string, Source?: string, WindowId?: number) => {
+    ipcRenderer.send("balloon", { title: Title, contents: Contents, source: Source, windowId: WindowId });
 };
 
 /**
@@ -24,12 +24,12 @@ export const setWindowTitle = (title: string, windowId?: number) => {
 /**
  * Sets the application which is currently being displayed
  */
-export const setActiveApplication = (App: string, window?: number) => {
-    ipcRenderer.send("activeApplication", { Active: App, WindowId: window });
+export const setActiveApplication = (App: string, windowId?: number) => {
+    ipcRenderer.send("activeApplication", { Active: App, WindowId: windowId });
 };
 
 /**
- * Removes an application from the DOM.
+ * Removes an application from the DOM. "Everything not saved will be lost" - Nintendo quit screen
  */
 export const closeApplication = (App: string, windowId?: number) => {
     ipcRenderer.send("closeApplication", { Close: App, WindowId: windowId });

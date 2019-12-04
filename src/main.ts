@@ -67,6 +67,8 @@ app.on("activate", () => {
 // app tray
 let appIcon: Tray = null;
 let lastBalloonMessage = "";
+let balloonSource = "";
+let balloonWindow = mainWindowId;
 const createTray = () => {
   appIcon = new Tray(
     nativeImage.createFromPath(iconpath).resize({ width: 16, height: 16 }),
@@ -88,7 +90,7 @@ const createTray = () => {
     {
       label: "Last message",
       click() {
-        balloon("Last message", lastBalloonMessage);
+        balloon("Last message", lastBalloonMessage, balloonSource, balloonWindow);
       },
     },
   ]);
@@ -99,16 +101,27 @@ const createTray = () => {
     control.getWindow(mainWindowId).show();
   });
   appIcon.on("balloon-click", () => {
-    control.getWindow(mainWindowId).show();
+    if (balloonSource !== "") {
+      control.getWindow(mainWindowId).show();
+      SetActive(balloonSource, balloonWindow);
+    } else {
+      control.getWindow(mainWindowId).show();
+    }
   });
 };
 
-export function balloon(displayTitle: string, contents: string, other?: any) {
+export function balloon(displayTitle: string, contents: string, Source?: any, WindowId?: number) {
   try {
     appIcon.displayBalloon({ title: displayTitle, content: contents });
     lastBalloonMessage = contents;
   } catch (Exception) {
     appIcon.displayBalloon({ title: "Exception", content: Exception });
+  }
+  if (Source !== undefined && Source !== null) {
+    balloonSource = Source;
+  }
+  if (WindowId !== undefined && WindowId !== null) {
+    balloonWindow = WindowId;
   }
 }
 
@@ -124,14 +137,17 @@ ipcMain.on(
 // --------- Notify Routing ---------
 // to choose Active Application
 ipcMain.on("activeApplication", (event: any, value: any) => {
-  NR.setActiveApplication = value.Active;
-  let windowId = mainWindowId;
-  if (value.WindowId !== undefined && value.WindowId !== null) {
-      windowId = value.WindowId;
-  }
-  NR.activeApp(value.Active, windowId);
+  SetActive(value.Active, value.WindowId);
 });
 
+function SetActive(App: string, WindowId?: number) {
+  NR.setActiveApplication(App);
+  let windowId = mainWindowId;
+  if (WindowId !== undefined && WindowId !== null) {
+    windowId = WindowId;
+  }
+  NR.activeApp(App, windowId);
+}
 
 
 // ---------- Dev experiments ------------
@@ -165,3 +181,5 @@ ipcMain.on("NewWindow", (event: any, value: any) => {
     .getWindow(mainWindowId)
     .webContents.send("webpageLauncher", newWindow);
 });
+
+

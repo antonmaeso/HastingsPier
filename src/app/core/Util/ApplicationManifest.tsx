@@ -25,7 +25,7 @@ class App {
   }
 }
 // add your component to the map. The Key is assigned as the class to your apps selection pane and
-// its icon in the appBar
+// its icon in the appBar. The key must not contain a space
 export const appMap = new Map<string, App>([
   [
     "ApplicationSelection",

@@ -12,7 +12,7 @@ export class NotifyRouting {
 
     public initaliseListeners() {
         ipcMain.on("balloon", (event: any, arg: any) => {
-            balloon(arg.title, arg.contents, arg.other);
+            balloon(arg.title, arg.contents, arg.source, arg.windowId);
         });
         // ipc main routing to util classes
         // ipc routing for app bar notifications
