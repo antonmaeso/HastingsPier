@@ -10,7 +10,7 @@ import { VideoRecording } from "../../modules/VideoRecording/VideoRecording";
 
 /**
  * @param root React component which serves as the foundation for your app
- * @param description Description of your app which is displayed on the app selction window. Try to keep it ~120 chars
+ * @param description Description of your app which is displayed on the app selction window. Try to keep it <120 chars
  * @param title The title Pier should show when your application is loaded
  */
 class App {
@@ -29,25 +29,49 @@ class App {
 export const appMap = new Map<string, App>([
   [
     "ApplicationSelection",
-    new App(<AppSelection />, "Default for selecting an app", "Hastings Pier"),
+    new App(
+      <AppSelection />,
+      "Default for selecting an app",
+      "Hastings Pier"),
   ],
   [
     "Octane",
     new App(
       <OctaneParent />,
       "Burn down your Octane Tasks to keep accurate track of time taken",
-      "Octane Burner",
-    ),
+      "Octane Burner"),
   ],
   [
     "BatManager",
-    new App(<Example />, "For testing stuff as we develop", "Dev Experiments"),
+    new App(
+      <Example />,
+      "For testing stuff as we develop",
+      "Dev Experiments"),
   ],
   [
     "RmDashboard",
-    new App(<RmDash />, "Show RM Dashboard in app", "RM Dashboard"),
+    new App(
+      <RmDash />,
+      "Show RM Dashboard in app",
+      "RM Dashboard"),
   ],
-  ["HastingsTapestry", new App(<Tapestry />, "Load Tapestry", "Tapestry")],
-  ["Google", new App(<Google />, "Show google", "Loading Google")],
-  ["VideoRecording", new App(<VideoRecording />, "Record videos of your pc", "Video Recording")],
+  [
+    "HastingsTapestry",
+    new App(
+      <Tapestry />,
+      "Load Tapestry",
+      "Tapestry"),
+  ],
+  ["Google",
+    new App(
+      <Google />,
+      "Show google",
+      "Loading Google"),
+  ],
+  ["VideoRecording",
+    new App(
+      <VideoRecording />,
+      "Record videos of your pc",
+      "Video Recording"),
+  ],
 ]);

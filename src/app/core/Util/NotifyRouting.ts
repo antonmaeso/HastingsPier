@@ -90,7 +90,6 @@ export class NotifyRouting {
         }
         // loop thorugh list to set the active flag and send the ipc notifications out
 
-        // the map is not staying updated. I think we will need to change the main.ts to hold the info.
         Array.from(this.applicationList.keys()).forEach((key) => {
             this.applicationList.set(key, (key === Active));
             control.getWindow(WindowId).webContents.send("activeApplication" + key, Active);

@@ -71,6 +71,7 @@ release-builds
 
 #temp office files
 ~$*
+*.tmp
 
 #brownbag folder
 /BrownBag

@@ -112,6 +112,29 @@ export function balloon(displayTitle: string, contents: string, other?: any) {
   }
 }
 
+// to request a new window open
+ipcMain.on(
+  "WindowControl",
+  (event: any, value: any, responseTarget: string) => {
+    const toReturn = control.route(value);
+    return toReturn;
+  },
+);
+
+// --------- Notify Routing ---------
+// to choose Active Application
+ipcMain.on("activeApplication", (event: any, value: any) => {
+  NR.setActiveApplication = value.Active;
+  let windowId = mainWindowId;
+  if (value.WindowId !== undefined && value.WindowId !== null) {
+      windowId = value.WindowId;
+  }
+  NR.activeApp(value.Active, windowId);
+});
+
+
+
+// ---------- Dev experiments ------------
 ipcMain.on("apps", (event: any, value: any) => {
   const file: IFileOperations = DataHandler.createDataHandler();
   const appManefest = DataHandler.projectDist + "/HastingsPier.json";
@@ -122,15 +145,6 @@ ipcMain.on("apps", (event: any, value: any) => {
   );
   control.getWindow(mainWindowId).webContents.send("appsResponse", config);
 });
-
-// to request a new window open
-ipcMain.on(
-  "WindowControl",
-  (event: any, value: any, responseTarget: string) => {
-    const toReturn = control.route(value);
-    return toReturn;
-  },
-);
 
 ipcMain.on("NewWindow", (event: any, value: any) => {
   let newWindow: number;
@@ -150,16 +164,4 @@ ipcMain.on("NewWindow", (event: any, value: any) => {
   control
     .getWindow(mainWindowId)
     .webContents.send("webpageLauncher", newWindow);
-});
-
-
-// --------- Notify Routing ---------
-// to choose Active Application
-ipcMain.on("activeApplication", (event: any, value: any) => {
-  NR.setActiveApplication = value.Active;
-  let windowId = mainWindowId;
-  if (value.WindowId !== undefined && value.WindowId !== null) {
-      windowId = value.WindowId;
-  }
-  NR.activeApp(value.Active, windowId);
 });

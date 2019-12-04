@@ -4,7 +4,7 @@ import { Button } from "../../../core/components/library/Button";
 import { TextInput } from "../../../core/components/library/TextInput";
 import * as N from "../../../core/util/Notify";
 import * as Ps from "../../../core/util/PersistantStorage";
-import { ApiUtil } from "../Util/ApiUtil";
+import { ApiUtil } from "../util/ApiUtil";
 
 const errorStyle = {
     color: "red",
