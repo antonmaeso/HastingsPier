@@ -103,8 +103,9 @@ const createTray = () => {
   appIcon.on("balloon-click", () => {
     if (balloonSource !== "") {
       control.getWindow(mainWindowId).show();
-      // TODO: the set active does not set the Pier title so clicking on the balloon does not change the title.
+      // TODO: SetActive doesnt set the title so clicking the balloon doesnt change the title. For now set to App Key
       SetActive(balloonSource, balloonWindow);
+      NR.MenuTitle(balloonSource);
     } else {
       control.getWindow(mainWindowId).show();
     }
