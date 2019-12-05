@@ -1,4 +1,5 @@
 import * as React from "react";
+import { log } from "../../core/util/Logger"
 // https://reactjs.org/docs/error-boundaries.html
 
 export class ErrorBoundary extends React.Component<{}, { hasError: boolean }> {
@@ -15,6 +16,7 @@ export class ErrorBoundary extends React.Component<{}, { hasError: boolean }> {
   public componentDidCatch(error: any, errorInfo: any) {
     // You can also log the error to an error reporting service
     // logErrorToMyService(error, errorInfo);
+    log(error);
   }
 
   public render() {

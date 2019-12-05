@@ -1,5 +1,5 @@
 import { ipcMain } from "electron";
-import { balloon, control, mainWindowId } from "../../../main";
+import { balloon, control, mainWindowId } from "../../../../main";
 
 export class NotifyRouting {
 

@@ -1,5 +1,5 @@
 import { ipcRenderer } from "electron";
-import { Delete, Get, Post, Put } from "../../../core/util/HttpRequest";
+import { Delete, Get, Post, Put } from "../../../core/util/classes/HttpRequest";
 
 const urlStart = "https://almoctane-eur.saas.microfocus.com/api/shared_spaces/146003/workspaces/";
 

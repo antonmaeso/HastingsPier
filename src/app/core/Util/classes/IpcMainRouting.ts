@@ -1,5 +1,5 @@
 import { ipcMain } from "electron";
-import { control, mainWindowId } from "../../../main";
+import { control, mainWindowId } from "../../../../main";
 
 interface IInternal {
   app: string;

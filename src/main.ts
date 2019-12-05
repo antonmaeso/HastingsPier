@@ -6,16 +6,16 @@ import logo from "./app/core/assets/Ant.png";
 const iconpath = path.join(__dirname + "\\" + logo);
 
 import { app, ipcMain, Menu, nativeImage, Tray } from "electron";
-import { BrowserViewControl } from "./app/core/util/BrowserViewControl";
+import { BrowserViewControl } from "./app/core/util/classes/BrowserViewControl";
+import { Logger } from "./app/core/util/classes/LoggerUtil";
 import {
   DataHandler,
   IFileOperations,
 } from "./app/core/util/DataHandler/DataHandler";
 import { ICRUD } from "./app/core/util/DataHandler/ICRUD";
-import { IpcMainRouting } from "./app/core/util/IpcMainRouting";
-import { Logger } from "./app/core/util/Logger";
-import { NotifyRouting } from "./app/core/util/NotifyRouting";
-import { WindowControl } from "./app/core/util/WindowManager";
+import { IpcMainRouting } from "./app/core/util/classes/IpcMainRouting";
+import { NotifyRouting } from "./app/core/util/classes/NotifyRouting";
+import { WindowControl } from "./app/core/util/classes/WindowManager";
 
 export let mainWindowId: number;
 const Path = app.getAppPath();
@@ -146,7 +146,12 @@ function SetActive(App: string, WindowId?: number) {
   }
   NR.activeApp(App, windowId);
 }
+// --------- Notify Routing ---------
 
+// --------- Logger Routing ---------
+ipcMain.on("logger", (event: any, value: any) => {
+  logger.Log(value.ToRecord);
+});
 
 // ---------- Dev experiments ------------
 ipcMain.on("apps", (event: any, value: any) => {

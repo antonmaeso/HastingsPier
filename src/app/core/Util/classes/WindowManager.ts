@@ -1,6 +1,6 @@
 import { BrowserWindow, BrowserWindowConstructorOptions } from "electron";
-import { Logger } from "./Logger";
-import * as N from "./Notify";
+import { Logger } from "./LoggerUtil";
+import * as N from "../Notify";
 // tslint:disable-next-line: no-var-requires
 const Path = require("path");
 

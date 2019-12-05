@@ -1,5 +1,5 @@
 import { BrowserView, ipcMain, Rectangle } from "electron";
-import { control, mainWindowId } from "../../../main";
+import { control, mainWindowId } from "../../../../main";
 
 export class BrowserViewControl {
     // map of browser views. Key is the app name in the view. Value is the view
