@@ -3,6 +3,7 @@ import * as React from "react";
 import * as Notify from "../util/Notify";
 import * as ps from "../util/PersistantStorage";
 import { AppButton } from "./ApplicationButton";
+import { ErrorBoundary } from "./ErrorBoundry";
 const WindowId = require("electron").remote.getCurrentWindow().id;
 
 let applications = new Map<string, JSX.Element>([
@@ -40,7 +41,7 @@ export const ApplicationBar = (props: any) => {
   }
 
   return (
-    <React.Fragment>
+    <ErrorBoundary>
       <div className={className}>
         {Array.from(applications.values())}
       </div>
@@ -55,7 +56,7 @@ export const ApplicationBar = (props: any) => {
           {arrow}
         </div>
       </div>
-    </React.Fragment>
+    </ErrorBoundary>
   );
 };
 
@@ -69,7 +70,9 @@ const buildAppsFromstore = (appArray: [], setAppArray: React.Dispatch<React.SetS
 };
 
 const createAppButton = (appName: string, title: string) => {
-  return <AppButton key={appName + "Pane"} appName={appName} title={title} />;
+  return <ErrorBoundary>
+    <AppButton key={appName + "Pane"} appName={appName} title={title} />
+  </ErrorBoundary>;
 };
 
 

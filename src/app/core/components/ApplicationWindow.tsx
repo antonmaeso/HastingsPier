@@ -1,6 +1,7 @@
 import { ipcRenderer } from "electron";
 import * as React from "react";
 import * as ps from "../util/PersistantStorage";
+import { ErrorBoundary } from "./ErrorBoundry";
 const WindowId = require('electron').remote.getCurrentWindow().id;
 
 // TODO: call a util class to ask which one to show.
@@ -42,7 +43,9 @@ export const ApplicationWindow = (props: IProps) => {
     className += " active";
   }
 
-  return <div className={className}>{props.App}</div>;
+  return <ErrorBoundary>
+    <div className={className}>{props.App}</div>
+  </ErrorBoundary>;
 };
 
 const saveStateToSession = (display: boolean, identifier: string) => {

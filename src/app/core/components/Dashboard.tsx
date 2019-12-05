@@ -95,7 +95,7 @@ const addAppToDom = (app: string) => {
     if (App !== undefined) {
       const appToDisplay = App.root;
       const appWindow =
-        <ErrorBoundary>
+        <ErrorBoundary key={app + "Window"}>
           <ApplicationWindow
             key={app + "Window"}
             identifier={app}

@@ -1,16 +1,6 @@
-import * as React from "react";
 import { clipboard } from "electron";
-
-// export const Button = (props: any) => {
-//   let button = null;
-//   if (props.type === "glyphiconButton") {
-//     button = glyphiconButton(props);
-//   } else {
-//     button = StandardButton(props);
-//   }
-//   return button;
-// };
-
+import * as React from "react";
+import { ErrorBoundary } from "../ErrorBoundry";
 
 export class Button extends React.Component<{
   alt?: string,
@@ -41,27 +31,29 @@ export class Button extends React.Component<{
 
   private CssImgButton() {
     // used when you want to set the image in a button though a CSS class
-    return (
+    return (<ErrorBoundary>
       <div
         className={this.props.className}
         onClick={this.props.onClick}
         onDoubleClick={this.props.onDblclick}
         title={this.props.Text} />
+    </ErrorBoundary>
     );
   }
 
   private glyphiconButton() {
-    return (
+    return (<ErrorBoundary>
       <div
         className={"glyphiconButton glyphicon glyphicon-" + this.props.className}
         onClick={this.props.onClick}
         title={this.props.Text}
       />
+    </ErrorBoundary>
     );
   }
 
   private StandardButton() {
-    return (
+    return (<ErrorBoundary>
       <button
         className={this.props.className}
         onClick={this.props.onClick}
@@ -71,6 +63,7 @@ export class Button extends React.Component<{
         title={this.props.HoverText}
         onContextMenu={this.rightClick}>{this.props.Text}
       </button>
+    </ErrorBoundary>
     );
   }
 
