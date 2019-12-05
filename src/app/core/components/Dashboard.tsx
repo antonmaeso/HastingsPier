@@ -1,4 +1,5 @@
 import { ipcRenderer } from "electron";
+import { ErrorBoundary } from "../../core/components/ErrorBoundry";
 import * as React from "react";
 import "../style/style.scss";
 import { appMap } from "../util/ApplicationManifest";
@@ -49,7 +50,9 @@ export const Dashboard = (props: any) => {
   return (
     <div className="coreApplication">
       <div className="application">
-        <ApplicationBar Active={RunningApplication} />
+        <ErrorBoundary>
+          <ApplicationBar Active={RunningApplication} />
+        </ErrorBoundary>
         {Array.from(loadedApps.values())}
       </div>
     </div>
@@ -90,10 +93,13 @@ const addAppToDom = (app: string) => {
   if (!Array.from(loadedApps.keys()).includes(app)) {
     const App = appMap.get(app);
     const appToDisplay = App.root;
-    const appWindow = <ApplicationWindow
-      key={app + "Window"}
-      identifier={app}
-      App={appToDisplay} />;
+    const appWindow =
+      <ErrorBoundary>
+        <ApplicationWindow
+          key={app + "Window"}
+          identifier={app}
+          App={appToDisplay} />
+      </ErrorBoundary>;
     loadedApps.set(app, appWindow);
   }
 };
