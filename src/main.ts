@@ -101,7 +101,7 @@ const createTray = () => {
     control.getWindow(mainWindowId).show();
   });
   appIcon.on("balloon-click", () => {
-    if (balloonSource !== "") {
+    if (balloonSource !== "" && balloonSource !== null && balloonSource !== undefined) {
       control.getWindow(mainWindowId).show();
       // TODO: SetActive doesnt set the title so clicking the balloon doesnt change the title. For now set to App Key
       SetActive(balloonSource, balloonWindow);
