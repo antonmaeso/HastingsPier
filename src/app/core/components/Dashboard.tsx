@@ -1,6 +1,6 @@
 import { ipcRenderer } from "electron";
-import { ErrorBoundary } from "../../core/components/ErrorBoundry";
 import * as React from "react";
+import { ErrorBoundary } from "../../core/components/ErrorBoundry";
 import "../style/style.scss";
 import { appMap } from "../util/ApplicationManifest";
 import * as BV from "../util/BrowserViewUtil";
@@ -64,7 +64,7 @@ const saveStateToSession = (active: string) => {
 };
 
 const setupListeners = (setRunningApplication: React.Dispatch<React.SetStateAction<string>>) => {
-  console.log("Dashboard Creating listeners: ActiveApplication, closeApplication");
+  // console.log("Dashboard Creating listeners: ActiveApplication, closeApplication");
   ipcRenderer.on("activeApplication", (event: any, value: any) => {
     if (value !== undefined) {
       setRunningApplication(value);
@@ -86,7 +86,7 @@ const removeAppFromDom = (app: string) => {
   loadedApps.delete(app); // need something to refresh the page
   // if its a browser window, destroy it
   BV.closeView(app);
-  console.log(app + " Removed from Map: " + !(loadedApps.has(app)));
+  // console.log(app + " Removed from Map: " + !(loadedApps.has(app)));
 };
 
 const addAppToDom = (app: string) => {
