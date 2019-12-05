@@ -92,14 +92,16 @@ const removeAppFromDom = (app: string) => {
 const addAppToDom = (app: string) => {
   if (!Array.from(loadedApps.keys()).includes(app)) {
     const App = appMap.get(app);
-    const appToDisplay = App.root;
-    const appWindow =
-      <ErrorBoundary>
-        <ApplicationWindow
-          key={app + "Window"}
-          identifier={app}
-          App={appToDisplay} />
-      </ErrorBoundary>;
-    loadedApps.set(app, appWindow);
+    if (App !== undefined) {
+      const appToDisplay = App.root;
+      const appWindow =
+        <ErrorBoundary>
+          <ApplicationWindow
+            key={app + "Window"}
+            identifier={app}
+            App={appToDisplay} />
+        </ErrorBoundary>;
+      loadedApps.set(app, appWindow);
+    }
   }
 };

@@ -5,6 +5,7 @@ import * as Notify from "../../core/util/Notify";
 import * as ps from "../../core/util/PersistantStorage";
 import "./style/exampleStyle.scss";
 import { Kid } from "./components/exampleChild";
+import { appMap } from "../../core/util/ApplicationManifest";
 
 export const Example = (props: any) => {
   const [count, setCount] = React.useState(0);
@@ -134,11 +135,23 @@ export const Example = (props: any) => {
           ipcRenderer.on("CallMe", () => {
             Notify.Balloon("Example", "listener Called");
             sethiddenListenerText("listener Called");
-          })
+          });
         }} />
       <div>{hiddenListenerText}</div>
       <br></br>
-
+      <Button Text="Crash Dashboard"
+        onClick={() => {
+          Notify.Balloon("crash", "Click me to crash Dashboard", "John Connor");
+        }} />
+      <br></br>
+      <Button Text="Crash Example"
+        onClick={crashComponent} />
+      <br></br>
     </div>
   );
+};
+
+const crashComponent = () => {
+  const Empty = appMap.get("NothingToGetHere");
+  const blank = Empty.root;
 };
