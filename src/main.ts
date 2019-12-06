@@ -116,8 +116,11 @@ export function balloon(displayTitle: string, contents: string, Source?: any, Wi
   try {
     appIcon.displayBalloon({ title: displayTitle, content: contents });
     lastBalloonMessage = contents;
-    balloonSource = Source;
     balloonWindow = WindowId;
+    const apps = NR.getLoadedApps();
+    if (apps.has(Source)) {
+      balloonSource = Source;
+    }
   } catch (Exception) {
     appIcon.displayBalloon({ title: "Exception", content: Exception });
   }

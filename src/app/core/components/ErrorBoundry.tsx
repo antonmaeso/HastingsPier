@@ -28,9 +28,9 @@ export class ErrorBoundary extends React.Component<{}, { hasError: boolean, Erro
     if (this.state.hasError) {
       // You can render any custom fallback UI
       return <React.Fragment>
-        <div>Something went wrong.</div>
-        <div className="hidden">{this.state.Error.message}</div>
-        <div className="hidden">{this.state.Error.stack}</div>
+        {/* <div>Something went wrong.</div> */}
+        <div className="hidden error">{this.state.Error.message}</div>
+        <div className="hidden error">{this.state.Error.stack}</div>
       </React.Fragment>;
     }
     return this.props.children;

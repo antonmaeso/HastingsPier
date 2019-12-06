@@ -30,7 +30,7 @@ export const AppPane = (props: IProps) => {
 const clickApp = (App: string, Title: string) => {
   // signal to the util that an app has been clicked on
   // for now just use ipcRenderer. Extract to util when better idea of how it looks
-  ipcRenderer.send("AppBar", {app: App, title: Title});
+  Notify.AppBar(App, Title);
   // Notify.AppNotification(app, "W");
   // Notify.setWindowTitle(app);
 };

@@ -139,7 +139,7 @@ export const Example = (props: any) => {
         }} />
       <div>{hiddenListenerText}</div>
       <br></br>
-      <Button Text="Crash Dashboard"
+      <Button HoverText="Fixed what caused crash" Text="Crash Dashboard"
         onClick={() => {
           Notify.Balloon("crash", "Click me to crash Dashboard", "John Connor");
         }} />
@@ -152,6 +152,5 @@ export const Example = (props: any) => {
 };
 
 const crashComponent = () => {
-  const Empty = appMap.get("NothingToGetHere");
-  const blank = Empty.root;
+  throw new Error("Crashing");
 };

@@ -10,54 +10,10 @@ export class NotifyRouting {
         this.initaliseListeners();
     }
 
-    public initaliseListeners() {
-        ipcMain.on("balloon", (event: any, arg: any) => {
-            balloon(arg.title, arg.contents, arg.source, arg.windowId);
-        });
-        // ipc main routing to util classes
-        // ipc routing for app bar notifications
-        ipcMain.on("AppBarNotify", (event: any, value: any) => {
-            control.getWindow(mainWindowId).webContents.send("notify" + value.App, value.Notification);
-        });
-        // ipc routing for application pane
-        ipcMain.on("AppBar", (event: any, value: any) => {
-            control.getWindow(mainWindowId).webContents.send("AppBar", value);
-        });
-        // ipc routing to change Title
-        ipcMain.on("menuTitle", (event: any, value: any) => {
-            this.MenuTitle(value.Title, value.WindowId);
-        });
-        // to choose Active Application
-        // ipcMain.on("activeApplication", (event: any, value: any) => {
-        //     this.activeApplication = value.Active;
-        //     let windowId = mainWindowId;
-        //     if (value.WindowId !== undefined && value.WindowId !== null) {
-        //         windowId = value.WindowId;
-        //     }
-        //     this.activeApp(value.Active, windowId);
-
-        //     control.getWindow(windowId).webContents.send("activeApplication", value.Active);
-        // });
-
-        // to remove an application from the DOM
-        ipcMain.on("closeApplication", (event: any, value: any) => {
-            let window = mainWindowId;
-            if (value.WindowId !== undefined) {
-                window = value.WindowId;
-            }
-            value.Active = this.activeApplication;
-            control.getWindow(window).webContents.send("closeApplication", value);
-            if (this.applicationList.has(value.Active)) {
-                this.applicationList.delete(value.Active);
-            }
-        });
-
-        // when the app bar has resized   
-        ipcMain.on("AppBarResized", () => {
-            Array.from(this.applicationList.keys()).forEach((key) => {
-                control.getWindow(mainWindowId).webContents.send("AppBarResized" + key);
-            });
-        });
+    public getLoadedApps() {
+        return this.applicationList;
+    } public getActiveApp() {
+        return this.activeApp;
     }
 
     public MenuTitle(Title: string, WindowId?: number) {
@@ -76,7 +32,9 @@ export class NotifyRouting {
         if (active === undefined || active === null) {
             active = true;
         }
-        this.applicationList.set(app, active);
+        if (!this.applicationList.has(app)) {
+            this.applicationList.set(app, active);
+        }
     }
 
     public removeFromActiveList(remove: string) {
@@ -100,5 +58,48 @@ export class NotifyRouting {
         });
 
         control.getWindow(WindowId).webContents.send("activeApplication", app);
+    }
+
+    private initaliseListeners() {
+        ipcMain.on("balloon", (event: any, arg: any) => {
+            balloon(arg.title, arg.contents, arg.source, arg.windowId);
+        });
+        // ipc main routing to util classes
+        // ipc routing for app bar notifications
+        ipcMain.on("AppBarNotify", (event: any, value: any) => {
+            control.getWindow(mainWindowId).webContents.send("notify" + value.App, value.Notification);
+        });
+        // ipc routing for application pane
+        ipcMain.on("AppBar", (event: any, value: any) => {
+            const app = value.app;
+            // add app to list of availible apps
+            this.addToActiveList(app, false);
+
+            control.getWindow(mainWindowId).webContents.send("AppBar", value);
+        });
+        // ipc routing to change Title
+        ipcMain.on("menuTitle", (event: any, value: any) => {
+            this.MenuTitle(value.Title, value.WindowId);
+        });
+
+        // to remove an application from the DOM
+        ipcMain.on("closeApplication", (event: any, value: any) => {
+            let window = mainWindowId;
+            if (value.WindowId !== undefined) {
+                window = value.WindowId;
+            }
+            value.Active = this.activeApplication;
+            control.getWindow(window).webContents.send("closeApplication", value);
+            if (this.applicationList.has(value.Active)) {
+                this.applicationList.delete(value.Active);
+            }
+        });
+
+        // when the app bar has resized
+        ipcMain.on("AppBarResized", () => {
+            Array.from(this.applicationList.keys()).forEach((key) => {
+                control.getWindow(mainWindowId).webContents.send("AppBarResized" + key);
+            });
+        });
     }
 }
