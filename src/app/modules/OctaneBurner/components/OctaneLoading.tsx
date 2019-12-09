@@ -2,8 +2,10 @@ import { ipcRenderer, remote } from "electron";
 import * as React from "react";
 import { Button } from "../../../core/components/library/Button";
 import { TextInput } from "../../../core/components/library/TextInput";
+import { Get } from "../../../core/util/classes/HttpRequest";
 import * as N from "../../../core/util/Notify";
 import * as Ps from "../../../core/util/PersistantStorage";
+import { BaseUrl } from "../OctaneParent";
 import { ApiUtil } from "../util/ApiUtil";
 
 const errorStyle = {
@@ -11,10 +13,12 @@ const errorStyle = {
     fontSize: "18px",
 };
 
+let WorkspaceId: string;
+
 interface IProps {
     className?: string;
-    LoggingIn: any;
-    LoggedIn: any;
+    LoggingIn: { (pending: boolean, LIN: boolean) };
+    LoggedIn: { (id: string, name: string, allUsers: Map<string, any>, workspace: string) };
 }
 
 export const OctaneLogin = (props: IProps) => {
@@ -81,9 +85,60 @@ export const OctaneLogin = (props: IProps) => {
 
             Ps.putLocal("OctaneBurnerUserName", userName);
 
-            ApiUtil.getWorkspaceId(null);
+            getWorkspaceId();
         });
         mainWindow.focus();
+    };
+
+    const getWorkspaceId = (response?: any) => {
+        if (response === undefined || response === null) {
+            Get(BaseUrl, getWorkspaceId);
+        } else {
+            // check status
+            if (response.status !== 200) {
+                // login has failed, try again
+                setFailedLogin(true);
+                props.LoggingIn(false, false);
+            } else {
+                // pull out id
+                WorkspaceId = JSON.parse(response.responseText).data[0].id;
+                props.LoggingIn(false, true);
+                getUserId();
+            }
+        }
+    };
+
+    const getUserId = (response?: any) => {
+        const url = BaseUrl + WorkspaceId + "/workspace_users?fields=email,first_name,id,last_name";
+        if (response === undefined || response === null) {
+            Get(url, getUserId);
+        } else {
+            // pass response to util to pull out the desired ID
+            const data = response.responseText;
+            pullOutUserId(userName, data);
+        }
+    };
+
+    const pullOutUserId = (targetEmail: string, OctaneRespone: any) => {
+        const userList = new Map<string, object>();
+        let toReturn = "";
+        // Pull apart the json message from octane into objects.
+        const UserInfo = JSON.parse(OctaneRespone);
+        const users = UserInfo.data;
+        // look though each one for the user who logged in.
+        // while here create in memory list of users. Dictionary with id as key. user object as value
+        // tslint:disable-next-line: forin
+        for (const person of users) {
+            const email = person.email;
+            const ID = person.id;
+            if (email !== undefined) {
+                if (email.toUpperCase() === targetEmail.toUpperCase()) {
+                    toReturn = ID;
+                }
+                userList.set(ID, person);
+            }
+        }
+        props.LoggedIn(toReturn, targetEmail, userList, WorkspaceId);
     };
 
     //  componentDidMount(): void {
