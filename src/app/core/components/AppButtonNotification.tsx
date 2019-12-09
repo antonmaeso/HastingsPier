@@ -4,6 +4,7 @@ import { NotifyObject } from "./ApplicationButton";
 interface IProps {
     notifications: NotifyObject[];
     appName: string;
+    show: boolean;
 }
 
 export const ButtonNotification = (props: IProps) => {
@@ -17,15 +18,38 @@ export const ButtonNotification = (props: IProps) => {
         toShow.push(notificationLine(notification.notification));
     });
 
+    const [leftmargin, setLeftMargin] = React.useState(-1000);
+    // move the box so that it is in the correct position
+
+    const leftMargin = (show: boolean) => {
+        // get notification window width
+
+        if (show) {
+            const margin = document.getElementById("divnotify" + props.appName).getBoundingClientRect().width;
+            setLeftMargin(margin);
+        } else {
+            setLeftMargin(-10000);
+        }
+    };
+
     React.useEffect(() => {
         // When new notifications, reload notification lines
-     }, props.notifications);
+        try {
+            leftMargin(props.show);
+        } catch{ }
+    });
 
-    return <div id={"divnotify" + props.appName} className="notifyList">{toShow}</div>;
+
+    return <div
+        style={{ marginLeft: leftmargin }}
+        id={"divnotify" + props.appName}
+        className="notifyList"
+        onMouseEnter={() => { leftMargin(true); }}
+        onMouseLeave={() => { leftMargin(false); }}
+    >{toShow}</div>;
 };
 
 const notificationLine = (toShow: string) => {
     return <div key={toShow} className="notifyLine">{toShow}</div>;
 };
 
-// make the notification apear at the mouse

@@ -26,6 +26,7 @@ export const AppButton = (props: IProps) => {
   const [listeners, setListeners] = React.useState(false);
   const [reloaded, setReloaded] = React.useState(false);
   const [notifications, setNotifications] = React.useState(new Array<NotifyObject>());
+  const [showNotification, setShowNotification] = React.useState(false);
 
   if (!reloaded) {
     // re load state from session
@@ -69,6 +70,10 @@ export const AppButton = (props: IProps) => {
     };
   }, []);
 
+  const showNotifications = (visible: boolean) => {
+    setShowNotification(visible);
+  };
+
   return (
     <React.Fragment>
       {props.appName === "ApplicationSelection" ? null :
@@ -86,16 +91,25 @@ export const AppButton = (props: IProps) => {
       >
         {notifications.length > 0 ?
           <React.Fragment>
-            <div className="notifyCount" title={(notifications.length).toString()}>{notifications.length}</div>
+            <div
+              className="notifyCount"
+              title={(notifications.length).toString()}
+              onMouseOver={() => { showNotifications(true); }}
+              // onMouseLeave={() => { showNotifications(false); }}
+              >{notifications.length}
+            </div>
             <ButtonNotification
               appName={props.appName}
-              notifications={notifications} />
+              notifications={notifications}
+              show={showNotification}
+            />
           </React.Fragment> : null
         }
       </div>
     </React.Fragment>
   );
 };
+
 
 const rightClick = (AppToShow: string) => {
   // open app in new window

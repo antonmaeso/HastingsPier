@@ -82,7 +82,6 @@
 }
 
 .notifyList {
-    display: none;
     position: absolute;
     margin-top: 70px;
     background-color: black;
@@ -91,14 +90,12 @@
     z-index: 2;
 }
 
-.notifyCount:hover+.notifyList {
-    display: inline-grid;
-}
-
-.notifyList:hover {
-    display: inline-grid;
-}
-
+// .notifyCount:hover+.notifyList {
+//     display: inline-grid;
+// }
+// .notifyList:hover {
+//     display: inline-grid;
+// }
 .notifyLine {
     display: flex;
 }
