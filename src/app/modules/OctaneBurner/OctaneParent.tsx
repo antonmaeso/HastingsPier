@@ -1,5 +1,6 @@
 import * as React from "react";
 import { OctaneLogin } from "./components/OctaneLoading";
+import { OctaneMain } from "./components/OctaneMain";
 import { Spinner } from "./components/Spinner";
 import "./style/octaneStyle.scss";
 
@@ -18,24 +19,29 @@ export const OctaneParent = (props: any) => {
     hide = "hidden";
   }
 
+  // Add on offline mode to use the last cahced info to look things up?
+  // Would need to pass the offline boolean so it could be acted on to not show online functions.
+
   return (
     <React.Fragment>
-      {loggedIn ? <div>Logged in. {UserId}</div> : <React.Fragment>
-        {loggingIn ? <Spinner /> : null}
-        <OctaneLogin
-          className={hide}
-          LoggingIn={(pending: boolean, LIN: boolean) => {
-            setLoggingIn(pending);
-            setLoggedIn(LIN);
-          }}
-          LoggedIn={(id: string, name: string, allusers: Map<string, any>, workspace: string) => {
-            setUserId(id);
-            setUsername(name);
-            setAllUsers(allusers);
-            setWorkspaceId(workspace);
-          }}
-        />
-      </React.Fragment>}
+      {loggedIn ? <div>Logged in. {UserId}
+        <OctaneMain allUsers={allUsers} userId={UserId} username={UserName} workspaceId={workspaceId} />
+      </div> : <React.Fragment>
+          {loggingIn ? <Spinner /> : null}
+          <OctaneLogin
+            className={hide}
+            LoggingIn={(pending: boolean, LIN: boolean) => {
+              setLoggingIn(pending);
+              setLoggedIn(LIN);
+            }}
+            LoggedIn={(id: string, name: string, allusers: Map<string, any>, workspace: string) => {
+              setUserId(id);
+              setUsername(name);
+              setAllUsers(allusers);
+              setWorkspaceId(workspace);
+            }}
+          />
+        </React.Fragment>}
     </React.Fragment>
   );
 };

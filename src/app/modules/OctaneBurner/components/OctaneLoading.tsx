@@ -17,8 +17,8 @@ let WorkspaceId: string;
 
 interface IProps {
     className?: string;
-    LoggingIn: { (pending: boolean, LIN: boolean) };
-    LoggedIn: { (id: string, name: string, allUsers: Map<string, any>, workspace: string) };
+    LoggingIn: (pending: boolean, LIN: boolean) => void;
+    LoggedIn: (id: string, name: string, allUsers: Map<string, any>, workspace: string) => void;
 }
 
 export const OctaneLogin = (props: IProps) => {
@@ -34,27 +34,6 @@ export const OctaneLogin = (props: IProps) => {
             setUserName(fromStore);
         }
     }
-
-    // { userName: string, password: string, failedLogin: boolean, failedReason: any }> {
-
-    // constructor(props: any) {
-    //     super(props);
-    //     this.openWindow = this.openWindow.bind(this);
-    //     this.state = {
-    //         failedLogin: false,
-    //         failedReason: null,
-    //         password: "",
-    //         userName: "",
-    //     };
-    // }
-
-    // public username = (name: string) => {
-    //     this.setState({ userName: name });
-    // }
-
-    // public pass = (pw: string) => {
-    //     this.setState({ password: pw });
-    // }
 
     const openWindow = () => {
         N.Balloon("Login", "Logging in");
@@ -139,52 +118,6 @@ export const OctaneLogin = (props: IProps) => {
             }
         }
         props.LoggedIn(toReturn, targetEmail, userList, WorkspaceId);
-    };
-
-    //  componentDidMount(): void {
-    //     // load up any saved log in details
-    //     const fromStore = Ps.getLocal("OctaneBurnerUserName");
-    //     if (fromStore !== null) {
-    //         this.setState({ userName: fromStore });
-    //     }
-
-    //     // TODO: all of this needs replacing and replicating
-
-    //     ipcRenderer.on("usernameRetrieve", this.onRetrieve);
-    //     ipcRenderer.on("workspaceSuccess", this.logInSuccess);
-    //     ipcRenderer.on("workspaceFail", this.loginFail);
-    //     ipcRenderer.send("tsUtil",
-    //         {
-    //             source: "usernameRetrieve", target: "details", data:
-    //                 { target: "retrieve", data: { target: "USERNAME" } },
-    //         });
-    // }
-
-    // public componentWillUnmount(): void {
-    //     this.setState({ password: "" });
-    //     ipcRenderer.removeAllListeners("usernameRetrieve");
-    //     ipcRenderer.removeAllListeners("workspaceSuccess");
-    //     ipcRenderer.removeAllListeners("workspaceFail");
-    // }
-
-    // const logInSuccess = (event: any, value: any) => {
-    //     // this sets the state to logged in, put into check success action
-    //     // value should be the workspaceID for the user.
-    //     N.Balloon("Success", "Logged in");
-    //     // save username to local storage
-    //     Ps.putLocal("OctaneBurnerUserName", userName);
-    //     ApiUtil.updateUsername(userName);
-    //     props.LoggingIn(false, true);
-    // };
-
-    // const loginFail = (event: any, value: any) => {
-    //     setFailedLogin(true);
-    //     N.Balloon("Error", "Could not log in");
-    //     props.LoggingIn(false, false);
-    // };
-
-    const onRetrieve = (event: any, value: string) => {
-        setUserName(value);
     };
 
     const wait = (ms: number) => {
