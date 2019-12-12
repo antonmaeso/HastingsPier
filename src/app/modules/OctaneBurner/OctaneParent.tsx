@@ -24,9 +24,9 @@ export const OctaneParent = (props: any) => {
 
   return (
     <React.Fragment>
-      {loggedIn ? <div>Logged in. {UserId}
+      {loggedIn ?
         <OctaneMain allUsers={allUsers} userId={UserId} username={UserName} workspaceId={workspaceId} />
-      </div> : <React.Fragment>
+        : <React.Fragment>
           {loggingIn ? <Spinner /> : null}
           <OctaneLogin
             className={hide}

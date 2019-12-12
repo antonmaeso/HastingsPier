@@ -1,12 +1,12 @@
-import { ipcRenderer, remote } from "electron";
+import { remote } from "electron";
 import * as React from "react";
 import { Button } from "../../../core/components/library/Button";
 import { TextInput } from "../../../core/components/library/TextInput";
 import { Get } from "../../../core/util/classes/HttpRequest";
 import * as N from "../../../core/util/Notify";
 import * as Ps from "../../../core/util/PersistantStorage";
+import { notification } from "../components/Spinner";
 import { BaseUrl } from "../OctaneParent";
-import { ApiUtil } from "../util/ApiUtil";
 
 const errorStyle = {
     color: "red",
@@ -37,6 +37,7 @@ export const OctaneLogin = (props: IProps) => {
 
     const openWindow = () => {
         N.Balloon("Login", "Logging in");
+        notification("Logging in");
         setFailedLogin(false);
         props.LoggingIn(true, false);
         const mainWindow = remote.BrowserWindow.getFocusedWindow();
@@ -82,6 +83,7 @@ export const OctaneLogin = (props: IProps) => {
                 // pull out id
                 WorkspaceId = JSON.parse(response.responseText).data[0].id;
                 props.LoggingIn(false, true);
+                notification("Logged in");
                 getUserId();
             }
         }

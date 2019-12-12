@@ -1,9 +1,11 @@
+import { loadPartialConfig } from "@babel/core";
+import { string } from "prop-types";
 import * as React from "react";
 import { TextInput } from "../../../core/components/library/TextInput";
-import { BaseUrl } from "../OctaneParent";
-import { Stories } from "./Stories";
 import { Get } from "../../../core/util/classes/HttpRequest";
-import { string } from "prop-types";
+import { BaseUrl } from "../OctaneParent";
+import { notification, Spinner } from "./Spinner";
+import { Stories } from "./Stories";
 
 interface IProps {
     allUsers: Map<string, any>;
@@ -30,9 +32,15 @@ export const OctaneMain = (props: IProps) => {
     const [stories, setStories] = React.useState([]);
     const [groupedStories, setGroupedStories] = React.useState(new Map<string, any>());
     const [allTasks, setAllTasks] = React.useState(new Map<string, any>());
+    const [loading, setLoading] = React.useState(true);
     let TotalNumberOfTasks: number;
 
     const getAllTasks = (response?: any, offset?: string, currentTasks?: []) => {
+        let message = "Fetching tasks";
+        if (offset !== undefined) {
+            message += ". Retrieved " + offset + " of " + TotalNumberOfTasks;
+        }
+        notification(message);
         // get all the tasks but just with owner details and phase
         let url = BaseUrl + props.workspaceId + "/tasks?fields=owner,phase&limit=9000";
         if (offset !== undefined && offset !== null) {
@@ -63,6 +71,7 @@ export const OctaneMain = (props: IProps) => {
                 } else {
                     // all tasks have been loaded so filter them now
                     filterTasks(newList);
+                    notification("Filtering User Tasks");
                 }
             }
         }
@@ -81,11 +90,12 @@ export const OctaneMain = (props: IProps) => {
                 }
             }
         }
+
+        notification(UserTasks.length + " Tasks Found");
         if (allTasks.size >= TotalNumberOfTasks) {
             UserTasks.forEach((taskId) => {
                 getTaskDetails(null, taskId);
             });
-
         }
     };
 
@@ -96,7 +106,7 @@ export const OctaneMain = (props: IProps) => {
         } else {
             // pull out task details in this api then pass the details to util for storage. To save on rendering time
             const taskToAdd = JSON.parse(response.responseText);
-
+            setLoading(false);
         }
     };
 
@@ -105,9 +115,12 @@ export const OctaneMain = (props: IProps) => {
     }
 
     return <React.Fragment>
-        <div>Octane Main</div>
-        <TextInput Placeholder="Search For A Story" />
-        <Stories />
+        {loading ? <Spinner /> :
+            <React.Fragment>
+                <TextInput Placeholder="Search For A Story" />
+                <Stories />
+            </React.Fragment>
+        }
     </React.Fragment>;
 };
 
