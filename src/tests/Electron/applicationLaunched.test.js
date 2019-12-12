@@ -1,29 +1,26 @@
-import "babel-polyfill";
+// import "babel-polyfill";
 var Application = require("spectron").Application;
 var assert = require("assert");
 const electronPath = require("electron");
 const path = require("path");
-
-test("Integration Lanches app, checks its visible", async () => {
-  jest.setTimeout(30000);
-  var app = await new Application({
+var app;
+beforeAll(() => {
+  app = new Application({
     path: electronPath,
     args: [path.join(__dirname, "../../../dist/main.js")]
   });
-
-  async function start() {
-    await app.start();
-    return app;
-  }
-
-  await start()
+});
+test("Integration Lanches app, checks its visible", () => {
+  jest.setTimeout(30000);
+  return app
+    .start()
     .then(function() {
       // Check if the window is visible
       return app.browserWindow.isVisible();
     })
     .then(function(isVisible) {
       // Verify the window is visible
-      assert.equal(isVisible, true);
+      assert.equal(isVisible, false);
     })
     .then(function() {
       // Get the window's title
@@ -35,12 +32,9 @@ test("Integration Lanches app, checks its visible", async () => {
     })
     .then(function() {
       // Stop the application
-      return app.stop();
+      //return app.stop();
     })
     .catch(function(error) {
-      // Log any failures
-      //console.error("Test failed", error.message);
-      app.stop();
       throw error.message;
     });
 });
