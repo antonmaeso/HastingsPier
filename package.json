@@ -4,7 +4,9 @@
   "description": "",
   "main": "dist/main.js",
   "scripts": {
-    "test": "jest --detectOpenHandles --coverage -i",
+    "test": "jest --detectOpenHandles --coverage",
+    "unit": "jest --testNamePattern=Unit --coverage",
+    "integration": "jest --testNamePattern=Integration",
     "start": "electron ./dist/main.js",
     "build": "webpack --mode development",
     "buildRun": "npm run buildAll && npm run start",
@@ -64,6 +66,7 @@
     "electron-main-window": "^1.0.4",
     "electron-window-manager": "^1.0.6",
     "fs": "0.0.1-security",
+    "jest-runner-groups": "^1.0.0",
     "jquery": "^3.4.1",
     "popper.js": "^1.16.0",
     "react": "^16.12.0",

@@ -4,7 +4,7 @@ var assert = require("assert");
 const electronPath = require("electron");
 const path = require("path");
 
-test("Lanches app, checks its visible", async () => {
+test("Integration Lanches app, checks its visible", async () => {
   jest.setTimeout(30000);
   var app = await new Application({
     path: electronPath,
