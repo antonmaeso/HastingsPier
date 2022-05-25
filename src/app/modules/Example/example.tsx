@@ -13,7 +13,7 @@ export const Example = (props: any) => {
   const [local, setLocal] = React.useState(0);
   const [session, setSession] = React.useState(0);
   const [kidText, setKidText] = React.useState("Milky bar");
-  const [hiddenListenerText, sethiddenListenerText] = React.useState("Og");
+  const [hiddenListenerText, setHiddenListenerText] = React.useState("Og");
 
   const listener = "appsResponse";
   ipcRenderer.removeAllListeners(listener);
@@ -134,7 +134,7 @@ export const Example = (props: any) => {
           ipcRenderer.removeAllListeners("CallMe");
           ipcRenderer.on("CallMe", () => {
             Notify.Balloon("Example", "listener Called");
-            sethiddenListenerText("listener Called");
+            setHiddenListenerText("listener Called");
           });
         }} />
       <div>{hiddenListenerText}</div>

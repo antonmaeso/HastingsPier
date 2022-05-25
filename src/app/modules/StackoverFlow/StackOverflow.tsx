@@ -41,25 +41,25 @@ export const Google = (props: any) => {
   return (
     <React.Fragment>
       <Button
-        text="Load File"
+        Text="Load File"
         onClick={() => {
           launchNewWindow();
         }}
       />
       <Button
-        text="Check element on window"
+        Text="Check element on window"
         onClick={() => {
           checkElementOnWindowHasClas("", "", "");
         }}
       />
       <Button
-        text="test File reader"
+        Text="test File reader"
         onClick={() => {
           readFile();
         }}
       />
       <Button
-        text="web request reader"
+        Text="web request reader"
         onClick={() => {
           webRequest();
         }}
